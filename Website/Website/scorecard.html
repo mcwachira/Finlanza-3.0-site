@@ -1,0 +1,2728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Business Systems Scorecard — Finlanza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #152232;
+    --navy-light: #1E3045;
+    --gold: #C8971C;
+    --gold-light: #E8B84B;
+    --gold-pale: #FBF0D4;
+    --cream: #F5EFE0;
+    --white: #FFFFFF;
+    --text: #E8E2D4;
+    --text-muted: #8A9BAD;
+    --border: rgba(200,151,28,0.2);
+    --border-light: rgba(255,255,255,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ─────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAV ───────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 60px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(13,27,42,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    text-decoration: none;
+  }
+  .nav-logo-f {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+  .nav-logo-tag {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-left: 6px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a.active { color: var(--white); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 10px 24px !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px !important;
+    transition: background 0.2s, transform 0.1s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+  /* ── PAGE SYSTEM ───────────────────────────────────────── */
+  .page { display: none; min-height: 100vh; padding-top: 72px; }
+  .page.active { display: block; }
+
+  /* ── SHARED LAYOUT ─────────────────────────────────────── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+  .section { padding: 100px 0; }
+  .section-sm { padding: 60px 0; }
+
+  .label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .display-xl {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 10vw, 140px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+  .display-lg {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .display-md {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .serif-lg {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 3vw, 42px);
+    line-height: 1.2;
+    color: var(--white);
+  }
+
+  .gold { color: var(--gold); }
+  .muted { color: var(--text-muted); }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 16px 36px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white);
+    padding: 16px 36px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border-light);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Gold line divider */
+  .gold-line {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  /* Grid helpers */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+
+  /* ── HOME PAGE ─────────────────────────────────────────── */
+  .hero {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(200,151,28,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 80% at 10% 30%, rgba(30,48,69,0.8) 0%, transparent 50%);
+  }
+
+  .hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,151,28,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,151,28,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 60px;
+    width: 100%;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-eyebrow-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero-eyebrow span {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .hero-headline {
+    animation: fadeUp 0.8s ease 0.15s both;
+    margin-bottom: 32px;
+  }
+
+  .hero-sub {
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    animation: fadeUp 0.8s ease 0.45s both;
+  }
+
+  .hero-stat-row {
+    display: flex;
+    gap: 60px;
+    margin-top: 80px;
+    padding-top: 60px;
+    border-top: 1px solid var(--border-light);
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+  .hero-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hero-stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* Marquee */
+  .marquee-section {
+    background: var(--gold);
+    padding: 18px 0;
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--navy);
+    padding: 0 48px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+  .marquee-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--navy);
+    border-radius: 50%;
+    opacity: 0.4;
+  }
+
+  /* Problem section */
+  .problem-section {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .problem-left {
+    padding: 100px 80px 100px 0;
+    border-right: 1px solid var(--border);
+  }
+  .problem-right {
+    padding: 100px 0 100px 80px;
+  }
+  .problem-list {
+    list-style: none;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .problem-list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    font-size: 16px;
+    color: var(--text-muted);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .problem-list li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+    font-weight: 300;
+  }
+
+  /* Process section */
+  .process-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 40px;
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border-light);
+    position: relative;
+  }
+  .process-step:last-child { border-bottom: none; }
+  .process-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.3;
+    transition: opacity 0.3s;
+  }
+  .process-step:hover .process-num { opacity: 1; }
+  .process-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  /* Industries */
+  .industry-card {
+    border: 1px solid var(--border-light);
+    padding: 32px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .industry-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .industry-card:hover { border-color: var(--border); background: var(--navy-mid); }
+  .industry-card:hover::before { transform: scaleX(1); }
+  .industry-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-top: 16px;
+  }
+  .industry-icon { font-size: 28px; }
+
+  /* Testimonials */
+  .testimonial {
+    background: var(--navy-light);
+    border: 1px solid var(--border-light);
+    padding: 48px;
+    position: relative;
+  }
+  .testimonial::before {
+    content: '"';
+    font-family: 'DM Serif Display', serif;
+    font-size: 120px;
+    color: var(--gold);
+    opacity: 0.15;
+    position: absolute;
+    top: -20px;
+    left: 32px;
+    line-height: 1;
+  }
+  .testimonial-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .testimonial-author {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .testimonial-role {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── ABOUT PAGE ────────────────────────────────────────── */
+  .page-hero {
+    padding: 100px 0 80px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200,151,28,0.05) 0%, transparent 60%);
+  }
+
+  .about-manifesto {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    padding: 80px;
+    position: relative;
+    margin: 60px 0;
+  }
+  .about-manifesto::before {
+    content: 'MANIFESTO';
+    position: absolute;
+    top: -13px;
+    left: 60px;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    padding: 4px 16px;
+  }
+
+  .value-card {
+    border-top: 2px solid var(--gold);
+    padding-top: 32px;
+  }
+  .value-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .value-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .team-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+  }
+  .team-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--navy-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .team-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, var(--navy) 100%);
+  }
+  .team-info {
+    padding: 24px;
+  }
+  .team-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .team-role {
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* ── DREAM PAGE ────────────────────────────────────────── */
+  .dream-phase {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .dream-phase:last-child { border-bottom: none; }
+  .dream-letter {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 160px;
+    line-height: 0.85;
+    padding: 40px 40px 40px 0;
+    border-right: 1px solid var(--border-light);
+    display: flex;
+    align-items: flex-start;
+  }
+  .dream-body {
+    padding: 48px 0 48px 60px;
+  }
+  .dream-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .dream-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .dream-deliverables {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .dream-tag {
+    background: rgba(200,151,28,0.1);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+  }
+
+  /* ── SERVICES PAGE ─────────────────────────────────────── */
+  .service-card {
+    border: 1px solid var(--border-light);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  .service-card:hover { background: var(--navy-mid); transform: translateY(-4px); }
+  .service-tier {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .service-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+  .service-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .service-features li {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+  .service-features li::before {
+    content: '→';
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── CASE STUDIES ──────────────────────────────────────── */
+  .case-card {
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .case-card:hover { border-color: var(--border); }
+  .case-header {
+    background: var(--navy-light);
+    padding: 40px;
+    position: relative;
+  }
+  .case-industry {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .case-client {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .case-location {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .case-body { padding: 40px; }
+  .case-challenge {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .case-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 32px;
+  }
+  .case-result-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .case-result-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── PRICING PAGE ──────────────────────────────────────── */
+  .pricing-card {
+    border: 1px solid var(--border-light);
+    padding: 48px;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .pricing-card.featured {
+    border-color: var(--gold);
+    background: var(--navy-mid);
+  }
+  .pricing-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 4px 16px;
+    white-space: nowrap;
+  }
+  .pricing-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .pricing-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .pricing-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .pricing-note {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+  }
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 40px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 32px;
+  }
+  .pricing-features li {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+  .pricing-features li.included { color: var(--text); }
+  .pricing-features li::before { content: '✓'; color: var(--gold); flex-shrink: 0; }
+  .pricing-features li.excluded { opacity: 0.4; }
+  .pricing-features li.excluded::before { content: '–'; color: var(--text-muted); }
+
+  /* ── BLOG PAGE ─────────────────────────────────────────── */
+  .post-card {
+    border-bottom: 1px solid var(--border-light);
+    padding: 48px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .post-card:first-child { border-top: 1px solid var(--border-light); }
+  .post-card:hover .post-title { color: var(--gold); }
+  .post-meta {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    gap: 20px;
+  }
+  .post-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1.3;
+    color: var(--white);
+    transition: color 0.2s;
+    margin-bottom: 16px;
+  }
+  .post-excerpt {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .post-read {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+  }
+
+  /* ── CONTACT PAGE ──────────────────────────────────────── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 70vh;
+  }
+  .contact-left {
+    padding: 80px;
+    background: var(--navy-mid);
+    border-right: 1px solid var(--border);
+  }
+  .contact-right { padding: 80px; }
+
+  .contact-info-item {
+    display: flex;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .contact-info-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .contact-info-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .contact-info-val {
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+  .form-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: var(--navy-mid);
+    border: 1px solid var(--border-light);
+    color: var(--text);
+    padding: 14px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-select { appearance: none; cursor: pointer; }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); opacity: 0.5; }
+
+  /* ── FOOTER ────────────────────────────────────────────── */
+  footer {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    padding: 60px 0 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 32px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 3px;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .footer-tagline {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+  .footer-col-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .footer-legal a:hover { color: var(--white); }
+
+  /* ── ANIMATIONS ────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .fade-in { animation: fadeIn 0.5s ease both; }
+
+  /* ── CTA BAND ──────────────────────────────────────────── */
+  .cta-band {
+    background: var(--gold);
+    padding: 80px 0;
+    text-align: center;
+  }
+  .cta-band .display-lg { color: var(--navy); }
+  .cta-band p { color: var(--navy); opacity: 0.7; font-size: 18px; margin: 20px 0 40px; }
+  .btn-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--navy);
+    color: var(--white);
+    padding: 18px 44px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-dark:hover { background: var(--navy-light); transform: translateY(-1px); }
+
+  /* Horizontal rule */
+  hr { border: none; border-top: 1px solid var(--border-light); }
+
+
+  .nav-hamburger { display:none; background:none; border:1px solid var(--border); color:var(--text); padding:6px 12px; cursor:pointer; font-size:17px; }
+  .nav-gold { color: var(--gold) !important; }
+  .nav-links a.active { color: var(--white) !important; }
+  @media(max-width:900px){
+    nav { padding: 0 24px; }
+    .nav-links { display:none; flex-direction:column; position:absolute; top:72px; left:0; right:0; background:rgba(13,27,42,0.98); border-bottom:1px solid var(--border); padding:20px 24px; gap:16px; }
+    .nav-links.mob-open { display:flex; }
+    .nav-hamburger { display:block; }
+  }
+
+  /* reveal */
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.65s ease,transform 0.65s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-d1 { transition-delay:0.1s; }
+  .reveal-d2 { transition-delay:0.2s; }
+  .reveal-d3 { transition-delay:0.3s; }
+  .reveal-d4 { transition-delay:0.4s; }
+
+/* ── RESET & BASE ─────────────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:       #1B3A6B;
+  --navy-deep:  #0D1B2A;
+  --navy-mid:   #0F2340;
+  --gold:       #C8971C;
+  --gold-light: #E8B84B;
+  --gold-pale:  #F5EDD4;
+  --offwhite:   #F8F6F1;
+  --warm-grey:  #EAE6DC;
+  --text:       #1A2530;
+  --muted:      #6B7A8D;
+  --slate:      #3A4A5C;
+  --red:        #8B2020;
+  --amber:      #7A5C00;
+  --green:      #1A4A2A;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy-deep);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── ENGINEERING GRID BACKGROUND ─────────────────────────────────────── */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(200,151,28,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,151,28,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SCREEN SYSTEM ────────────────────────────────────────────────────── */
+.screen {
+  display: none;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.5s ease both;
+}
+.screen.active { display: flex; flex-direction: column; align-items: center; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── HERO / LANDING SCREEN ────────────────────────────────────────────── */
+#screen-intro {
+  justify-content: center;
+  padding: 60px 24px;
+  background: linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 60%, var(--navy-mid) 100%);
+}
+
+.intro-inner {
+  max-width: 720px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 64px;
+}
+
+.fz-mark {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+}
+
+.intro-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.intro-eyebrow::before,
+.intro-eyebrow::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+.intro-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(42px, 6vw, 68px);
+  font-weight: 600;
+  line-height: 1.05;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.intro-headline em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.intro-sub {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.65);
+  max-width: 560px;
+  margin: 0 auto 48px;
+}
+
+.stats-row {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--gold-light);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.start-btn {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 18px 48px;
+  position: relative;
+  transition: all 0.2s ease;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+.start-btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(200,151,28,0.35);
+}
+
+.intro-note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.04em;
+}
+
+.section-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 56px;
+}
+.pill {
+  border: 1px solid rgba(200,151,28,0.3);
+  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pill-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.7;
+}
+
+/* ── PROGRESS BAR ─────────────────────────────────────────────────────── */
+.progress-bar-wrap {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  z-index: 100;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transition: width 0.4s ease;
+}
+
+/* ── QUESTION SCREEN ──────────────────────────────────────────────────── */
+#screen-questions {
+  background: var(--offwhite);
+  padding: 0 0 80px;
+}
+
+.q-header {
+  width: 100%;
+  background: var(--navy-deep);
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(200,151,28,0.2);
+}
+
+.q-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.q-brand-name {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+}
+
+.q-counter {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+
+.q-body {
+  max-width: 760px;
+  width: 100%;
+  padding: 60px 24px 0;
+}
+
+.q-section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.q-section-label::after {
+  content: '';
+  display: block;
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(200,151,28,0.3), transparent);
+}
+
+.q-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.q-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 3.5vw, 32px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--navy);
+  margin-bottom: 40px;
+}
+
+.q-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 48px;
+}
+
+.q-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 22px;
+  background: #fff;
+  border: 1.5px solid rgba(27,58,107,0.12);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  position: relative;
+}
+.q-option:hover {
+  border-color: var(--gold);
+  background: var(--gold-pale);
+  transform: translateX(4px);
+}
+.q-option.selected {
+  border-color: var(--navy);
+  background: rgba(27,58,107,0.04);
+}
+.q-option.selected .opt-score-badge {
+  opacity: 1;
+}
+
+.opt-key {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(27,58,107,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: all 0.18s ease;
+}
+.q-option.selected .opt-key {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+
+.opt-text {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text);
+  padding-top: 3px;
+}
+
+.opt-score-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  opacity: 0;
+  padding-top: 5px;
+  flex-shrink: 0;
+  transition: opacity 0.18s;
+}
+
+.q-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-back {
+  background: none;
+  border: 1.5px solid rgba(27,58,107,0.2);
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.04em;
+}
+.btn-back:hover { border-color: var(--navy); color: var(--navy); }
+
+.btn-next {
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  cursor: pointer;
+  transition: all 0.2s;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  opacity: 0.4;
+  pointer-events: none;
+}
+.btn-next.enabled {
+  opacity: 1;
+  pointer-events: all;
+}
+.btn-next.enabled:hover {
+  background: var(--gold);
+  color: var(--navy-deep);
+  transform: translateY(-1px);
+}
+
+/* ── GATE SCREEN (EMAIL CAPTURE) ──────────────────────────────────────── */
+#screen-gate {
+  background: var(--navy-deep);
+  background-image:
+    linear-gradient(rgba(200,151,28,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,151,28,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  justify-content: center;
+  padding: 60px 24px;
+}
+
+.gate-inner {
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+}
+
+.gate-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 32px;
+  border: 1px solid rgba(200,151,28,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.gate-icon::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1px solid rgba(200,151,28,0.1);
+}
+
+.gate-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.gate-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.gate-sub {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 40px;
+}
+
+.gate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.form-row { display: flex; gap: 14px; }
+.form-row .form-field { flex: 1; }
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.form-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+.form-input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.18s;
+  width: 100%;
+}
+.form-input::placeholder { color: rgba(255,255,255,0.2); }
+.form-input:focus { border-color: var(--gold); }
+
+.form-select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 13px 16px;
+  outline: none;
+  width: 100%;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color 0.18s;
+}
+.form-select:focus { border-color: var(--gold); }
+.form-select option { background: var(--navy-deep); color: #fff; }
+
+.btn-reveal {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 18px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  margin-top: 8px;
+}
+.btn-reveal:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(200,151,28,0.35);
+}
+
+.gate-privacy {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  margin-top: 12px;
+}
+
+/* ── RESULTS SCREEN ───────────────────────────────────────────────────── */
+#screen-results {
+  background: var(--offwhite);
+  padding-bottom: 80px;
+}
+
+.results-hero {
+  width: 100%;
+  background: var(--navy-deep);
+  padding: 56px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.results-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.results-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+}
+
+.score-ring-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 32px;
+}
+
+.score-ring-svg {
+  transform: rotate(-90deg);
+  width: 180px;
+  height: 180px;
+}
+.score-ring-track { fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 10; }
+.score-ring-fill {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.score-text-inner {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.score-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
+}
+.score-denom {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.1em;
+}
+
+.score-tier-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.score-tier-sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  max-width: 480px;
+}
+
+.results-body {
+  max-width: 760px;
+  width: 100%;
+  padding: 56px 24px 0;
+}
+
+.section-breakdown {
+  margin-bottom: 48px;
+}
+
+.breakdown-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(200,151,28,0.2);
+}
+
+.breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.breakdown-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--navy);
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.breakdown-bar-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(27,58,107,0.08);
+  position: relative;
+}
+.breakdown-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--navy), var(--gold));
+  transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0.3s;
+  width: 0;
+}
+
+.breakdown-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* diagnosis block */
+.diagnosis-block {
+  background: #fff;
+  border: 1px solid rgba(27,58,107,0.1);
+  border-left: 4px solid var(--gold);
+  padding: 28px 32px;
+  margin-bottom: 32px;
+}
+.diagnosis-block h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+.diagnosis-block p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--slate);
+}
+
+/* findings */
+.findings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.finding-card {
+  background: #fff;
+  border: 1px solid rgba(27,58,107,0.08);
+  padding: 22px 20px;
+  position: relative;
+}
+.finding-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+}
+.finding-card.critical::before { background: #8B2020; }
+.finding-card.moderate::before { background: var(--gold); }
+.finding-card.strength::before { background: #1A4A2A; }
+
+.finding-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.finding-card.critical .finding-badge { color: #8B2020; }
+.finding-card.moderate .finding-badge { color: var(--amber); }
+.finding-card.strength .finding-badge { color: #1A4A2A; }
+
+.finding-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.finding-desc {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* CTA block */
+.cta-block {
+  background: var(--navy);
+  padding: 48px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-block::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.cta-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.cta-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 3.5vw, 36px);
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+.cta-sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  max-width: 460px;
+  margin: 0 auto 32px;
+  line-height: 1.65;
+}
+.cta-btn {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy-deep);
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 16px 44px;
+  cursor: pointer;
+  transition: all 0.2s;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  text-decoration: none;
+}
+.cta-btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(200,151,28,0.35);
+}
+.cta-note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.25);
+}
+
+/* share row */
+.share-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.share-btn {
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5);
+  background: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 9px 20px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.share-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .q-header { padding: 16px 20px; }
+  .q-body { padding: 40px 20px 0; }
+  .form-row { flex-direction: column; }
+  .breakdown-label { width: 130px; font-size: 12px; }
+  .diagnosis-block { padding: 22px 20px; }
+  .cta-block { padding: 40px 24px; }
+  .stats-row { gap: 24px; }
+}
+
+  body { padding-top: 0 !important; }
+  #scorecard-wrap { padding-top: 72px; }
+  .screen { min-height: calc(100vh - 72px); }
+
+</style>
+</head>
+<body>
+<nav id="main-nav">
+  <a class="nav-logo" href="index.html">
+    <span class="nav-logo-f">FINLANZA</span>
+    <span class="nav-logo-tag">Systems</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="" data-page="home">Home</a></li>
+    <li><a href="services.html" class="" data-page="services">Services</a></li>
+    <li><a href="dream.html" class="" data-page="dream">DREAM™</a></li>
+    <li><a href="pricing.html" class="" data-page="pricing">Pricing</a></li>
+    <li><a href="insights.html" class="" data-page="blog">Insights</a></li>
+    <li><a href="scorecard.html" class="nav-gold active" data-page="scorecard">Free Scorecard</a></li>
+    <li><a href="contact.html" class="nav-cta" data-page="contact">Book a Review</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('mob-open')" aria-label="Menu">☰</button>
+</nav>
+<div id="scorecard-wrap">
+
+
+<div class="grid-bg"></div>
+
+<!-- Progress bar -->
+<div class="progress-bar-wrap" id="progressWrap" style="display:none;">
+  <div class="progress-bar-fill" id="progressFill"></div>
+</div>
+
+<!-- ══ SCREEN 1: INTRO ══════════════════════════════════════════════════════ -->
+<div class="screen active" id="screen-intro">
+  <div class="intro-inner">
+
+    <div class="brand-lockup">
+      <svg class="fz-mark" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="300" height="300" fill="#1B3A6B"/>
+        <rect x="55" y="88" width="30" height="164" fill="#C8971C"/>
+        <rect x="55" y="152" width="106" height="28" fill="#C8971C"/>
+        <rect x="55" y="55" width="210" height="33" fill="white"/>
+        <polygon points="218,88 244,88 178,219 152,219" fill="white"/>
+        <rect x="55" y="219" width="210" height="33" fill="white"/>
+      </svg>
+      <span class="brand-name">Finlanza</span>
+    </div>
+
+    <div class="intro-eyebrow">Free Assessment</div>
+
+    <h1 class="intro-headline">
+      How healthy are your<br><em>business systems?</em>
+    </h1>
+
+    <p class="intro-sub">
+      Take the 5-minute Finlanza Business Systems Health Check. 
+      Get an instant score across 6 operational dimensions — 
+      and a personalised diagnosis of where your business is bleeding efficiency.
+    </p>
+
+    <div class="section-pills">
+      <div class="pill"><span class="pill-dot"></span>Process & Operations</div>
+      <div class="pill"><span class="pill-dot"></span>Finance Infrastructure</div>
+      <div class="pill"><span class="pill-dot"></span>Data & Reporting</div>
+      <div class="pill"><span class="pill-dot"></span>Technology Stack</div>
+      <div class="pill"><span class="pill-dot"></span>People & Alignment</div>
+      <div class="pill"><span class="pill-dot"></span>Growth Readiness</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-num">18</span>
+        <span class="stat-label">Diagnostic questions</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">5</span>
+        <span class="stat-label">Minutes to complete</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">6</span>
+        <span class="stat-label">Operational dimensions</span>
+      </div>
+    </div>
+
+    <button class="start-btn" onclick="startAssessment()">Begin Health Check →</button>
+    <p class="intro-note">No payment required · Instant results · Used by African businesses</p>
+
+  </div>
+</div>
+
+<!-- ══ SCREEN 2: QUESTIONS ══════════════════════════════════════════════════ -->
+<div class="screen" id="screen-questions">
+  <div class="q-header">
+    <div class="q-brand">
+      <svg width="28" height="28" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="300" height="300" fill="#1B3A6B"/>
+        <rect x="55" y="88" width="30" height="164" fill="#C8971C"/>
+        <rect x="55" y="152" width="106" height="28" fill="#C8971C"/>
+        <rect x="55" y="55" width="210" height="33" fill="white"/>
+        <polygon points="218,88 244,88 178,219 152,219" fill="white"/>
+        <rect x="55" y="219" width="210" height="33" fill="white"/>
+      </svg>
+      <span class="q-brand-name">Business Systems Health Check</span>
+    </div>
+    <span class="q-counter" id="qCounter">01 / 18</span>
+  </div>
+
+  <div class="q-body">
+    <div class="q-section-label" id="qSectionLabel">Process & Operations</div>
+    <div class="q-number" id="qNumber">Question 1 of 18</div>
+    <div class="q-text" id="qText"></div>
+    <div class="q-options" id="qOptions"></div>
+    <div class="q-nav">
+      <button class="btn-back" id="btnBack" onclick="prevQuestion()">← Back</button>
+      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 3: EMAIL GATE ═════════════════════════════════════════════════ -->
+<div class="screen" id="screen-gate">
+  <div class="gate-inner">
+
+    <div class="gate-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C8971C" stroke-width="1.5">
+        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+
+    <div class="gate-eyebrow">Assessment Complete</div>
+    <h2 class="gate-headline">Your results are ready.<br>Where should we send them?</h2>
+    <p class="gate-sub">
+      Enter your details below to unlock your full Business Systems Health Score — 
+      including a section-by-section breakdown and personalised recommendations.
+    </p>
+
+    <div class="gate-form">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">First Name</label>
+          <input class="form-input" type="text" id="firstName" placeholder="Amara" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Last Name</label>
+          <input class="form-input" type="text" id="lastName" placeholder="Osei" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Work Email</label>
+        <input class="form-input" type="email" id="email" placeholder="amara@company.com" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Company Name</label>
+        <input class="form-input" type="text" id="company" placeholder="Your company" />
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Role</label>
+          <select class="form-select" id="role">
+            <option value="">Select role</option>
+            <option>Founder / CEO</option>
+            <option>Managing Director</option>
+            <option>COO / Operations</option>
+            <option>CFO / Finance</option>
+            <option>Other Director</option>
+            <option>Manager</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Company Size</label>
+          <select class="form-select" id="companySize">
+            <option value="">Select size</option>
+            <option>1–10 employees</option>
+            <option>11–50 employees</option>
+            <option>51–200 employees</option>
+            <option>200+ employees</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-reveal" onclick="revealResults()">Reveal My Score →</button>
+    </div>
+    <p class="gate-privacy">We respect your privacy. No spam — ever. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- ══ SCREEN 4: RESULTS ════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-results">
+
+  <div class="results-hero">
+    <div class="results-eyebrow">Your Business Systems Health Score</div>
+
+    <div class="score-ring-wrap">
+      <svg class="score-ring-svg" viewBox="0 0 180 180">
+        <circle class="score-ring-track" cx="90" cy="90" r="76"/>
+        <circle class="score-ring-fill" id="scoreRingFill" cx="90" cy="90" r="76"
+          stroke-dasharray="477.5" stroke-dashoffset="477.5"/>
+      </svg>
+      <div class="score-text-inner">
+        <span class="score-num" id="scoreDisplay">0</span>
+        <span class="score-denom">/ 100</span>
+      </div>
+    </div>
+
+    <div class="score-tier-name" id="tierName"></div>
+    <div class="score-tier-sub" id="tierSub"></div>
+  </div>
+
+  <div class="results-body">
+
+    <!-- Section breakdown -->
+    <div class="section-breakdown">
+      <div class="breakdown-title">Score by Dimension</div>
+      <div id="breakdownBars"></div>
+    </div>
+
+    <!-- Diagnosis -->
+    <div class="diagnosis-block" id="diagnosisBlock">
+      <h3 id="diagnosisTitle"></h3>
+      <p id="diagnosisBody"></p>
+    </div>
+
+    <!-- Key findings -->
+    <div class="breakdown-title" style="margin-bottom:16px;">Key Findings</div>
+    <div class="findings-grid" id="findingsGrid"></div>
+
+    <!-- CTA -->
+    <div class="cta-block">
+      <div class="cta-eyebrow">Your Next Step</div>
+      <h3 class="cta-headline" id="ctaHeadline"></h3>
+      <p class="cta-sub" id="ctaSub"></p>
+      <a class="cta-btn" href="https://finlanza.com/health-check" target="_blank" id="ctaBtn">Book a Free Consultation →</a>
+      <p class="cta-note">30-minute call · No commitment · With a senior Finlanza consultant</p>
+
+      <div class="share-row">
+        <button class="share-btn" onclick="shareLinkedIn()">Share on LinkedIn</button>
+        <button class="share-btn" onclick="retakeAssessment()">Retake Assessment</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ JAVASCRIPT ════════════════════════════════════════════════════════════ -->
+
+</div>
+<footer>
+  <div class="container">
+    <div style="text-align:center;padding:40px 0 32px;border-bottom:1px solid var(--border-light);">
+      <div class="display-md" style="font-size:clamp(22px,3vw,38px);margin-bottom:8px;"><span class="gold">Scalability</span> is not an accident.<br>It is engineered.</div>
+      <div class="label" style="margin-top:12px;">Zoho Authorized Partner · Enterprise Implementation Specialists · Africa</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding:40px 0 32px;border-bottom:1px solid var(--border-light);">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--white);margin-bottom:4px;">FINLANZA</div>
+        <div class="label" style="margin-bottom:12px;">Business Systems Architecture Firm</div>
+        <p style="color:var(--text-muted);font-size:13px;line-height:1.7;">We engineer scalable business systems for multi-location, multi-entity organizations across Africa — built on the DREAM™ Transformation Framework.</p>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:14px;">Services</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <a href="services.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Diagnose</a>
+          <a href="services.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Transform</a>
+          <a href="services.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Managed</a>
+          <a href="pricing.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Pricing</a>
+        </div>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:14px;">Company</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <a href="dream.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">DREAM™ Framework</a>
+          <a href="scorecard.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Free Scorecard</a>
+          <a href="insights.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Insights</a>
+          <a href="contact.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:14px;">Contact</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:var(--text-muted);">
+          <a href="mailto:ask@finlanza.com" style="color:var(--text-muted);text-decoration:none;">ask@finlanza.com</a>
+          <a href="tel:+254724463536" style="color:var(--text-muted);text-decoration:none;">+254 724 463 536</a>
+          <span>Nairobi, Kenya</span>
+          <div style="margin-top:8px;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(200,151,28,0.2);padding:5px 10px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(200,151,28,0.55);">ZOHO <span style="display:inline-block;width:1px;height:10px;background:rgba(200,151,28,0.25);margin:0 4px;"></span> Partner</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom" style="border-top:none;padding-top:24px;">
+      <div class="footer-copy">© 2025 Finlanza. All rights reserved. DREAM™ is a proprietary transformation framework.</div>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); } });
+  },{threshold:0.07,rootMargin:'0px 0px -20px 0px'});
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+<script>
+// ── QUESTION DATA ─────────────────────────────────────────────────────────
+const QUESTIONS = [
+
+  // SECTION 1: Process & Operations (Q1–3)
+  {
+    section: "Process & Operations",
+    text: "How would you describe the way core business processes are documented in your organisation?",
+    options: [
+      { text: "We have no written documentation — processes live in people's heads.", score: 0 },
+      { text: "Some things are written down but it's inconsistent and often outdated.", score: 1 },
+      { text: "Most processes are documented but not always followed consistently.", score: 2 },
+      { text: "We have clear, current SOPs that staff actively follow.", score: 3 },
+    ]
+  },
+  {
+    section: "Process & Operations",
+    text: "When a key employee leaves, how much operational disruption does their departure typically cause?",
+    options: [
+      { text: "It's a crisis — we lose significant knowledge and capability with each departure.", score: 0 },
+      { text: "It takes weeks of firefighting to stabilise things.", score: 1 },
+      { text: "Some disruption, but we recover relatively quickly.", score: 2 },
+      { text: "Minimal disruption — our systems carry the knowledge, not individuals.", score: 3 },
+    ]
+  },
+  {
+    section: "Process & Operations",
+    text: "How consistently are your operational processes actually executed across the business?",
+    options: [
+      { text: "Every person does things their own way — there is no standard.", score: 0 },
+      { text: "There is a rough standard but significant variation in practice.", score: 1 },
+      { text: "Mostly consistent, with occasional deviations that get corrected.", score: 2 },
+      { text: "High consistency — deviations are rare and flagged immediately.", score: 3 },
+    ]
+  },
+
+  // SECTION 2: Finance Infrastructure (Q4–6)
+  {
+    section: "Finance Infrastructure",
+    text: "How quickly can your finance team produce a clear picture of the business's financial position?",
+    options: [
+      { text: "It takes days or weeks — we're often not sure where we stand.", score: 0 },
+      { text: "We can get there eventually but it requires significant manual work.", score: 1 },
+      { text: "We can pull together a reasonable picture within a day or two.", score: 2 },
+      { text: "Real-time or near-real-time visibility — dashboards are updated automatically.", score: 3 },
+    ]
+  },
+  {
+    section: "Finance Infrastructure",
+    text: "How would you describe your invoicing, collections, and accounts receivable process?",
+    options: [
+      { text: "Ad hoc and manual — invoices are sent inconsistently and chasing is reactive.", score: 0 },
+      { text: "We have a process but it relies heavily on one person and misses frequently.", score: 1 },
+      { text: "Generally works but has gaps — some invoices still slip through.", score: 2 },
+      { text: "Systematic and largely automated — AR is tracked and chased consistently.", score: 3 },
+    ]
+  },
+  {
+    section: "Finance Infrastructure",
+    text: "How accurately can you forecast cashflow for the next 90 days?",
+    options: [
+      { text: "We cannot forecast cashflow — we find out when there's a problem.", score: 0 },
+      { text: "Very rough estimates only — we're frequently surprised by cashflow gaps.", score: 1 },
+      { text: "Reasonable accuracy, built on some data and some assumptions.", score: 2 },
+      { text: "Strong accuracy — we build rolling forecasts based on real pipeline and cost data.", score: 3 },
+    ]
+  },
+
+  // SECTION 3: Data & Reporting (Q7–9)
+  {
+    section: "Data & Reporting",
+    text: "When leadership wants to understand business performance, how do you get the answer?",
+    options: [
+      { text: "Someone has to manually compile data from multiple places — it takes time and is often incomplete.", score: 0 },
+      { text: "We have some reports but they're not always accurate or current.", score: 1 },
+      { text: "We have dashboards but they require some manual updating.", score: 2 },
+      { text: "We have live dashboards that give leadership real-time performance visibility.", score: 3 },
+    ]
+  },
+  {
+    section: "Data & Reporting",
+    text: "How confident are you in the accuracy of the data your business decisions are based on?",
+    options: [
+      { text: "Not confident — data quality is a known problem but nothing has been done about it.", score: 0 },
+      { text: "Somewhat confident, but we know there are gaps and errors we haven't fixed.", score: 1 },
+      { text: "Reasonably confident — we've cleaned things up but know there's more to do.", score: 2 },
+      { text: "Very confident — data governance is taken seriously and quality is maintained.", score: 3 },
+    ]
+  },
+  {
+    section: "Data & Reporting",
+    text: "How are KPIs tracked and communicated across your organisation?",
+    options: [
+      { text: "We don't have defined KPIs — performance is tracked informally if at all.", score: 0 },
+      { text: "KPIs exist on paper but aren't regularly tracked or reviewed.", score: 1 },
+      { text: "KPIs are tracked and shared in monthly or quarterly reviews.", score: 2 },
+      { text: "KPIs are tracked in real time and reviewed formally at all levels of the business.", score: 3 },
+    ]
+  },
+
+  // SECTION 4: Technology Stack (Q10–12)
+  {
+    section: "Technology Stack",
+    text: "How integrated are the software systems your business uses day-to-day?",
+    options: [
+      { text: "No integration — different teams use different tools and data never comes together.", score: 0 },
+      { text: "Minimal integration — some manual exports and imports between systems.", score: 1 },
+      { text: "Partially integrated — some systems talk to each other but not all.", score: 2 },
+      { text: "Fully integrated — data flows automatically between all core systems.", score: 3 },
+    ]
+  },
+  {
+    section: "Technology Stack",
+    text: "How much time does your team spend on manual, repetitive administrative tasks each week?",
+    options: [
+      { text: "An enormous amount — manual work is one of our biggest productivity drains.", score: 0 },
+      { text: "Significant — several hours per person per week on avoidable manual tasks.", score: 1 },
+      { text: "Some — we've automated parts of it but a meaningful amount remains.", score: 2 },
+      { text: "Very little — most routine work is automated.", score: 3 },
+    ]
+  },
+  {
+    section: "Technology Stack",
+    text: "How would you describe your organisation's technology adoption and utilisation?",
+    options: [
+      { text: "We are significantly behind where we should be — tech is a competitive disadvantage.", score: 0 },
+      { text: "We have technology but don't use it well — poor adoption is a recurring issue.", score: 1 },
+      { text: "Decent adoption but we know we're only using a fraction of what's available to us.", score: 2 },
+      { text: "Strong — we use technology as a strategic asset and continuously improve our stack.", score: 3 },
+    ]
+  },
+
+  // SECTION 5: People & Alignment (Q13–15)
+  {
+    section: "People & Alignment",
+    text: "How clearly do team members understand what is expected of them and how their work connects to business goals?",
+    options: [
+      { text: "Most people don't have a clear picture — roles and expectations are vague.", score: 0 },
+      { text: "Job descriptions exist but there's often confusion about priorities and expectations.", score: 1 },
+      { text: "Generally clear, though alignment breaks down during busy periods.", score: 2 },
+      { text: "Very clear — every person understands their role, KPIs, and how they contribute.", score: 3 },
+    ]
+  },
+  {
+    section: "People & Alignment",
+    text: "How effectively does information flow across departments and teams in your organisation?",
+    options: [
+      { text: "Poorly — silos are a serious problem. Teams operate without awareness of what others are doing.", score: 0 },
+      { text: "There are silos but people work around them — it creates friction.", score: 1 },
+      { text: "Reasonable flow, but we miss things and important updates don't always reach the right people.", score: 2 },
+      { text: "Strong cross-functional visibility — teams are aligned and communication is systematic.", score: 3 },
+    ]
+  },
+  {
+    section: "People & Alignment",
+    text: "When you implement a new process or system, how well does your organisation actually adopt it?",
+    options: [
+      { text: "Poorly — change rarely sticks. New initiatives are launched but old habits return.", score: 0 },
+      { text: "Mixed — some people adopt, others resist. Compliance is inconsistent.", score: 1 },
+      { text: "Reasonable adoption with management follow-through, though it takes time.", score: 2 },
+      { text: "Strong — we have a structured approach to change and people generally follow through.", score: 3 },
+    ]
+  },
+
+  // SECTION 6: Growth Readiness (Q16–18)
+  {
+    section: "Growth Readiness",
+    text: "If your revenue doubled in the next 12 months, how well could your current systems handle that growth?",
+    options: [
+      { text: "They would completely break down — we couldn't handle double the volume with current systems.", score: 0 },
+      { text: "We would struggle significantly and need to rebuild almost everything under pressure.", score: 1 },
+      { text: "We could manage but it would be stressful and we'd need to upgrade key areas.", score: 2 },
+      { text: "We are built to scale — our systems can handle significantly more without breaking.", score: 3 },
+    ]
+  },
+  {
+    section: "Growth Readiness",
+    text: "How confident are you that your leadership team has real-time visibility of the information needed to make good decisions?",
+    options: [
+      { text: "Not confident — decisions are often made on gut feel or outdated information.", score: 0 },
+      { text: "Partially — some good information exists but significant blind spots remain.", score: 1 },
+      { text: "Mostly confident — visibility is reasonable but not complete.", score: 2 },
+      { text: "Very confident — we have the information we need when we need it.", score: 3 },
+    ]
+  },
+  {
+    section: "Growth Readiness",
+    text: "Overall, to what extent do your business systems feel like an asset versus a liability?",
+    options: [
+      { text: "Significant liability — our systems hold us back more than they help us move forward.", score: 0 },
+      { text: "More liability than asset — we spend too much time managing system failures.", score: 1 },
+      { text: "Broadly neutral — they work but they're not a source of competitive advantage.", score: 2 },
+      { text: "Clear asset — our systems genuinely enable performance and growth.", score: 3 },
+    ]
+  },
+];
+
+const SECTIONS = ["Process & Operations","Finance Infrastructure","Data & Reporting","Technology Stack","People & Alignment","Growth Readiness"];
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let currentQ = 0;
+let answers  = new Array(QUESTIONS.length).fill(null);
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function startAssessment() {
+  currentQ = 0;
+  answers  = new Array(QUESTIONS.length).fill(null);
+  document.getElementById('progressWrap').style.display = 'block';
+  showScreen('screen-questions');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  document.getElementById('qSectionLabel').textContent = q.section;
+  document.getElementById('qNumber').textContent       = `Question ${currentQ+1} of ${QUESTIONS.length}`;
+  document.getElementById('qCounter').textContent      = `${String(currentQ+1).padStart(2,'0')} / ${String(QUESTIONS.length).padStart(2,'0')}`;
+  document.getElementById('qText').textContent         = q.text;
+
+  const pct = ((currentQ) / QUESTIONS.length) * 100;
+  document.getElementById('progressFill').style.width  = pct + '%';
+
+  const keys = ['A','B','C','D'];
+  const container = document.getElementById('qOptions');
+  container.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-option' + (answers[currentQ] === i ? ' selected' : '');
+    div.innerHTML = `
+      <div class="opt-key">${keys[i]}</div>
+      <div class="opt-text">${opt.text}</div>
+      <div class="opt-score-badge">${opt.score}/3</div>
+    `;
+    div.onclick = () => selectOption(i);
+    container.appendChild(div);
+  });
+
+  // nav button states
+  document.getElementById('btnBack').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  const nextBtn = document.getElementById('btnNext');
+  if (answers[currentQ] !== null) {
+    nextBtn.classList.add('enabled');
+    nextBtn.textContent = currentQ === QUESTIONS.length - 1 ? 'See My Score →' : 'Next →';
+  } else {
+    nextBtn.classList.remove('enabled');
+    nextBtn.textContent = 'Next →';
+  }
+}
+
+function selectOption(i) {
+  answers[currentQ] = i;
+  renderQuestion();
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === null) return;
+  if (currentQ < QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion();
+    document.getElementById('qOptions').style.animation = 'none';
+    setTimeout(() => document.getElementById('qOptions').style.animation = '', 10);
+  } else {
+    document.getElementById('progressFill').style.width = '100%';
+    showScreen('screen-gate');
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) { currentQ--; renderQuestion(); }
+}
+
+// ── RESULTS LOGIC ─────────────────────────────────────────────────────────
+function computeScores() {
+  const sectionScores = {};
+  const sectionMax    = {};
+  SECTIONS.forEach(s => { sectionScores[s] = 0; sectionMax[s] = 0; });
+
+  QUESTIONS.forEach((q, i) => {
+    const sel = answers[i];
+    sectionMax[q.section] += 3;
+    if (sel !== null) sectionScores[q.section] += q.options[sel].score;
+  });
+
+  let total = 0, maxTotal = 0;
+  SECTIONS.forEach(s => { total += sectionScores[s]; maxTotal += sectionMax[s]; });
+
+  const overall = Math.round((total / maxTotal) * 100);
+  const sectionPcts = {};
+  SECTIONS.forEach(s => { sectionPcts[s] = Math.round((sectionScores[s] / sectionMax[s]) * 100); });
+
+  return { overall, sectionPcts };
+}
+
+function getTier(score) {
+  if (score >= 80) return {
+    name: "Systems Strong",
+    sub: "Your business is operating with above-average systems maturity. There are still opportunities to optimise, but you have solid foundations in place.",
+    color: "#1A4A2A",
+    ringColor: "#2ECC71",
+    diagnosis: {
+      title: "You are ahead of most businesses your size.",
+      body: "Your systems are broadly functional and you have meaningful infrastructure in place. The opportunity now is to close the remaining gaps, integrate your stack more tightly, and build the kind of real-time visibility that separates good businesses from great ones. A Finlanza engagement at this stage focuses on precision optimisation — finding the 20% of improvements that unlock 80% of the next level of performance."
+    },
+    ctaHeadline: "You're close to world-class — let's close the gap.",
+    ctaSub: "Even strong systems have blind spots. A free 30-minute consultation will show you exactly where your biggest remaining opportunities are.",
+    findings: [
+      { type: 'strength', title: 'Solid Foundations', desc: 'Your core systems are functional and your team understands how to use them.' },
+      { type: 'moderate', title: 'Integration Gaps', desc: 'Even strong businesses typically have disconnected systems creating invisible inefficiency.' },
+      { type: 'moderate', title: 'Optimisation Opportunity', desc: 'Tightening your stack and reporting infrastructure will unlock the next level of performance.' },
+    ]
+  };
+  if (score >= 60) return {
+    name: "Developing Infrastructure",
+    sub: "You have systems in place but they are not working together effectively. Operational drag is increasing as your business grows.",
+    color: var_gold_amber,
+    ringColor: "#E8B84B",
+    diagnosis: {
+      title: "Your systems are starting to hold your growth back.",
+      body: "You have invested in processes and technology, but they are not integrated and not consistently followed. The result is a growing gap between where your business is and where it could be — and the gap widens as you grow. This is the inflection point where many African businesses get stuck. The work required is not starting from scratch — it is reengineering what exists into something coherent, integrated, and scalable."
+    },
+    ctaHeadline: "This is the inflection point. Let's engineer your systems for scale.",
+    ctaSub: "Businesses at this stage that act now grow faster and more profitably. Those that wait spend the next two years firefighting.",
+    findings: [
+      { type: 'critical', title: 'Integration Risk', desc: 'Disconnected systems are creating invisible costs and slowing your team down daily.' },
+      { type: 'moderate', title: 'Process Inconsistency', desc: 'Standards exist but are not embedded — performance depends too much on individuals.' },
+      { type: 'strength', title: 'Reform-Ready', desc: 'You have enough infrastructure to build on — this is an optimisation, not a rebuild from zero.' },
+    ]
+  };
+  if (score >= 40) return {
+    name: "Operational Strain",
+    sub: "Your business is running on informal systems and individual effort. Growth is constrained and risk is accumulating beneath the surface.",
+    color: "#7A5C00",
+    ringColor: "#C8971C",
+    diagnosis: {
+      title: "Your business is carrying a significant systems debt.",
+      body: "The informal arrangements and manual workarounds that got you to this point are now active constraints on your growth. Revenue is being lost to inefficiency, key-person dependencies are creating fragility, and leadership is spending too much time managing operations rather than building the business. The cost of doing nothing is real and growing. The DREAM Framework is designed exactly for businesses at this stage — a structured transformation that replaces operational drag with scalable infrastructure."
+    },
+    ctaHeadline: "Your systems are costing you more than a Finlanza engagement.",
+    ctaSub: "At your current scale, operational inefficiency costs most businesses KES 4–8M per year in lost productivity and missed revenue. Let's quantify yours.",
+    findings: [
+      { type: 'critical', title: 'Key-Person Dependency', desc: 'Critical knowledge and processes are locked in individuals — a major business risk.' },
+      { type: 'critical', title: 'Manual Process Overhead', desc: 'Significant revenue and time is being consumed by avoidable manual work.' },
+      { type: 'moderate', title: 'Reporting Blind Spots', desc: 'Leadership is making decisions without the data infrastructure to support them.' },
+    ]
+  };
+  return {
+    name: "Systems at Crisis Point",
+    sub: "Your business is operating without the foundational systems it needs. Every day without intervention increases cost and risk.",
+    color: "#8B2020",
+    ringColor: "#E74C3C",
+    diagnosis: {
+      title: "Your business is being held hostage by its own systems — or lack of them.",
+      body: "At this score, your operational infrastructure is a significant constraint on everything the business is trying to do. Processes are not documented, technology is not integrated, financial visibility is poor, and your organisation is running on heroic individual effort. This is not a criticism — it is the starting point for almost every business we have transformed. The DREAM Framework was built for exactly this situation. The question is not whether to act, but how quickly."
+    },
+    ctaHeadline: "Every month of delay compounds the cost. Let's start the diagnosis.",
+    ctaSub: "A free 30-minute consultation is the first step of DREAM Phase 1 — Diagnose. No pitch. Just a clear picture of what needs to change and in what order.",
+    findings: [
+      { type: 'critical', title: 'No Process Documentation', desc: 'The business runs on individual knowledge — a fragile, unscalable foundation.' },
+      { type: 'critical', title: 'Financial Visibility Gap', desc: 'Leadership cannot see the business clearly — decisions are made on incomplete information.' },
+      { type: 'critical', title: 'Technology Underutilisation', desc: 'Available technology is not being used effectively, or the right tools are not in place.' },
+    ]
+  };
+}
+
+const var_gold_amber = "#7A5C00"; // fallback for template literal issue
+
+function revealResults() {
+  const fname = document.getElementById('firstName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  if (!fname || !email) {
+    alert('Please enter at least your name and email to see your results.');
+    return;
+  }
+
+  const { overall, sectionPcts } = computeScores();
+  const tier = getTier(overall);
+
+  showScreen('screen-results');
+  document.getElementById('progressWrap').style.display = 'none';
+
+  // Animate score ring
+  const circumference = 477.5;
+  const offset = circumference - (overall / 100) * circumference;
+  const ring = document.getElementById('scoreRingFill');
+  ring.style.stroke = tier.ringColor;
+  setTimeout(() => { ring.style.strokeDashoffset = offset; }, 200);
+
+  // Count-up score number
+  let count = 0;
+  const target = overall;
+  const interval = setInterval(() => {
+    count += Math.ceil(target / 60);
+    if (count >= target) { count = target; clearInterval(interval); }
+    document.getElementById('scoreDisplay').textContent = count;
+  }, 20);
+
+  document.getElementById('tierName').textContent = tier.name;
+  document.getElementById('tierSub').textContent  = tier.sub;
+
+  // Section breakdown bars
+  const barsEl = document.getElementById('breakdownBars');
+  barsEl.innerHTML = '';
+  SECTIONS.forEach(s => {
+    const pct = sectionPcts[s];
+    const div = document.createElement('div');
+    div.className = 'breakdown-item';
+    div.innerHTML = `
+      <div class="breakdown-label">${s}</div>
+      <div class="breakdown-bar-track">
+        <div class="breakdown-bar-fill" style="width:0%" data-pct="${pct}"></div>
+      </div>
+      <div class="breakdown-pct">${pct}%</div>
+    `;
+    barsEl.appendChild(div);
+  });
+  setTimeout(() => {
+    document.querySelectorAll('.breakdown-bar-fill').forEach(b => {
+      b.style.width = b.dataset.pct + '%';
+    });
+  }, 300);
+
+  // Diagnosis
+  document.getElementById('diagnosisTitle').textContent = tier.diagnosis.title;
+  document.getElementById('diagnosisBody').textContent  = tier.diagnosis.body;
+
+  // Findings
+  const grid = document.getElementById('findingsGrid');
+  grid.innerHTML = '';
+  tier.findings.forEach(f => {
+    const card = document.createElement('div');
+    card.className = `finding-card ${f.type}`;
+    const badgeMap = { critical: 'Critical Issue', moderate: 'Area to Address', strength: 'Strength' };
+    card.innerHTML = `
+      <div class="finding-badge">${badgeMap[f.type]}</div>
+      <div class="finding-title">${f.title}</div>
+      <div class="finding-desc">${f.desc}</div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // CTA
+  document.getElementById('ctaHeadline').textContent = tier.ctaHeadline;
+  document.getElementById('ctaSub').textContent      = tier.ctaSub;
+}
+
+function retakeAssessment() {
+  currentQ = 0;
+  answers  = new Array(QUESTIONS.length).fill(null);
+  document.getElementById('progressWrap').style.display = 'block';
+  showScreen('screen-questions');
+  renderQuestion();
+}
+
+function shareLinkedIn() {
+  const { overall } = computeScores();
+  const tier = getTier(overall);
+  const text = encodeURIComponent(`I just completed the Finlanza Business Systems Health Check and scored ${overall}/100 — ${tier.name}. Find out how your business systems stack up: https://finlanza.com/health-check`);
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://finlanza.com/health-check&summary=${text}`, '_blank');
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  const active = document.querySelector('.screen.active');
+  if (!active || active.id !== 'screen-questions') return;
+  const keys = {'a':0,'b':1,'c':2,'d':3,'1':0,'2':1,'3':2,'4':3};
+  const key = e.key.toLowerCase();
+  if (keys[key] !== undefined) selectOption(keys[key]);
+  if (e.key === 'Enter' || e.key === 'ArrowRight') nextQuestion();
+  if (e.key === 'ArrowLeft') prevQuestion();
+});
+</script>
+</body>
+</html>

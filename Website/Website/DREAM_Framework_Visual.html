@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The DREAM Framework — Finlanza</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@200;300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ── RESET ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:      #1B3A6B;
+  --navy-deep: #0D1B2A;
+  --navy-mid:  #0F2744;
+  --gold:      #C8971C;
+  --gold-lt:   #E8B84B;
+  --gold-dim:  #8A6510;
+  --gold-pale: rgba(200,151,28,0.08);
+  --offwhite:  #F8F6F1;
+  --slate:     #3A4A5C;
+  --muted:     rgba(255,255,255,0.38);
+  --muted2:    rgba(255,255,255,0.18);
+
+  /* Phase colours — subtle tints on the gold spectrum */
+  --d-col: #C8971C;
+  --r-col: #B8870C;
+  --e-col: #D4A830;
+  --a-col: #BF9218;
+  --m-col: #C8971C;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--navy-deep);
+  font-family: 'DM Sans', sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ── LAYOUT ── */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 60px 24px 80px;
+  position: relative;
+}
+
+/* Blueprint grid */
+.page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(200,151,28,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,151,28,0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Radial atmosphere */
+.page::after {
+  content: '';
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px; height: 900px;
+  background: radial-gradient(ellipse at center,
+    rgba(27,58,107,0.55) 0%,
+    transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── HEADER ── */
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 72px;
+  animation: fadeDown 0.6s ease both;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fz {
+  width: 36px; height: 36px; flex-shrink: 0;
+}
+
+.brand-name {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+
+.header-right {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.25);
+  text-transform: uppercase;
+}
+
+/* ── HERO TEXT ── */
+.hero {
+  text-align: center;
+  margin-bottom: 80px;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 48px; height: 1px;
+  background: var(--gold);
+  opacity: 0.4;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.hero-title span {
+  color: var(--gold-lt);
+  font-style: italic;
+}
+
+.hero-subtitle {
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 28px;
+}
+
+.tagline {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.85;
+  padding: 10px 24px;
+  border: 1px solid rgba(200,151,28,0.25);
+  display: inline-block;
+}
+
+/* ── DIAGRAM CONTAINER ── */
+.diagram-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+
+.diagram-svg-wrap {
+  position: relative;
+  width: 560px;
+  height: 560px;
+  flex-shrink: 0;
+}
+
+/* ── SVG DIAGRAM ── */
+#dreamSvg {
+  width: 560px; height: 560px;
+  overflow: visible;
+}
+
+/* Phase arc segments */
+.phase-arc {
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+.phase-arc path.arc-fill {
+  transition: opacity 0.25s ease, filter 0.25s ease;
+  opacity: 0.9;
+}
+.phase-arc:hover path.arc-fill {
+  opacity: 1;
+  filter: brightness(1.15) drop-shadow(0 0 12px rgba(200,151,28,0.5));
+}
+.diagram-svg-wrap.has-active .phase-arc:not(.active) path.arc-fill {
+  opacity: 0.2;
+}
+.diagram-svg-wrap.has-active .phase-arc.active path.arc-fill {
+  opacity: 1;
+  filter: brightness(1.2) drop-shadow(0 0 20px rgba(200,151,28,0.6));
+}
+
+/* Letter labels on arcs */
+.phase-letter {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 600;
+  fill: #fff;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.diagram-svg-wrap.has-active .phase-arc:not(.active) .phase-letter {
+  opacity: 0.2;
+}
+
+/* Tick marks */
+.tick {
+  stroke: rgba(200,151,28,0.3);
+  stroke-width: 1;
+}
+
+/* Centre circle */
+.centre-ring-outer {
+  fill: none;
+  stroke: rgba(200,151,28,0.15);
+  stroke-width: 1;
+}
+.centre-ring-inner {
+  fill: var(--navy-deep);
+  stroke: rgba(200,151,28,0.3);
+  stroke-width: 1.5;
+}
+.centre-text-d {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  fill: var(--gold-lt);
+  text-anchor: middle;
+  letter-spacing: 0.06em;
+}
+.centre-text-r {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  font-weight: 300;
+  fill: rgba(255,255,255,0.4);
+  text-anchor: middle;
+  letter-spacing: 0.08em;
+}
+
+/* Outer label rings */
+.outer-label-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  fill: rgba(255,255,255,0.75);
+  text-anchor: middle;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: opacity 0.25s, fill 0.25s;
+}
+.outer-label-word {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 400;
+  fill: rgba(255,255,255,0.4);
+  text-anchor: middle;
+  font-style: italic;
+  pointer-events: none;
+  transition: opacity 0.25s, fill 0.25s;
+}
+.diagram-svg-wrap.has-active .phase-arc:not(.active) .outer-label-name,
+.diagram-svg-wrap.has-active .phase-arc:not(.active) .outer-label-word {
+  opacity: 0.15;
+}
+.diagram-svg-wrap.has-active .phase-arc.active .outer-label-name {
+  fill: var(--gold-lt);
+}
+.diagram-svg-wrap.has-active .phase-arc.active .outer-label-word {
+  fill: rgba(255,255,255,0.65);
+}
+
+/* Connector dots */
+.connector-dot {
+  fill: var(--gold);
+  opacity: 0.4;
+  transition: opacity 0.25s;
+}
+
+/* Arrows on the ring */
+.ring-arrow {
+  fill: rgba(200,151,28,0.35);
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+/* ── DETAIL PANEL ── */
+.detail-panel {
+  width: 100%;
+  max-width: 820px;
+  min-height: 160px;
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+.detail-panel.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.detail-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0 32px;
+  align-items: start;
+  border: 1px solid rgba(200,151,28,0.2);
+  border-left: 3px solid var(--gold);
+  padding: 28px 32px;
+  background: rgba(13,27,42,0.7);
+  backdrop-filter: blur(8px);
+}
+
+.detail-phase-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  opacity: 0.3;
+  margin-top: -8px;
+}
+
+.detail-body { }
+
+.detail-phase-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.detail-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.detail-desc {
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.6);
+  max-width: 520px;
+}
+
+.detail-deliverables {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.detail-del-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 4px;
+}
+
+.detail-del-item {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.4;
+}
+.detail-del-item::before {
+  content: '—';
+  color: var(--gold);
+  flex-shrink: 0;
+  font-size: 10px;
+  margin-top: 1px;
+}
+
+/* ── PILLAR STRIP ── */
+.pillar-strip {
+  width: 100%;
+  max-width: 820px;
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: rgba(200,151,28,0.12);
+  animation: fadeUp 0.9s 0.35s ease both;
+}
+
+.pillar-cell {
+  background: var(--navy-deep);
+  padding: 20px 16px 22px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.pillar-cell::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+  transform-origin: left;
+}
+.pillar-cell:hover::before,
+.pillar-cell.active::before {
+  transform: scaleX(1);
+}
+.pillar-cell:hover,
+.pillar-cell.active {
+  background: rgba(27,58,107,0.6);
+}
+
+.pillar-letter {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 6px;
+  transition: color 0.2s;
+}
+.pillar-cell:hover .pillar-letter,
+.pillar-cell.active .pillar-letter {
+  color: var(--gold-lt);
+}
+
+.pillar-name {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 3px;
+}
+
+.pillar-word {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(255,255,255,0.28);
+}
+
+/* ── FOOTER ── */
+.footer {
+  margin-top: 72px;
+  text-align: center;
+  animation: fadeUp 1s 0.5s ease both;
+}
+.footer-rule {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,151,28,0.4), transparent);
+  margin: 0 auto 24px;
+}
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.2);
+  text-transform: uppercase;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes drawArc {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.spin-ring {
+  animation: spinSlow 40s linear infinite;
+  transform-origin: 280px 280px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .diagram-svg-wrap { width: 340px; height: 340px; }
+  #dreamSvg { width: 340px; height: 340px; }
+  .pillar-strip { grid-template-columns: repeat(5, 1fr); }
+  .pillar-letter { font-size: 22px; }
+  .pillar-name { font-size: 8px; }
+  .detail-inner { grid-template-columns: 1fr; }
+  .detail-phase-num { font-size: 44px; }
+  .detail-deliverables { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="content">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="brand">
+        <svg class="fz" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="300" fill="#1B3A6B"/>
+          <rect x="55" y="88" width="30" height="164" fill="#C8971C"/>
+          <rect x="55" y="152" width="106" height="28" fill="#C8971C"/>
+          <rect x="55" y="55" width="210" height="33" fill="white"/>
+          <polygon points="218,88 244,88 178,219 152,219" fill="white"/>
+          <rect x="55" y="219" width="210" height="33" fill="white"/>
+        </svg>
+        <span class="brand-name">Finlanza</span>
+      </div>
+      <span class="header-right">Business Systems Architecture Firm</span>
+    </header>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-eyebrow">Proprietary Methodology</div>
+      <h1 class="hero-title">The <span>DREAM</span><br>Framework</h1>
+      <p class="hero-subtitle">Five phases. One transformation. Engineered for African business.</p>
+      <div class="tagline">From Chaos to Control.</div>
+    </div>
+
+    <!-- DIAGRAM -->
+    <div class="diagram-wrap">
+      <div class="diagram-svg-wrap" id="diagramWrap">
+        <svg id="dreamSvg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Glow filter -->
+            <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="glow-strong" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="8" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <!-- Gold gradient for arcs -->
+            <radialGradient id="goldGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#E8B84B"/>
+              <stop offset="100%" stop-color="#8A6510"/>
+            </radialGradient>
+            <!-- Subtle arc gradients per phase -->
+            <linearGradient id="arcGrad0" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#D4A830"/>
+              <stop offset="100%" stop-color="#9A6E10"/>
+            </linearGradient>
+            <linearGradient id="arcGrad1" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#C8971C"/>
+              <stop offset="100%" stop-color="#8A6510"/>
+            </linearGradient>
+            <linearGradient id="arcGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#E0A828"/>
+              <stop offset="100%" stop-color="#9A6E10"/>
+            </linearGradient>
+            <linearGradient id="arcGrad3" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="#BF9218"/>
+              <stop offset="100%" stop-color="#7A5C00"/>
+            </linearGradient>
+            <linearGradient id="arcGrad4" x1="0%" y1="50%" x2="100%" y2="50%">
+              <stop offset="0%" stop-color="#D4A830"/>
+              <stop offset="100%" stop-color="#8A6510"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Slow-spinning outer blueprint ring -->
+          <g class="spin-ring">
+            <circle cx="280" cy="280" r="265" fill="none" stroke="rgba(200,151,28,0.06)" stroke-width="1" stroke-dasharray="4 8"/>
+          </g>
+
+          <!-- Blueprint concentric rings (static) -->
+          <circle cx="280" cy="280" r="252" fill="none" stroke="rgba(200,151,28,0.06)" stroke-width="0.5"/>
+          <circle cx="280" cy="280" r="230" fill="none" stroke="rgba(200,151,28,0.04)" stroke-width="0.5"/>
+
+          <!-- Outer tick marks (72 ticks) -->
+          <g id="ticks"></g>
+
+          <!-- The 5 arc segments — rendered by JS below -->
+          <g id="arcGroup"></g>
+
+          <!-- Gap lines between segments -->
+          <g id="gapLines"></g>
+
+          <!-- Outer labels ring -->
+          <g id="outerLabels"></g>
+
+          <!-- Arrow indicators on outer ring -->
+          <g id="arrows"></g>
+
+          <!-- Inner rings -->
+          <circle class="centre-ring-outer" cx="280" cy="280" r="106"/>
+          <circle cx="280" cy="280" r="96" fill="rgba(13,27,42,0.92)" stroke="rgba(200,151,28,0.2)" stroke-width="1"/>
+          <circle cx="280" cy="280" r="72" fill="var(--navy-deep)" stroke="rgba(200,151,28,0.35)" stroke-width="1.5"/>
+
+          <!-- Centre content -->
+          <text class="centre-text-d" x="280" y="268">DREAM</text>
+          <text class="centre-text-r" x="280" y="288">Framework</text>
+          <line x1="230" y1="298" x2="330" y2="298" stroke="rgba(200,151,28,0.2)" stroke-width="0.5"/>
+          <text class="centre-text-r" x="280" y="312" style="font-size:9px;letter-spacing:0.1em;">© FINLANZA</text>
+
+          <!-- Connector dots at segment joins -->
+          <g id="connectorDots"></g>
+
+        </svg>
+      </div>
+
+      <!-- DETAIL PANEL -->
+      <div class="detail-panel" id="detailPanel">
+        <div class="detail-inner">
+          <div class="detail-phase-num" id="detailNum">01</div>
+          <div class="detail-body">
+            <div class="detail-phase-label" id="detailPhaseLabel">Phase D</div>
+            <div class="detail-title" id="detailTitle">Diagnose</div>
+            <div class="detail-desc" id="detailDesc"></div>
+          </div>
+          <div class="detail-deliverables" id="detailDels">
+            <div class="detail-del-label">Key Deliverables</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR STRIP -->
+    <div class="pillar-strip" id="pillarStrip"></div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-rule"></div>
+      <p class="footer-copy">Finlanza · Business Systems Architecture Firm · Nairobi, Kenya</p>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+// ── PHASE DATA ─────────────────────────────────────────────────────────────
+const PHASES = [
+  {
+    letter: "D",
+    name: "DIAGNOSE",
+    word: "Current State",
+    desc: "We conduct a rigorous analysis of how your business actually operates before recommending anything. Most consultants skip this. We do not. The Diagnose phase produces an unvarnished picture of your operational reality — processes, technology, financial infrastructure, data flows, and the gaps between where you are and where you need to be.",
+    deliverables: [
+      "Diagnostic Report",
+      "Process Inventory",
+      "Technology Audit",
+      "Transformation Roadmap",
+      "Quick-win prioritisation"
+    ],
+    num: "01",
+    gradId: "arcGrad0"
+  },
+  {
+    letter: "R",
+    name: "REENGINEER",
+    word: "Future State Design",
+    desc: "We redesign broken processes on paper before a single line of code is written or a single system is configured. Reengineering defines the operating model your business is building toward — the right workflows, the right governance structures, the right decision logic. Technology built on reengineered foundations works. Technology built on broken processes fails faster.",
+    deliverables: [
+      "Future-state process maps",
+      "SOP documentation",
+      "Operating model design",
+      "Role & responsibility matrix",
+      "Change impact assessment"
+    ],
+    num: "02",
+    gradId: "arcGrad1"
+  },
+  {
+    letter: "E",
+    name: "EXECUTE",
+    word: "Build & Deploy",
+    desc: "We configure, build, and deploy the right systems on the reengineered foundation. For most clients, this means implementing the Zoho platform — CRM, finance, operations, HR, reporting — customised precisely to the operating model designed in Phase R. Execute is where the transformation becomes tangible.",
+    deliverables: [
+      "Zoho platform configuration",
+      "System integrations",
+      "Data migration",
+      "UAT & quality assurance",
+      "Go-live management"
+    ],
+    num: "03",
+    gradId: "arcGrad2"
+  },
+  {
+    letter: "A",
+    name: "ALIGN",
+    word: "Embed & Adopt",
+    desc: "A system nobody uses is a wasted investment. The Align phase ensures the technology and processes are genuinely embedded in how your team works. This is not an afterthought — it is a dedicated phase with structured training, change management, and adoption tracking. Real transformation requires people, not just platforms.",
+    deliverables: [
+      "Training programme",
+      "Role-based user guides",
+      "Change management plan",
+      "Adoption tracking",
+      "Issue resolution log"
+    ],
+    num: "04",
+    gradId: "arcGrad3"
+  },
+  {
+    letter: "M",
+    name: "MEASURE",
+    word: "Govern & Improve",
+    desc: "We install the KPI frameworks, dashboards, and governance structures that make transformation permanent and visible. Measure ensures that what was built continues to perform — and that leadership has the real-time visibility to make confident decisions. The cycle then feeds back into Diagnose, creating a continuous improvement loop.",
+    deliverables: [
+      "KPI framework",
+      "Executive dashboards",
+      "Monthly review cadence",
+      "Performance baseline",
+      "Continuous improvement plan"
+    ],
+    num: "05",
+    gradId: "arcGrad4"
+  }
+];
+
+// ── GEOMETRY ──────────────────────────────────────────────────────────────
+const CX = 280, CY = 280;
+const OUTER_R = 212;   // arc outer radius
+const INNER_R = 118;   // arc inner radius
+const GAP_DEG = 3;     // gap between segments in degrees
+const LABEL_R = 240;   // outer label radius
+const DOT_R   = 215;   // connector dot radius
+
+function polarToCartesian(cx, cy, r, angleDeg) {
+  const rad = (angleDeg - 90) * Math.PI / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function arcPath(cx, cy, outerR, innerR, startDeg, endDeg) {
+  const s1 = polarToCartesian(cx, cy, outerR, startDeg);
+  const e1 = polarToCartesian(cx, cy, outerR, endDeg);
+  const s2 = polarToCartesian(cx, cy, innerR, endDeg);
+  const e2 = polarToCartesian(cx, cy, innerR, startDeg);
+  const large = (endDeg - startDeg > 180) ? 1 : 0;
+  return [
+    `M ${s1.x} ${s1.y}`,
+    `A ${outerR} ${outerR} 0 ${large} 1 ${e1.x} ${e1.y}`,
+    `L ${s2.x} ${s2.y}`,
+    `A ${innerR} ${innerR} 0 ${large} 0 ${e2.x} ${e2.y}`,
+    'Z'
+  ].join(' ');
+}
+
+// ── BUILD SVG ─────────────────────────────────────────────────────────────
+const arcGroup     = document.getElementById('arcGroup');
+const outerLabels  = document.getElementById('outerLabels');
+const connDots     = document.getElementById('connectorDots');
+const gapLines     = document.getElementById('gapLines');
+const ticksGroup   = document.getElementById('ticks');
+const arrowsGroup  = document.getElementById('arrows');
+
+const totalPhases  = 5;
+const segDeg       = (360 / totalPhases);
+const startOffset  = -90; // start from top
+
+// Tick marks
+for (let i = 0; i < 72; i++) {
+  const angle = i * 5;
+  const isMajor = i % 5 === 0;
+  const r1 = isMajor ? OUTER_R + 14 : OUTER_R + 7;
+  const r2 = OUTER_R + 3;
+  const p1 = polarToCartesian(CX, CY, r1, startOffset + angle);
+  const p2 = polarToCartesian(CX, CY, r2, startOffset + angle);
+  const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+  line.setAttribute('x1', p1.x); line.setAttribute('y1', p1.y);
+  line.setAttribute('x2', p2.x); line.setAttribute('y2', p2.y);
+  line.setAttribute('stroke', isMajor ? 'rgba(200,151,28,0.25)' : 'rgba(200,151,28,0.1)');
+  line.setAttribute('stroke-width', isMajor ? '1.5' : '0.8');
+  ticksGroup.appendChild(line);
+}
+
+// Build each phase arc
+PHASES.forEach((phase, i) => {
+  const startAngle = startOffset + i * segDeg + GAP_DEG / 2;
+  const endAngle   = startOffset + (i + 1) * segDeg - GAP_DEG / 2;
+  const midAngle   = (startAngle + endAngle) / 2;
+
+  // Arc group
+  const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+  g.setAttribute('class','phase-arc');
+  g.dataset.phase = i;
+
+  // Arc fill
+  const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+  path.setAttribute('class','arc-fill');
+  path.setAttribute('d', arcPath(CX, CY, OUTER_R, INNER_R, startAngle, endAngle));
+  path.setAttribute('fill', `url(#${phase.gradId})`);
+  path.setAttribute('filter','url(#glow)');
+  g.appendChild(path);
+
+  // Letter label inside arc
+  const midR = (OUTER_R + INNER_R) / 2;
+  const lp = polarToCartesian(CX, CY, midR, midAngle);
+  const letter = document.createElementNS("http://www.w3.org/2000/svg","text");
+  letter.setAttribute('class','phase-letter');
+  letter.setAttribute('x', lp.x);
+  letter.setAttribute('y', lp.y);
+  letter.textContent = phase.letter;
+  g.appendChild(letter);
+
+  // Outer name label
+  const nlp = polarToCartesian(CX, CY, LABEL_R, midAngle);
+  const nGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
+  nGroup.setAttribute('class','outer-label-group');
+
+  const nameText = document.createElementNS("http://www.w3.org/2000/svg","text");
+  nameText.setAttribute('class','outer-label-name');
+  nameText.setAttribute('x', nlp.x);
+  nameText.setAttribute('y', nlp.y - 8);
+  nameText.textContent = phase.name;
+  nGroup.appendChild(nameText);
+
+  const wordText = document.createElementNS("http://www.w3.org/2000/svg","text");
+  wordText.setAttribute('class','outer-label-word');
+  wordText.setAttribute('x', nlp.x);
+  wordText.setAttribute('y', nlp.y + 10);
+  wordText.textContent = phase.word;
+  nGroup.appendChild(wordText);
+
+  g.appendChild(nGroup);
+  arcGroup.appendChild(g);
+
+  // Connector dot at segment start
+  const dp = polarToCartesian(CX, CY, DOT_R, startAngle);
+  const dot = document.createElementNS("http://www.w3.org/2000/svg","circle");
+  dot.setAttribute('class','connector-dot');
+  dot.setAttribute('cx', dp.x); dot.setAttribute('cy', dp.y); dot.setAttribute('r','4');
+  connDots.appendChild(dot);
+});
+
+// Direction arrow (single, at top of ring)
+function createArrow(angleDeg) {
+  const r = OUTER_R + 10;
+  const p = polarToCartesian(CX, CY, r, angleDeg);
+  // Tangent direction
+  const tangentAngle = (angleDeg - 90 + 90) * Math.PI / 180;
+  const tx = Math.cos(tangentAngle) * 8;
+  const ty = Math.sin(tangentAngle) * 8;
+  const arrow = document.createElementNS("http://www.w3.org/2000/svg","polygon");
+  arrow.setAttribute('class','ring-arrow');
+  arrow.setAttribute('points',
+    `${p.x+tx},${p.y+ty} ${p.x-ty*0.5+tx*0.3},${p.y+tx*0.5+ty*0.3} ${p.x+ty*0.5+tx*0.3},${p.y-tx*0.5+ty*0.3}`
+  );
+  arrowsGroup.appendChild(arrow);
+}
+// Place 5 arrows between segments
+for (let i = 0; i < 5; i++) {
+  createArrow(startOffset + i * segDeg + segDeg * 0.65);
+}
+
+// ── INTERACTION ───────────────────────────────────────────────────────────
+const wrap        = document.getElementById('diagramWrap');
+const detailPanel = document.getElementById('detailPanel');
+const pillarStrip = document.getElementById('pillarStrip');
+let activePhase   = null;
+
+function showPhase(i) {
+  const phase = PHASES[i];
+  activePhase = i;
+
+  // SVG state
+  wrap.classList.add('has-active');
+  document.querySelectorAll('.phase-arc').forEach((el,j) => {
+    el.classList.toggle('active', j === i);
+  });
+
+  // Detail panel
+  document.getElementById('detailNum').textContent = phase.num;
+  document.getElementById('detailPhaseLabel').textContent = `Phase ${phase.letter}`;
+  document.getElementById('detailTitle').textContent = phase.name.charAt(0) + phase.name.slice(1).toLowerCase();
+  document.getElementById('detailDesc').textContent = phase.desc;
+
+  const delsEl = document.getElementById('detailDels');
+  delsEl.innerHTML = '<div class="detail-del-label">Key Deliverables</div>';
+  phase.deliverables.forEach(d => {
+    const div = document.createElement('div');
+    div.className = 'detail-del-item';
+    div.textContent = d;
+    delsEl.appendChild(div);
+  });
+
+  detailPanel.classList.add('visible');
+
+  // Pillar strip
+  document.querySelectorAll('.pillar-cell').forEach((el,j) => {
+    el.classList.toggle('active', j === i);
+  });
+}
+
+function clearActive() {
+  activePhase = null;
+  wrap.classList.remove('has-active');
+  document.querySelectorAll('.phase-arc').forEach(el => el.classList.remove('active'));
+  detailPanel.classList.remove('visible');
+  document.querySelectorAll('.pillar-cell').forEach(el => el.classList.remove('active'));
+}
+
+// Arc click
+document.querySelectorAll('.phase-arc').forEach(el => {
+  el.addEventListener('click', () => {
+    const i = parseInt(el.dataset.phase);
+    if (activePhase === i) { clearActive(); }
+    else { showPhase(i); }
+  });
+});
+
+// Click outside to clear
+document.getElementById('dreamSvg').addEventListener('click', e => {
+  if (!e.target.closest('.phase-arc')) clearActive();
+});
+
+// ── PILLAR STRIP ──────────────────────────────────────────────────────────
+PHASES.forEach((phase, i) => {
+  const cell = document.createElement('div');
+  cell.className = 'pillar-cell';
+  cell.innerHTML = `
+    <div class="pillar-letter">${phase.letter}</div>
+    <div class="pillar-name">${phase.name}</div>
+    <div class="pillar-word">${phase.word}</div>
+  `;
+  cell.addEventListener('click', () => {
+    if (activePhase === i) { clearActive(); }
+    else { showPhase(i); }
+  });
+  pillarStrip.appendChild(cell);
+});
+
+// ── AUTO-INTRO SEQUENCE ───────────────────────────────────────────────────
+// Briefly highlight each phase on load, then rest
+let introIdx = 0;
+const introTimer = setInterval(() => {
+  if (introIdx < PHASES.length) {
+    showPhase(introIdx);
+    introIdx++;
+  } else {
+    clearInterval(introTimer);
+    setTimeout(clearActive, 800);
+  }
+}, 600);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finlanza Academy — Finlanza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #152232;
+    --navy-light: #1E3045;
+    --gold: #C8971C;
+    --gold-light: #E8B84B;
+    --gold-pale: #FBF0D4;
+    --cream: #F5EFE0;
+    --white: #FFFFFF;
+    --text: #E8E2D4;
+    --text-muted: #8A9BAD;
+    --border: rgba(200,151,28,0.2);
+    --border-light: rgba(255,255,255,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ─────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAV ───────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 60px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(13,27,42,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    text-decoration: none;
+  }
+  .nav-logo-f {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+  .nav-logo-tag {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-left: 6px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a.active { color: var(--white); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 10px 24px !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px !important;
+    transition: background 0.2s, transform 0.1s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+  /* ── PAGE SYSTEM ───────────────────────────────────────── */
+  .page { display: none; min-height: 100vh; padding-top: 72px; }
+  .page.active { display: block; }
+
+  /* ── SHARED LAYOUT ─────────────────────────────────────── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+  .section { padding: 100px 0; }
+  .section-sm { padding: 60px 0; }
+
+  .label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .display-xl {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 10vw, 140px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+  .display-lg {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .display-md {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .serif-lg {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 3vw, 42px);
+    line-height: 1.2;
+    color: var(--white);
+  }
+
+  .gold { color: var(--gold); }
+  .muted { color: var(--text-muted); }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 16px 36px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white);
+    padding: 16px 36px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border-light);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Gold line divider */
+  .gold-line {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  /* Grid helpers */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+
+  /* ── HOME PAGE ─────────────────────────────────────────── */
+  .hero {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(200,151,28,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 80% at 10% 30%, rgba(30,48,69,0.8) 0%, transparent 50%);
+  }
+
+  .hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,151,28,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,151,28,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 60px;
+    width: 100%;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-eyebrow-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero-eyebrow span {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .hero-headline {
+    animation: fadeUp 0.8s ease 0.15s both;
+    margin-bottom: 32px;
+  }
+
+  .hero-sub {
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    animation: fadeUp 0.8s ease 0.45s both;
+  }
+
+  .hero-stat-row {
+    display: flex;
+    gap: 60px;
+    margin-top: 80px;
+    padding-top: 60px;
+    border-top: 1px solid var(--border-light);
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+  .hero-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hero-stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* Marquee */
+  .marquee-section {
+    background: var(--gold);
+    padding: 18px 0;
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--navy);
+    padding: 0 48px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+  .marquee-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--navy);
+    border-radius: 50%;
+    opacity: 0.4;
+  }
+
+  /* Problem section */
+  .problem-section {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .problem-left {
+    padding: 100px 80px 100px 0;
+    border-right: 1px solid var(--border);
+  }
+  .problem-right {
+    padding: 100px 0 100px 80px;
+  }
+  .problem-list {
+    list-style: none;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .problem-list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    font-size: 16px;
+    color: var(--text-muted);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .problem-list li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+    font-weight: 300;
+  }
+
+  /* Process section */
+  .process-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 40px;
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border-light);
+    position: relative;
+  }
+  .process-step:last-child { border-bottom: none; }
+  .process-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.3;
+    transition: opacity 0.3s;
+  }
+  .process-step:hover .process-num { opacity: 1; }
+  .process-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  /* Industries */
+  .industry-card {
+    border: 1px solid var(--border-light);
+    padding: 32px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .industry-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .industry-card:hover { border-color: var(--border); background: var(--navy-mid); }
+  .industry-card:hover::before { transform: scaleX(1); }
+  .industry-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-top: 16px;
+  }
+  .industry-icon { font-size: 28px; }
+
+  /* Testimonials */
+  .testimonial {
+    background: var(--navy-light);
+    border: 1px solid var(--border-light);
+    padding: 48px;
+    position: relative;
+  }
+  .testimonial::before {
+    content: '"';
+    font-family: 'DM Serif Display', serif;
+    font-size: 120px;
+    color: var(--gold);
+    opacity: 0.15;
+    position: absolute;
+    top: -20px;
+    left: 32px;
+    line-height: 1;
+  }
+  .testimonial-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .testimonial-author {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .testimonial-role {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── ABOUT PAGE ────────────────────────────────────────── */
+  .page-hero {
+    padding: 100px 0 80px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200,151,28,0.05) 0%, transparent 60%);
+  }
+
+  .about-manifesto {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    padding: 80px;
+    position: relative;
+    margin: 60px 0;
+  }
+  .about-manifesto::before {
+    content: 'MANIFESTO';
+    position: absolute;
+    top: -13px;
+    left: 60px;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    padding: 4px 16px;
+  }
+
+  .value-card {
+    border-top: 2px solid var(--gold);
+    padding-top: 32px;
+  }
+  .value-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .value-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .team-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+  }
+  .team-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--navy-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .team-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, var(--navy) 100%);
+  }
+  .team-info {
+    padding: 24px;
+  }
+  .team-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .team-role {
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* ── DREAM PAGE ────────────────────────────────────────── */
+  .dream-phase {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .dream-phase:last-child { border-bottom: none; }
+  .dream-letter {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 160px;
+    line-height: 0.85;
+    padding: 40px 40px 40px 0;
+    border-right: 1px solid var(--border-light);
+    display: flex;
+    align-items: flex-start;
+  }
+  .dream-body {
+    padding: 48px 0 48px 60px;
+  }
+  .dream-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .dream-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .dream-deliverables {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .dream-tag {
+    background: rgba(200,151,28,0.1);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+  }
+
+  /* ── SERVICES PAGE ─────────────────────────────────────── */
+  .service-card {
+    border: 1px solid var(--border-light);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  .service-card:hover { background: var(--navy-mid); transform: translateY(-4px); }
+  .service-tier {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .service-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+  .service-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .service-features li {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+  .service-features li::before {
+    content: '→';
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── CASE STUDIES ──────────────────────────────────────── */
+  .case-card {
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .case-card:hover { border-color: var(--border); }
+  .case-header {
+    background: var(--navy-light);
+    padding: 40px;
+    position: relative;
+  }
+  .case-industry {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .case-client {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .case-location {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .case-body { padding: 40px; }
+  .case-challenge {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .case-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 32px;
+  }
+  .case-result-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .case-result-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── PRICING PAGE ──────────────────────────────────────── */
+  .pricing-card {
+    border: 1px solid var(--border-light);
+    padding: 48px;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .pricing-card.featured {
+    border-color: var(--gold);
+    background: var(--navy-mid);
+  }
+  .pricing-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 4px 16px;
+    white-space: nowrap;
+  }
+  .pricing-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .pricing-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .pricing-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .pricing-note {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+  }
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 40px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 32px;
+  }
+  .pricing-features li {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+  .pricing-features li.included { color: var(--text); }
+  .pricing-features li::before { content: '✓'; color: var(--gold); flex-shrink: 0; }
+  .pricing-features li.excluded { opacity: 0.4; }
+  .pricing-features li.excluded::before { content: '–'; color: var(--text-muted); }
+
+  /* ── BLOG PAGE ─────────────────────────────────────────── */
+  .post-card {
+    border-bottom: 1px solid var(--border-light);
+    padding: 48px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .post-card:first-child { border-top: 1px solid var(--border-light); }
+  .post-card:hover .post-title { color: var(--gold); }
+  .post-meta {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    gap: 20px;
+  }
+  .post-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1.3;
+    color: var(--white);
+    transition: color 0.2s;
+    margin-bottom: 16px;
+  }
+  .post-excerpt {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .post-read {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+  }
+
+  /* ── CONTACT PAGE ──────────────────────────────────────── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 70vh;
+  }
+  .contact-left {
+    padding: 80px;
+    background: var(--navy-mid);
+    border-right: 1px solid var(--border);
+  }
+  .contact-right { padding: 80px; }
+
+  .contact-info-item {
+    display: flex;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .contact-info-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .contact-info-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .contact-info-val {
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+  .form-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: var(--navy-mid);
+    border: 1px solid var(--border-light);
+    color: var(--text);
+    padding: 14px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-select { appearance: none; cursor: pointer; }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); opacity: 0.5; }
+
+  /* ── FOOTER ────────────────────────────────────────────── */
+  footer {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    padding: 60px 0 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 32px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 3px;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .footer-tagline {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+  .footer-col-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .footer-legal a:hover { color: var(--white); }
+
+  /* ── ANIMATIONS ────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .fade-in { animation: fadeIn 0.5s ease both; }
+
+  /* ── CTA BAND ──────────────────────────────────────────── */
+  .cta-band {
+    background: var(--gold);
+    padding: 80px 0;
+    text-align: center;
+  }
+  .cta-band .display-lg { color: var(--navy); }
+  .cta-band p { color: var(--navy); opacity: 0.7; font-size: 18px; margin: 20px 0 40px; }
+  .btn-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--navy);
+    color: var(--white);
+    padding: 18px 44px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-dark:hover { background: var(--navy-light); transform: translateY(-1px); }
+
+  /* Horizontal rule */
+  hr { border: none; border-top: 1px solid var(--border-light); }
+
+
+  .nav-hamburger { display:none; background:none; border:1px solid var(--border); color:var(--text); padding:6px 12px; cursor:pointer; font-size:17px; }
+  .nav-gold { color: var(--gold) !important; }
+  .nav-links a.active { color: var(--white) !important; }
+  @media(max-width:900px){
+    nav { padding: 0 24px; }
+    .nav-links { display:none; flex-direction:column; position:absolute; top:72px; left:0; right:0; background:rgba(13,27,42,0.98); border-bottom:1px solid var(--border); padding:20px 24px; gap:16px; }
+    .nav-links.mob-open { display:flex; }
+    .nav-hamburger { display:block; }
+  }
+
+  /* reveal */
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.65s ease,transform 0.65s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-d1 { transition-delay:0.1s; }
+  .reveal-d2 { transition-delay:0.2s; }
+  .reveal-d3 { transition-delay:0.3s; }
+  .reveal-d4 { transition-delay:0.4s; }
+
+  .hero-orbit { position:absolute; right:-80px; top:50%; transform:translateY(-50%); width:580px; height:580px; border:1px dashed rgba(200,151,28,0.08); border-radius:50%; animation:spin 60s linear infinite; pointer-events:none; }
+  .hero-orbit2 { position:absolute; right:-40px; top:50%; transform:translateY(-50%); width:440px; height:440px; border:1px solid rgba(200,151,28,0.05); border-radius:50%; pointer-events:none; }
+  @keyframes spin{from{transform:translateY(-50%) rotate(0)}to{transform:translateY(-50%) rotate(360deg)}}
+  .zoho-badge { display:inline-flex; align-items:center; gap:8px; border:1px solid rgba(200,151,28,0.2); padding:6px 13px; margin-bottom:20px; opacity:0.75; }
+  .zoho-badge span { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; }
+  .stat-strip { background:var(--navy-mid); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:0; }
+  .stat-strip-inner { display:grid; grid-template-columns:repeat(4,1fr); }
+  .stat-cell { padding:32px 28px; border-right:1px solid var(--border); }
+  .stat-cell:last-child { border-right:none; }
+  .stat-n { font-family:'DM Serif Display',serif; font-size:46px; color:var(--gold-light); line-height:1; margin-bottom:6px; }
+  .stat-l { font-size:13px; color:var(--text-muted); line-height:1.5; }
+  .home-infra-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); margin-bottom:32px; }
+  .infra-card { background:var(--navy); padding:30px 26px; transition:background 0.2s; cursor:default; position:relative; }
+  .infra-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform 0.28s ease; }
+  .infra-card:hover { background:var(--navy-mid); }
+  .infra-card:hover::before { transform:scaleX(1); }
+  .infra-icon { width:32px; height:32px; background:rgba(200,151,28,0.1); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+  .infra-icon svg { width:14px; height:14px; stroke:var(--gold); fill:none; stroke-width:1.5; }
+  .infra-name { font-size:14px; font-weight:500; color:var(--white); margin-bottom:8px; }
+  .infra-desc { font-size:13px; color:var(--text-muted); line-height:1.6; }
+  .dream-strip { display:flex; flex-direction:column; gap:0; border:1px solid var(--border); }
+  .dream-row { display:flex; align-items:center; gap:14px; padding:14px 18px; border-bottom:1px solid var(--border); transition:background 0.2s; }
+  .dream-row:last-child { border-bottom:none; }
+  .dream-row:hover { background:rgba(255,255,255,0.03); }
+  .dream-letter { width:32px; height:32px; background:rgba(200,151,28,0.1); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:'DM Serif Display',serif; font-size:16px; color:var(--gold); flex-shrink:0; }
+  .dream-name { font-size:13px; font-weight:500; color:var(--white); }
+  .dream-tag { font-size:12px; color:var(--text-muted); margin-left:auto; font-style:italic; }
+  .ind-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); }
+  .ind-card { background:var(--navy); padding:26px 22px; border-bottom:2px solid transparent; transition:background 0.2s, border-color 0.2s; }
+  .ind-card:hover { background:var(--navy-mid); border-bottom-color:var(--gold); }
+  .ind-name { font-size:13.5px; font-weight:500; color:var(--white); margin-bottom:9px; }
+  .ind-tags { display:flex; flex-wrap:wrap; gap:5px; }
+  .ind-tag { font-size:10px; letter-spacing:0.8px; text-transform:uppercase; color:var(--text-muted); border:1px solid rgba(255,255,255,0.08); padding:3px 7px; }
+  .cta-home-grid { display:grid; grid-template-columns:1fr 360px; gap:72px; align-items:start; }
+  .cta-box { background:var(--navy-mid); border:1px solid var(--border); border-top:3px solid var(--gold); padding:36px 30px; }
+  .cta-box h3 { font-family:'DM Serif Display',serif; font-size:22px; color:var(--white); margin-bottom:10px; line-height:1.25; }
+  .cta-box p { color:var(--text-muted); font-size:13.5px; line-height:1.7; margin-bottom:22px; }
+  .cta-note { font-size:12px; color:var(--text-muted); margin-top:12px; text-align:center; }
+  @media(max-width:900px){
+    .hero .hero-content { padding-top:100px; }
+    .stat-strip-inner { grid-template-columns:1fr 1fr; }
+    .home-infra-grid,.ind-grid { grid-template-columns:1fr 1fr; }
+    .cta-home-grid { grid-template-columns:1fr; }
+    .hero-diagram-col { display:none; }
+  }
+  @media(max-width:600px){ .home-infra-grid,.ind-grid { grid-template-columns:1fr; } .stat-strip-inner{grid-template-columns:1fr 1fr;} }
+
+
+
+  .nav-hamburger { display:none; background:none; border:1px solid var(--border); color:var(--text); padding:6px 12px; cursor:pointer; font-size:17px; }
+  .nav-gold { color: var(--gold) !important; }
+  @media(max-width:900px){
+    nav { padding: 0 24px; }
+    .nav-links { display:none; flex-direction:column; position:absolute; top:72px; left:0; right:0; background:rgba(13,27,42,0.98); border-bottom:1px solid var(--border); padding:20px 24px; gap:16px; }
+    .nav-links.mob-open { display:flex; }
+    .nav-hamburger { display:block; }
+  }
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.65s ease,transform 0.65s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-d1 { transition-delay:0.1s; }
+  .reveal-d2 { transition-delay:0.2s; }
+  .reveal-d3 { transition-delay:0.3s; }
+  .reveal-d4 { transition-delay:0.4s; }
+
+
+/* ── Academy-specific design tokens ── */
+:root {
+  --academy-gold: #C8971C;
+  --academy-deep: #0A1520;
+}
+
+/* ── Programme cards ── */
+.programme-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 2px;
+  background: var(--border);
+  margin-bottom: 2px;
+}
+.programme-grid.four-col {
+  grid-template-columns: repeat(4,1fr);
+}
+.prog-card {
+  background: var(--navy-mid);
+  padding: 36px 30px 32px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.prog-card.featured {
+  background: var(--navy-light);
+  border-top: 3px solid var(--gold);
+}
+.prog-code {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.prog-code::before {
+  content: '';
+  display: block;
+  width: 14px; height: 1px;
+  background: rgba(200,151,28,0.5);
+}
+.prog-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 1.5px;
+  color: var(--white);
+  margin-bottom: 4px;
+  line-height: 1.05;
+}
+.prog-subtitle {
+  font-family: 'DM Serif Display', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--gold-light);
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+.prog-meta {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.prog-meta-item {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.prog-meta-item strong {
+  color: var(--white);
+  font-weight: 500;
+}
+.prog-audience {
+  font-size: 12px;
+  color: var(--text-muted);
+  border-left: 2px solid rgba(200,151,28,0.3);
+  padding-left: 12px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.prog-outcomes {
+  list-style: none;
+  margin-bottom: 24px;
+  flex: 1;
+}
+.prog-outcomes li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.prog-outcomes li::before {
+  content: '→';
+  color: var(--gold);
+  flex-shrink: 0;
+  font-size: 11px;
+  margin-top: 2px;
+}
+.prog-price {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  color: var(--gold-light);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.prog-price-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.prog-card .btn-primary,
+.prog-card .btn-ghost {
+  text-align: center;
+  display: block;
+  text-decoration: none;
+}
+
+/* DC restricted card */
+.prog-card.restricted {
+  background: var(--navy);
+  border: 1px solid rgba(200,151,28,0.15);
+  border-top: 3px solid rgba(200,151,28,0.4);
+  opacity: 0.88;
+}
+.restricted-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(200,151,28,0.08);
+  border: 1px solid rgba(200,151,28,0.25);
+  padding: 4px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(200,151,28,0.7);
+  margin-bottom: 14px;
+}
+
+/* ── Certification framework table ── */
+.cert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+.cert-cell {
+  background: var(--navy-mid);
+  padding: 20px 18px;
+}
+.cert-cell.head {
+  background: var(--navy);
+  padding: 12px 18px;
+}
+.cert-cell-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.cert-cell-val {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+/* ── Philosophy principles ── */
+.principle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.principle-item {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border-light);
+  align-items: start;
+}
+.principle-item:last-child { border-bottom: none; }
+.principle-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: rgba(200,151,28,0.2);
+  line-height: 1;
+  padding-top: 2px;
+}
+.principle-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.principle-body {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+/* ── Delivery modes ── */
+.delivery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+}
+.delivery-card {
+  background: var(--navy-mid);
+  padding: 32px 28px;
+}
+.delivery-mode {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1.5px;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.delivery-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.delivery-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+}
+.delivery-row:last-child { border-bottom: none; }
+.delivery-row-key {
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-top: 1px;
+}
+.delivery-row-val { color: var(--text-muted); line-height: 1.55; }
+
+/* ── Pathway arc ── */
+.pathway-arc {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  padding: 8px 0 16px;
+}
+.pathway-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+.pathway-box {
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  text-align: center;
+  min-width: 140px;
+}
+.pathway-box.active { border-color: var(--gold); border-top: 3px solid var(--gold); }
+.pathway-box.future { opacity: 0.45; border-style: dashed; }
+.pathway-code {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.pathway-title {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1.3;
+}
+.pathway-price {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+.pathway-arrow {
+  font-size: 18px;
+  color: rgba(200,151,28,0.35);
+  padding: 0 6px;
+  flex-shrink: 0;
+}
+
+/* ── Wave badges ── */
+.wave-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+.wave-badge span { color: var(--gold); }
+
+/* ── Responsive ── */
+@media(max-width:960px){
+  .programme-grid, .programme-grid.four-col { grid-template-columns: 1fr 1fr; }
+  .cert-grid { grid-template-columns: 1fr 1fr; }
+  .delivery-grid { grid-template-columns: 1fr; }
+}
+@media(max-width:640px){
+  .programme-grid, .programme-grid.four-col { grid-template-columns: 1fr; }
+  .cert-grid { grid-template-columns: 1fr 1fr; }
+  .pathway-arc { flex-direction: column; }
+  .pathway-arrow { transform: rotate(90deg); }
+}
+
+</style>
+</head>
+<body>
+<nav id="main-nav">
+  <a class="nav-logo" href="index.html">
+    <span class="nav-logo-f">FINLANZA</span>
+    <span class="nav-logo-tag">Systems</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active" data-page="home">Home</a></li>
+    <li><a href="services.html" class="" data-page="services">Services</a></li>
+    <li><a href="dream.html" class="" data-page="dream">DREAM™</a></li>
+    <li><a href="pricing.html" class="" data-page="pricing">Pricing</a></li>
+    <li><a href="insights.html" class="" data-page="blog">Insights</a></li>
+    <li><a href="scorecard.html" class="nav-gold" data-page="scorecard">Free Scorecard</a></li>
+    <li><a href="contact.html" class="nav-cta" data-page="contact">Book a Review</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('mob-open')" aria-label="Menu">☰</button>
+</nav>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════════ -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container" style="position:relative;z-index:2;padding-top:110px;padding-bottom:70px;">
+    <div class="wave-badge reveal"><span>Wave 1</span> · Now Enrolling · 2025</div>
+    <span class="label reveal">Finlanza Academy</span>
+    <div class="display-lg reveal reveal-d1">WE DON'T TRAIN<br>PEOPLE TO USE<br><span class="gold">SOFTWARE.</span></div>
+    <p style="font-family:'DM Serif Display',serif;font-size:clamp(16px,2vw,21px);font-style:italic;color:var(--text-muted);max-width:580px;line-height:1.7;margin-top:20px;" class="reveal reveal-d2">We build Africa's next generation of business systems architects.</p>
+    <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;" class="reveal reveal-d3">
+      <a href="contact.html" class="btn-primary">Enquire About Enrolment →</a>
+      <a href="#programmes" class="btn-ghost">View All Programmes</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PHILOSOPHY ══════════════════════════════════════════════════════════ -->
+<section class="section" style="background:var(--navy-mid);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+      <div>
+        <span class="label reveal">Academy Philosophy</span>
+        <div class="display-md reveal reveal-d1" style="margin-bottom:16px;">THE MOST VALUABLE THING WE CAN TEACH IS NOT <span class="gold">HOW TO USE SOFTWARE.</span></div>
+        <p style="font-family:'DM Serif Display',serif;font-size:18px;font-style:italic;color:var(--text);line-height:1.65;margin-bottom:16px;" class="reveal reveal-d2">It is how to think about systems.</p>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.85;margin-bottom:16px;" class="reveal reveal-d2">Software changes. Platforms evolve. But the ability to diagnose a broken process, redesign it with rigour, and build the architecture to make it work — that is a skill that compounds for a lifetime.</p>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.85;" class="reveal reveal-d2">Finlanza Academy is not a training centre. It is a professional development institution. Every design decision reflects that ambition — from how we assess, to who we certify, to who we invite to teach.</p>
+      </div>
+      <div class="reveal reveal-d2">
+        <div class="principle-list">
+          <div class="principle-item">
+            <div class="principle-num">01</div>
+            <div><div class="principle-name">DREAM-First</div><div class="principle-body">Every programme is taught through the lens of the DREAM Framework. Participants don't learn Zoho — they learn how to Diagnose, Reengineer, Execute, Align, and Measure. Zoho is the implementation tool. DREAM is the methodology.</div></div>
+          </div>
+          <div class="principle-item">
+            <div class="principle-num">02</div>
+            <div><div class="principle-name">Practitioner-Led</div><div class="principle-body">All programmes are led by practitioners with real implementation experience — not generic trainers. You learn from someone who has built what they are teaching.</div></div>
+          </div>
+          <div class="principle-item">
+            <div class="principle-num">03</div>
+            <div><div class="principle-name">Problem-Before-Tool</div><div class="principle-body">Every module begins with a business problem, not a software feature. Participants first understand why a process is broken, then learn how the tool solves it. This produces architects, not configurators.</div></div>
+          </div>
+          <div class="principle-item">
+            <div class="principle-num">04</div>
+            <div><div class="principle-name">Certification-as-Signal</div><div class="principle-body">A Finlanza Academy certificate must mean something in the market. Rigorous assessment standards, a 70% minimum pass mark, and a public register of certified graduates. Employers should recognise it as evidence of real capability.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PATHWAY ARC ═════════════════════════════════════════════════════════ -->
+<section class="section" style="padding:60px 0;">
+  <div class="container">
+    <span class="label reveal">Learning Pathway</span>
+    <div class="display-md reveal reveal-d1" style="margin-bottom:8px;">FROM FOUNDATION TO <span class="gold">CERTIFICATION.</span></div>
+    <p style="color:var(--text-muted);font-size:15px;max-width:580px;line-height:1.8;margin-bottom:36px;" class="reveal reveal-d2">Every programme is a standalone credential. Together they form a progression from methodology to mastery to certification.</p>
+    <div class="pathway-arc reveal reveal-d2">
+      <div class="pathway-node">
+        <div class="pathway-box active">
+          <div class="pathway-code">P1 · Wave 1</div>
+          <div class="pathway-title">DREAM Foundation</div>
+          <div class="pathway-price">KES 18,000 · 2 days</div>
+        </div>
+      </div>
+      <div class="pathway-arrow">→</div>
+      <div class="pathway-node">
+        <div class="pathway-box active">
+          <div class="pathway-code">P2 · Wave 1</div>
+          <div class="pathway-title">Finance Systems Architect</div>
+          <div class="pathway-price">KES 35,000 · 3 days</div>
+        </div>
+      </div>
+      <div class="pathway-arrow">→</div>
+      <div class="pathway-node">
+        <div class="pathway-box active">
+          <div class="pathway-code">P3 · Wave 1</div>
+          <div class="pathway-title">CRM &amp; Revenue Operations</div>
+          <div class="pathway-price">KES 25,000 · 3 days</div>
+        </div>
+      </div>
+      <div class="pathway-arrow">→</div>
+      <div class="pathway-node">
+        <div class="pathway-box" style="border-color:rgba(200,151,28,0.5);border-top:3px solid rgba(200,151,28,0.5);opacity:0.75;">
+          <div class="pathway-code" style="color:rgba(200,151,28,0.6);">DC · Restricted</div>
+          <div class="pathway-title">DREAM Consultant Certification</div>
+          <div class="pathway-price" style="color:rgba(200,151,28,0.4);">Application only</div>
+        </div>
+      </div>
+      <div class="pathway-arrow">→</div>
+      <div class="pathway-node">
+        <div class="pathway-box future">
+          <div class="pathway-code">Wave 2 · Future</div>
+          <div class="pathway-title">Zoho Systems Architect</div>
+          <div class="pathway-price">KES 65,000 · 5 days</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2px;padding:14px;border:1px solid var(--border);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);text-align:center;" class="reveal">All Wave 1 programmes delivered in Nairobi (in-person) and online via Zoho Trainer Central</div>
+  </div>
+</section>
+
+<!-- ═══ PROGRAMMES ══════════════════════════════════════════════════════════ -->
+<section class="section" style="padding-top:0;" id="programmes">
+  <div class="container">
+    <span class="label reveal">Wave 1 Programmes</span>
+    <div class="display-md reveal reveal-d1" style="margin-bottom:36px;">THE <span class="gold">CURRENT CURRICULUM.</span></div>
+
+    <div class="programme-grid reveal reveal-d2">
+
+      <!-- P1 -->
+      <div class="prog-card featured">
+        <div class="prog-code">P1 · DREAM Foundation</div>
+        <div class="prog-name">DREAM<br>FOUNDATION</div>
+        <div class="prog-subtitle">The methodology behind modern business systems architecture</div>
+        <div class="prog-meta">
+          <span class="prog-meta-item">📅 <strong>2 Days</strong></span>
+          <span class="prog-meta-item">⏱ <strong>16 CPD Hours</strong></span>
+          <span class="prog-meta-item">👥 Max <strong>16</strong></span>
+        </div>
+        <div class="prog-audience">Finance &amp; ops professionals, team leads, junior consultants, and any professional affected by broken business systems.</div>
+        <ul class="prog-outcomes">
+          <li>Diagnose the real cause of operational failure — symptoms vs root causes</li>
+          <li>Map current-state processes and identify friction, manual effort, data leakage</li>
+          <li>Apply the full DREAM Framework to structure a transformation engagement</li>
+          <li>Make the case for process-before-technology to leadership</li>
+          <li>Produce a basic Diagnose Report with findings and recommendations</li>
+        </ul>
+        <div class="prog-price">KES 18,000</div>
+        <div class="prog-price-note">Online: KES 14,400 (20% discount) · No prerequisites</div>
+        <a href="contact.html" class="btn-primary">Enquire About Enrolment →</a>
+      </div>
+
+      <!-- P2 -->
+      <div class="prog-card">
+        <div class="prog-code">P2 · Finance Systems Architect</div>
+        <div class="prog-name">FINANCE<br>SYSTEMS<br>ARCHITECT</div>
+        <div class="prog-subtitle">Design the modern finance function — then build it on Zoho Books</div>
+        <div class="prog-meta">
+          <span class="prog-meta-item">📅 <strong>3 Days</strong></span>
+          <span class="prog-meta-item">⏱ <strong>24 CPD Hours</strong></span>
+          <span class="prog-meta-item">👥 Max <strong>12</strong></span>
+        </div>
+        <div class="prog-audience">Qualified accountants, CFOs, Finance Directors, Finance Managers, and finance consultants responsible for the finance function.</div>
+        <ul class="prog-outcomes">
+          <li>Design a modern finance operating model from COA through to executive reporting</li>
+          <li>Diagnose the root causes of finance function failure</li>
+          <li>Reengineer invoice-to-cash, purchase-to-pay, month-end close and reporting</li>
+          <li>Configure Zoho Books to execute the reengineered process — not the broken one</li>
+          <li>Build cross-system automation connecting finance, sales, and operations</li>
+          <li>Design multi-currency and multi-entity architectures for African market realities</li>
+        </ul>
+        <div class="prog-price">KES 35,000</div>
+        <div class="prog-price-note">Online: KES 28,000 (20% discount) · P1 recommended, accounting knowledge required</div>
+        <a href="contact.html" class="btn-ghost">Enquire About Enrolment →</a>
+      </div>
+
+      <!-- P3 -->
+      <div class="prog-card">
+        <div class="prog-code">P3 · CRM &amp; Revenue Operations</div>
+        <div class="prog-name">CRM &amp;<br>REVENUE<br>OPERATIONS</div>
+        <div class="prog-subtitle">Design the revenue engine — from first contact to closed cash</div>
+        <div class="prog-meta">
+          <span class="prog-meta-item">📅 <strong>3 Days</strong></span>
+          <span class="prog-meta-item">⏱ <strong>24 CPD Hours</strong></span>
+          <span class="prog-meta-item">👥 Max <strong>14</strong></span>
+        </div>
+        <div class="prog-audience">Sales managers, Revenue Operations professionals, CRM administrators, and consultants advising on commercial operations.</div>
+        <ul class="prog-outcomes">
+          <li>Design a pipeline with stages that reflect how the business actually sells</li>
+          <li>Map the full revenue cycle from lead capture to invoiced, collected cash</li>
+          <li>Build a lead qualification framework salespeople will actually use</li>
+          <li>Configure Zoho CRM to execute a designed pipeline — not a broken process</li>
+          <li>Build the quote-to-cash process that eliminates manual invoicing</li>
+          <li>Design revenue intelligence dashboards the MD actually reads</li>
+        </ul>
+        <div class="prog-price">KES 25,000</div>
+        <div class="prog-price-note">Online: KES 20,000 (20% discount) · P1 recommended</div>
+        <a href="contact.html" class="btn-ghost">Enquire About Enrolment →</a>
+      </div>
+
+    </div>
+
+    <!-- DC card — full width, restricted -->
+    <div style="background:1px solid var(--border);margin-top:2px;" class="reveal">
+      <div class="prog-card restricted" style="display:grid;grid-template-columns:1fr 1fr 280px;gap:40px;align-items:center;">
+        <div>
+          <div class="restricted-badge">🔒 Application Only · Restricted Access</div>
+          <div class="prog-code">DC · DREAM Consultant Certification</div>
+          <div class="prog-name" style="font-size:32px;">DREAM CONSULTANT<br>CERTIFICATION</div>
+          <div class="prog-subtitle" style="margin-bottom:0;">The full DREAM methodology. For practitioners who will deliver it professionally.</div>
+        </div>
+        <div>
+          <p style="color:var(--text-muted);font-size:14px;line-height:1.85;margin-bottom:16px;">The DC is not a public programme. It is a restricted certification that grants access to the full DREAM operational methodology — the instruments, scoring tools, interview frameworks, diagnostic rubrics, and consulting playbook that underpin every Finlanza engagement.</p>
+          <p style="color:var(--text-muted);font-size:14px;line-height:1.85;">DC graduates are certified to deliver DREAM engagements independently. This is the foundation of Finlanza's continental licensing model.</p>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:'DM Serif Display',serif;font-size:28px;font-style:italic;color:rgba(200,151,28,0.6);margin-bottom:6px;">By Application</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:20px;">Prerequisites: P1 + P2 or P3 · Interview required</div>
+          <a href="contact.html" class="btn-ghost" style="display:block;text-align:center;border-color:rgba(200,151,28,0.35);color:rgba(200,151,28,0.7);">Apply for Consideration →</a>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:10px;">Not all applicants are accepted. Cohort size is strictly limited.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ DELIVERY MODES ══════════════════════════════════════════════════════ -->
+<section class="section" style="background:var(--navy-mid);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <span class="label reveal">Delivery Modes</span>
+    <div class="display-md reveal reveal-d1" style="margin-bottom:12px;">SAME STANDARD. <span class="gold">TWO FORMATS.</span></div>
+    <p style="color:var(--text-muted);font-size:15px;max-width:580px;line-height:1.8;margin-bottom:36px;" class="reveal reveal-d2">Both delivery modes award identical certificates and apply identical assessment standards. The difference is the learning environment, not the outcome.</p>
+    <div class="delivery-grid reveal reveal-d2">
+      <div class="delivery-card">
+        <div class="delivery-mode">IN-PERSON COHORT</div>
+        <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;font-style:italic;border-left:2px solid var(--border);padding-left:12px;">For participants in East Africa who benefit from peer immersion and real-time facilitation.</div>
+        <div class="delivery-rows">
+          <div class="delivery-row"><div class="delivery-row-key">Location</div><div class="delivery-row-val">Facilitated in Nairobi. Maximum 12–16 participants per cohort.</div></div>
+          <div class="delivery-row"><div class="delivery-row-key">Pace</div><div class="delivery-row-val">Fixed schedule — 2 or 3 full days as per programme.</div></div>
+          <div class="delivery-row"><div class="delivery-row-key">Interaction</div><div class="delivery-row-val">Real-time peer discussion, group exercises, live facilitator Q&amp;A.</div></div>
+          <div class="delivery-row"><div class="delivery-row-key">Assessment</div><div class="delivery-row-val">Same assessments, same pass standard, same certificate.</div></div>
+          <div class="delivery-row"><div class="delivery-row-key">Price</div><div class="delivery-row-val">Full programme price as listed.</div></div>
+        </div>
+      </div>
+      <div class="delivery-card" style="border-top:3px solid var(--gold);">
+        <div class="delivery-mode">SELF-PACED ONLINE</div>
+        <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;font-style:italic;border-left:2px solid var(--border);padding-left:12px;">Via Zoho Trainer Central. For participants across Africa with scheduling constraints.</div>
+        <div class="delivery-rows">
+          <div class="delivery-row"><div class="delivery-row-key">Platform</div><div class="delivery-row-val">Zoho Trainer Central — recorded sessions, interactive exercises, live check-ins.</div></div>
+          <div class="delivery-row"><div class="delivery-row-key">Pace</div><div class="delivery-row-val">Participant-paced — complete within 8 weeks of enrolment.</div></div>
+          <div class="delivery-row"><div class="delivery-row-key">Interaction</div><div class="delivery-row-val">Discussion forum, weekly live Q&amp;A, facilitator feedback on submissions.</div></div>
+          <div class="delivery-row"><div class="delivery-row-key">Assessment</div><div class="delivery-row-val">Identical — same assessments, same pass standard, same certificate.</div></div>
+          <div class="delivery-row"><div class="delivery-row-key">Price</div><div class="delivery-row-val">20% discount on all listed prices.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CERTIFICATION FRAMEWORK ════════════════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <span class="label reveal">Certification Standards</span>
+    <div class="display-md reveal reveal-d1" style="margin-bottom:12px;">A CERTIFICATE THAT <span class="gold">MEANS SOMETHING.</span></div>
+    <p style="color:var(--text-muted);font-size:15px;max-width:580px;line-height:1.8;margin-bottom:36px;" class="reveal reveal-d2">Certification is not automatic. Every Finlanza Academy certificate requires passing rigorous assessment at a minimum 70% aggregate. Employers and clients recognise it as evidence of real capability.</p>
+    <div class="cert-grid reveal reveal-d2">
+      <div class="cert-cell head"><div class="cert-cell-label">Certificate</div></div>
+      <div class="cert-cell head"><div class="cert-cell-label">Awarded For</div></div>
+      <div class="cert-cell head"><div class="cert-cell-label">Pass Standard</div></div>
+      <div class="cert-cell head"><div class="cert-cell-label">Validity</div></div>
+      <div class="cert-cell"><div class="cert-cell-val" style="color:var(--gold);font-weight:500;">Certificate of Competence</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Passing all assessments at 70% or above</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">70% aggregate across all components</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Lifetime — version noted</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Certificate of Excellence</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Achieving 90% or above across all assessments</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">90% aggregate — featured on public register</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Lifetime — featured on register</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Certificate of Participation</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Completing the programme without meeting pass standard</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">100% attendance required</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Lifetime</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Corporate Completion</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Organisation sponsoring 3+ staff through any programme</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Per individual participant</div></div>
+      <div class="cert-cell"><div class="cert-cell-val">Organisation listed as Academy Partner</div></div>
+    </div>
+    <div style="margin-top:2px;padding:14px;border:1px solid var(--border);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);text-align:center;" class="reveal">Participants who do not meet the 70% pass mark are invited to reassess at no additional cost · Certificate integrity is non-negotiable</div>
+  </div>
+</section>
+
+<!-- ═══ WAVE 2 PREVIEW ══════════════════════════════════════════════════════ -->
+<section class="section" style="background:var(--navy-mid);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <span class="label reveal">Wave 2 — Coming Soon</span>
+    <div class="display-md reveal reveal-d1" style="margin-bottom:12px;">WHAT COMES <span class="gold">NEXT.</span></div>
+    <p style="color:var(--text-muted);font-size:15px;max-width:600px;line-height:1.8;margin-bottom:36px;" class="reveal reveal-d2">No Wave 2 programme launches without a proven internal case study and a live client outcome to point to. These are the programmes being designed — not announced.</p>
+    <div class="programme-grid four-col reveal reveal-d2" style="opacity:0.65;">
+      <div class="prog-card" style="border-top:2px dashed rgba(200,151,28,0.3);">
+        <div class="prog-code">Wave 2</div>
+        <div class="prog-name" style="font-size:22px;">ZOHO SYSTEMS ARCHITECT</div>
+        <div class="prog-meta"><span class="prog-meta-item">5 Days · KES 65,000 est.</span></div>
+        <div class="prog-audience">IT leads, operations managers, senior consultants</div>
+      </div>
+      <div class="prog-card" style="border-top:2px dashed rgba(200,151,28,0.3);">
+        <div class="prog-code">Wave 2</div>
+        <div class="prog-name" style="font-size:22px;">AIDEN™ AGENT DESIGN</div>
+        <div class="prog-meta"><span class="prog-meta-item">3 Days · KES 45,000 est.</span></div>
+        <div class="prog-audience">Technical professionals, developers, advanced consultants</div>
+      </div>
+      <div class="prog-card" style="border-top:2px dashed rgba(200,151,28,0.3);">
+        <div class="prog-code">Wave 2</div>
+        <div class="prog-name" style="font-size:22px;">EXECUTIVE SYSTEMS LEADERSHIP</div>
+        <div class="prog-meta"><span class="prog-meta-item">1 Day · KES 80,000 est.</span></div>
+        <div class="prog-audience">MDs, CFOs, COOs — the buyers, not the implementors</div>
+      </div>
+      <div class="prog-card" style="border-top:2px dashed rgba(200,151,28,0.3);">
+        <div class="prog-code">Available Now</div>
+        <div class="prog-name" style="font-size:22px;">CORPORATE DREAM PROGRAMME</div>
+        <div class="prog-meta"><span class="prog-meta-item">Custom · From KES 120,000</span></div>
+        <div class="prog-audience">Organisations training their teams on a Finlanza-built system</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 380px;gap:72px;align-items:center;">
+      <div>
+        <span class="label reveal">Enrol or Enquire</span>
+        <div class="display-md reveal reveal-d1" style="margin-bottom:16px;">READY TO BECOME A BUSINESS SYSTEMS <span class="gold">ARCHITECT?</span></div>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.85;margin-bottom:28px;" class="reveal reveal-d2">In-person cohorts run quarterly in Nairobi. Online programmes are available year-round via Zoho Trainer Central. Corporate and group enrolments are available for organisations sponsoring three or more participants.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;" class="reveal reveal-d3">
+          <a href="contact.html" class="btn-primary">Enquire About Enrolment →</a>
+          <a href="contact.html" class="btn-ghost">Corporate &amp; Group Enquiries</a>
+        </div>
+      </div>
+      <div class="reveal reveal-d2" style="background:var(--navy-mid);border:1px solid var(--border);border-top:3px solid var(--gold);padding:36px 30px;">
+        <div class="label" style="margin-bottom:8px;">DREAM Consultant Certification</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);margin-bottom:10px;line-height:1.3;">Interested in the DC<br>programme?</div>
+        <p style="color:var(--text-muted);font-size:13.5px;line-height:1.8;margin-bottom:20px;">The DREAM Consultant Certification is application-only. Prerequisites include completion of P1 and at least one of P2 or P3, plus a successful interview. Cohort sizes are strictly limited.</p>
+        <a href="contact.html" class="btn-ghost" style="display:block;text-align:center;">Apply for Consideration →</a>
+        <p style="color:var(--text-muted);font-size:11px;margin-top:10px;text-align:center;">Not all applicants are accepted.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div style="text-align:center;padding:40px 0 32px;border-bottom:1px solid var(--border-light);">
+      <div class="display-md" style="font-size:clamp(22px,3vw,38px);margin-bottom:8px;"><span class="gold">Scalability</span> is not an accident.<br>It is engineered.</div>
+      <div class="label" style="margin-top:12px;">Zoho Authorized Partner · Enterprise Implementation Specialists · Africa</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding:40px 0 32px;border-bottom:1px solid var(--border-light);">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--white);margin-bottom:4px;">FINLANZA</div>
+        <div class="label" style="margin-bottom:12px;">Business Systems Architecture Firm</div>
+        <p style="color:var(--text-muted);font-size:13px;line-height:1.7;">We engineer scalable business systems for multi-location, multi-entity organizations across Africa — built on the DREAM™ Transformation Framework.</p>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:14px;">Services</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <a href="services.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Diagnose</a>
+          <a href="services.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Transform</a>
+          <a href="services.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Managed</a>
+          <a href="pricing.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Pricing</a>
+        </div>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:14px;">Company</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <a href="dream.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">DREAM™ Framework</a>
+          <a href="scorecard.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Free Scorecard</a>
+          <a href="insights.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Insights</a>
+          <a href="contact.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:14px;">Contact</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:var(--text-muted);">
+          <a href="/cdn-cgi/l/email-protection#96f7e5fdd6f0fff8faf7f8ecf7b8f5f9fb" style="color:var(--text-muted);text-decoration:none;"><span class="__cf_email__" data-cfemail="c9a8baa289afa0a7a5a8a7b3a8e7aaa6a4">[email&#160;protected]</span></a>
+          <a href="tel:+254724463536" style="color:var(--text-muted);text-decoration:none;">+254 724 463 536</a>
+          <span>Nairobi, Kenya</span>
+          <div style="margin-top:8px;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(200,151,28,0.2);padding:5px 10px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(200,151,28,0.55);">ZOHO <span style="display:inline-block;width:1px;height:10px;background:rgba(200,151,28,0.25);margin:0 4px;"></span> Partner</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom" style="border-top:none;padding-top:24px;">
+      <div class="footer-copy">© 2025 Finlanza. All rights reserved. DREAM™ is a proprietary transformation framework.</div>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); } });
+  },{threshold:0.07,rootMargin:'0px 0px -20px 0px'});
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+</body>
+</html>

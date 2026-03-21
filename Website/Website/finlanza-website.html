@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finlanza — Business Systems Architecture Firm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+:root {
+  --navy:       #0D1B2A;
+  --navy-mid:   #1B3A6B;
+  --navy-card:  #0F2744;
+  --gold:       #C8971C;
+  --gold-lt:    #E8B84B;
+  --gold-dim:   rgba(200,151,28,0.15);
+  --gold-rule:  rgba(200,151,28,0.3);
+  --white:      #FFFFFF;
+  --offwhite:   #F4F1EB;
+  --muted:      rgba(255,255,255,0.42);
+  --muted2:     rgba(255,255,255,0.22);
+  --border:     rgba(200,151,28,0.18);
+
+  --ff-display: 'Cormorant Garamond', Georgia, serif;
+  --ff-body:    'DM Sans', sans-serif;
+  --ff-mono:    'DM Mono', monospace;
+
+  --max: 1160px;
+  --pad: clamp(24px, 5vw, 80px);
+}
+
+body {
+  background: var(--navy);
+  color: var(--white);
+  font-family: var(--ff-body);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Blueprint grid overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(200,151,28,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,151,28,0.028) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════════════════ */
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); position: relative; z-index: 1; }
+.eyebrow {
+  font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold); display: flex;
+  align-items: center; gap: 14px; margin-bottom: 20px;
+}
+.eyebrow::before { content:''; display:block; width:32px; height:1px; background:var(--gold); opacity:0.5; flex-shrink:0; }
+.section-rule { width:48px; height:2px; background:var(--gold); margin-bottom:28px; }
+.gold { color: var(--gold-lt); }
+.muted { color: var(--muted); }
+
+/* Reveal animations */
+.reveal { opacity:0; transform:translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  border-bottom: 1px solid rgba(200,151,28,0.12);
+  backdrop-filter: blur(16px);
+  background: rgba(13,27,42,0.88);
+  transition: background 0.3s;
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 var(--pad);
+  height: 68px; display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.nav-logo-mark {
+  width:32px; height:32px; background:var(--navy-mid);
+  border:1px solid rgba(200,151,28,0.4); display:flex; align-items:center;
+  justify-content:center; flex-shrink:0;
+}
+.nav-logo-mark svg { width:20px; height:20px; }
+.nav-logo-text { display:flex; flex-direction:column; gap:1px; }
+.nav-wordmark { font-family: var(--ff-body); font-size:13px; font-weight:600; letter-spacing:0.16em; color:var(--white); text-transform:uppercase; }
+.nav-tagline { font-family:var(--ff-mono); font-size:8px; letter-spacing:0.15em; color:var(--gold); text-transform:uppercase; }
+.nav-links { display:flex; align-items:center; gap:32px; }
+.nav-links a { font-size:11.5px; font-weight:400; letter-spacing:0.08em; color:var(--muted); text-decoration:none; text-transform:uppercase; transition:color 0.2s; }
+.nav-links a:hover { color:var(--white); }
+.nav-cta {
+  font-size:10.5px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--navy) !important; background:var(--gold); padding:9px 20px;
+  text-decoration:none; transition:background 0.2s;
+}
+.nav-cta:hover { background:var(--gold-lt) !important; color:var(--navy) !important; }
+
+/* ═══════════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════════ */
+#hero {
+  min-height: 100vh; display:flex; align-items:center;
+  padding: 120px var(--pad) 80px;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position:absolute; inset:0; z-index:0;
+  background: radial-gradient(ellipse 80% 70% at 65% 50%, rgba(27,58,107,0.45) 0%, transparent 70%);
+}
+/* Rotating outer ring */
+.hero-orbit {
+  position:absolute; right:-120px; top:50%; transform:translateY(-50%);
+  width:680px; height:680px; z-index:0; opacity:0.12;
+  animation: orbit 60s linear infinite;
+  border:1px dashed rgba(200,151,28,0.5); border-radius:50%;
+}
+.hero-orbit-2 {
+  position:absolute; right:-80px; top:50%; transform:translateY(-50%);
+  width:520px; height:520px; z-index:0; opacity:0.07;
+  border:1px solid rgba(200,151,28,0.8); border-radius:50%;
+}
+@keyframes orbit { from{transform:translateY(-50%) rotate(0deg);} to{transform:translateY(-50%) rotate(360deg);} }
+
+.hero-inner { position:relative; z-index:1; max-width:var(--max); margin:0 auto; width:100%; display:grid; grid-template-columns:1fr 480px; gap:80px; align-items:center; }
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:10px;
+  border:1px solid var(--border); padding:7px 14px 7px 10px;
+  margin-bottom:32px;
+}
+.hero-badge-dot { width:6px; height:6px; background:var(--gold); border-radius:50%; }
+.hero-badge-text { font-family:var(--ff-mono); font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); }
+
+/* Zoho badge in hero */
+.zoho-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid rgba(200,151,28,0.2); padding:6px 12px;
+  margin-bottom:16px; opacity:0.75;
+}
+.zoho-badge-logo { font-family:var(--ff-mono); font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:0.1em; }
+.zoho-badge-sep { width:1px; height:14px; background:rgba(200,151,28,0.25); }
+.zoho-badge-label { font-family:var(--ff-mono); font-size:8.5px; letter-spacing:0.15em; text-transform:uppercase; color:rgba(200,151,28,0.7); }
+
+h1.hero-title {
+  font-family: var(--ff-display);
+  font-size: clamp(42px, 5.5vw, 72px);
+  font-weight: 600; line-height: 1.05;
+  letter-spacing: -0.01em; margin-bottom: 24px;
+  color: var(--white);
+}
+h1.hero-title span { color: var(--gold-lt); font-style:italic; }
+
+.hero-services {
+  display:flex; flex-wrap:wrap; gap:8px; margin-bottom:40px;
+}
+.hero-service-tag {
+  font-family:var(--ff-mono); font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--muted); border:1px solid rgba(255,255,255,0.1); padding:5px 10px;
+}
+
+.hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+.btn-primary {
+  font-family:var(--ff-body); font-size:11.5px; font-weight:500; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--navy); background:var(--gold);
+  padding:14px 28px; text-decoration:none; display:inline-block;
+  transition:background 0.2s;
+}
+.btn-primary:hover { background:var(--gold-lt); }
+.btn-outline {
+  font-family:var(--ff-body); font-size:11.5px; font-weight:400; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--gold); background:transparent;
+  border:1px solid rgba(200,151,28,0.45); padding:14px 28px;
+  text-decoration:none; display:inline-block; transition:border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color:var(--gold); color:var(--gold-lt); }
+
+/* Hero diagram */
+.hero-diagram-wrap { position:relative; }
+.hero-diagram-svg { width:100%; max-width:480px; }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION SHARED
+═══════════════════════════════════════════════════════ */
+section { padding: clamp(80px,10vw,140px) var(--pad); position:relative; }
+.section-label {
+  font-family:var(--ff-mono); font-size:9px; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--gold); margin-bottom:16px;
+  display:flex; align-items:center; gap:12px;
+}
+.section-label::before { content:''; display:block; width:24px; height:1px; background:var(--gold); opacity:0.5; }
+
+h2.section-title {
+  font-family: var(--ff-display);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 600; line-height: 1.1; color: var(--white);
+  letter-spacing: -0.01em; margin-bottom: 16px;
+}
+h2.section-title em { color:var(--gold-lt); font-style:italic; }
+.section-intro {
+  font-size: 15px; font-weight:300; line-height:1.75;
+  color: var(--muted); max-width:580px; margin-bottom: 56px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   STRUCTURAL PROBLEM
+═══════════════════════════════════════════════════════ */
+#problem { background: var(--navy-card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.problem-list { list-style:none; display:flex; flex-direction:column; gap:0; margin-bottom:32px; }
+.problem-list li {
+  display:flex; align-items:flex-start; gap:14px;
+  padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.06);
+  font-size:14px; font-weight:300; color:rgba(255,255,255,0.72); line-height:1.5;
+}
+.problem-list li::before {
+  content:''; display:block; width:5px; height:5px; background:var(--gold);
+  border-radius:50%; flex-shrink:0; margin-top:6px;
+}
+.problem-verdict {
+  font-family:var(--ff-display); font-size:20px; font-style:italic;
+  color:var(--white); line-height:1.4; margin-bottom:16px;
+  padding-left:20px; border-left:2px solid var(--gold);
+}
+.problem-proof {
+  font-family:var(--ff-mono); font-size:9.5px; letter-spacing:0.12em;
+  color:var(--gold); text-transform:uppercase;
+}
+.problem-visual {
+  display:flex; flex-direction:column; gap:12px; padding-top:8px;
+}
+.problem-stat {
+  background: rgba(27,58,107,0.5); border:1px solid var(--border);
+  border-left:3px solid var(--gold); padding:20px 24px;
+}
+.problem-stat-num {
+  font-family:var(--ff-display); font-size:44px; font-weight:600;
+  color:var(--gold-lt); line-height:1;
+}
+.problem-stat-label { font-size:11.5px; font-weight:300; color:var(--muted); margin-top:4px; }
+
+/* ═══════════════════════════════════════════════════════
+   INFRASTRUCTURE LAYER (Services)
+═══════════════════════════════════════════════════════ */
+#infrastructure { }
+.services-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:var(--border); margin-bottom:48px;
+}
+.service-card {
+  background:var(--navy); padding:32px 28px;
+  transition:background 0.25s;
+  cursor:default; position:relative;
+}
+.service-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:var(--gold); transform:scaleX(0); transform-origin:left;
+  transition:transform 0.3s ease;
+}
+.service-card:hover { background:var(--navy-card); }
+.service-card:hover::before { transform:scaleX(1); }
+.service-icon {
+  width:36px; height:36px; background:var(--gold-dim); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; margin-bottom:20px;
+}
+.service-icon svg { width:16px; height:16px; stroke:var(--gold); fill:none; stroke-width:1.5; }
+.service-name { font-size:14px; font-weight:500; color:var(--white); margin-bottom:10px; letter-spacing:0.02em; }
+.service-desc { font-size:12.5px; font-weight:300; color:var(--muted); line-height:1.65; }
+.services-footer {
+  font-family:var(--ff-mono); font-size:9.5px; letter-spacing:0.16em;
+  text-transform:uppercase; color:var(--gold); text-align:center;
+  padding:20px; border:1px solid var(--border);
+}
+
+/* ═══════════════════════════════════════════════════════
+   DREAM FRAMEWORK SECTION (full embedded page)
+═══════════════════════════════════════════════════════ */
+#dream {
+  background: var(--navy-card);
+  border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  padding: clamp(80px,10vw,140px) 0;
+}
+.dream-header { padding: 0 var(--pad); margin-bottom:72px; }
+.dream-hero-text {
+  font-family:var(--ff-display); font-size:clamp(14px,1.8vw,18px);
+  font-weight:300; line-height:1.75; color:var(--muted); max-width:640px;
+  margin-bottom:12px;
+}
+.dream-hero-text strong { color:var(--white); font-weight:400; }
+
+/* Cycle diagram + tabs */
+.dream-layout {
+  display:grid; grid-template-columns:520px 1fr;
+  gap:0; align-items:start; padding: 0 var(--pad);
+}
+.dream-diagram-col { position:sticky; top:100px; }
+#dreamSvg { width:100%; max-width:480px; display:block; }
+
+.dream-phases-col { padding-left:56px; }
+.dream-phases-nav {
+  display:flex; flex-direction:column; gap:0; margin-bottom:40px;
+  border:1px solid var(--border);
+}
+.dream-phase-tab {
+  display:flex; align-items:center; gap:16px; padding:18px 24px;
+  cursor:pointer; transition:background 0.2s; border-bottom:1px solid var(--border);
+  position:relative;
+}
+.dream-phase-tab:last-child { border-bottom:none; }
+.dream-phase-tab::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:var(--gold); transform:scaleY(0); transition:transform 0.25s ease;
+}
+.dream-phase-tab:hover { background:rgba(27,58,107,0.4); }
+.dream-phase-tab.active { background:rgba(27,58,107,0.6); }
+.dream-phase-tab.active::before { transform:scaleY(1); }
+.dream-tab-letter {
+  width:36px; height:36px; flex-shrink:0; display:flex; align-items:center;
+  justify-content:center; background:var(--gold-dim); border:1px solid var(--border);
+  font-family:var(--ff-display); font-size:18px; font-weight:600; color:var(--gold);
+  transition:background 0.2s, color 0.2s;
+}
+.dream-phase-tab.active .dream-tab-letter { background:var(--gold); color:var(--navy); }
+.dream-tab-info { flex:1; }
+.dream-tab-name { font-size:12px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--white); }
+.dream-tab-tagline { font-size:11px; font-weight:300; color:var(--muted); margin-top:2px; }
+.dream-tab-num { font-family:var(--ff-mono); font-size:9px; color:var(--muted2); }
+
+.dream-detail { display:none; }
+.dream-detail.active { display:block; }
+.dream-detail-label { font-family:var(--ff-mono); font-size:9.5px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:12px; }
+.dream-detail-title { font-family:var(--ff-display); font-size:clamp(28px,3.5vw,40px); font-weight:600; color:var(--white); margin-bottom:16px; line-height:1.1; }
+.dream-detail-body { font-size:14px; font-weight:300; line-height:1.8; color:var(--muted); margin-bottom:28px; }
+.dream-deliverables { display:flex; flex-direction:column; gap:0; border:1px solid var(--border); }
+.dream-del-head { font-family:var(--ff-mono); font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); padding:14px 18px; border-bottom:1px solid var(--border); }
+.dream-del-item {
+  display:flex; align-items:center; gap:12px; padding:12px 18px;
+  border-bottom:1px solid rgba(255,255,255,0.04); font-size:12.5px; color:rgba(255,255,255,0.65);
+}
+.dream-del-item:last-child { border-bottom:none; }
+.dream-del-item::before { content:'—'; color:var(--gold); font-size:10px; flex-shrink:0; }
+
+/* ═══════════════════════════════════════════════════════
+   DEPLOYMENT SCALE
+═══════════════════════════════════════════════════════ */
+#deployment { }
+.deployment-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); margin-bottom:0; }
+.dep-panel { background:var(--navy); padding:40px; }
+.dep-panel-head { font-family:var(--ff-mono); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:28px; display:flex; align-items:center; gap:10px; }
+.dep-panel-head::before { content:''; display:block; width:20px; height:1px; background:var(--gold); opacity:0.5; }
+.dep-list { list-style:none; display:flex; flex-direction:column; gap:0; }
+.dep-list li {
+  display:flex; align-items:flex-start; gap:12px; padding:13px 0;
+  border-bottom:1px solid rgba(255,255,255,0.05); font-size:13px;
+  font-weight:300; color:rgba(255,255,255,0.68); line-height:1.45;
+}
+.dep-list li::before { content:''; display:block; width:4px; height:4px; background:var(--gold); border-radius:50%; flex-shrink:0; margin-top:7px; }
+.dep-stats { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); }
+.dep-stat { background:var(--navy-card); padding:28px 24px; }
+.dep-stat-n { font-family:var(--ff-display); font-size:42px; font-weight:600; color:var(--gold-lt); line-height:1; }
+.dep-stat-l { font-size:11px; font-weight:300; color:var(--muted); margin-top:6px; line-height:1.4; }
+
+/* ═══════════════════════════════════════════════════════
+   ENGINEERING CAPABILITIES
+═══════════════════════════════════════════════════════ */
+#capabilities { background: var(--navy-card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.caps-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--border); margin-bottom:40px; }
+.cap-card {
+  background:var(--navy); padding:36px 28px; position:relative;
+  transition:background 0.25s;
+}
+.cap-card:hover { background:rgba(15,39,68,0.8); }
+.cap-num {
+  font-family:var(--ff-mono); font-size:11px; color:var(--gold); margin-bottom:18px;
+  letter-spacing:0.1em;
+}
+.cap-name { font-size:15px; font-weight:500; color:var(--white); margin-bottom:12px; line-height:1.3; }
+.cap-desc { font-size:12.5px; font-weight:300; color:var(--muted); line-height:1.65; }
+.caps-footer { font-family:var(--ff-mono); font-size:9.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); text-align:center; padding:18px; border:1px solid var(--border); }
+
+/* ═══════════════════════════════════════════════════════
+   INDUSTRY CONTEXT
+═══════════════════════════════════════════════════════ */
+#industries { }
+.industry-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); }
+.industry-card {
+  background:var(--navy); padding:32px 24px;
+  border-bottom:2px solid transparent;
+  transition:background 0.25s, border-color 0.25s;
+  cursor:default;
+}
+.industry-card:hover { background:var(--navy-card); border-bottom-color:var(--gold); }
+.ind-name { font-size:13.5px; font-weight:500; color:var(--white); margin-bottom:12px; }
+.ind-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.ind-tag {
+  font-family:var(--ff-mono); font-size:9px; letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--muted); border:1px solid rgba(255,255,255,0.08); padding:4px 8px;
+}
+.industry-footer {
+  margin-top:32px; padding:20px 0; border-top:1px solid var(--border);
+  font-family:var(--ff-mono); font-size:9.5px; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--gold); text-align:center;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CTA SECTION
+═══════════════════════════════════════════════════════ */
+#cta {
+  background: var(--navy-card);
+  border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+}
+.cta-inner { display:grid; grid-template-columns:1fr 400px; gap:80px; align-items:start; }
+.cta-list { list-style:none; display:flex; flex-direction:column; gap:0; margin:28px 0 36px; }
+.cta-list li {
+  display:flex; align-items:flex-start; gap:12px;
+  padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06);
+  font-size:13.5px; font-weight:300; color:rgba(255,255,255,0.68);
+}
+.cta-list li::before { content:''; display:block; width:4px; height:4px; background:var(--gold); border-radius:50%; flex-shrink:0; margin-top:8px; }
+.cta-note {
+  font-family:var(--ff-mono); font-size:9px; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--muted); margin-top:20px;
+}
+.cta-card {
+  background:var(--navy); border:1px solid var(--border);
+  border-top:3px solid var(--gold); padding:36px 32px; position:sticky; top:100px;
+}
+.cta-card-head { font-family:var(--ff-display); font-size:24px; font-weight:600; color:var(--white); margin-bottom:12px; line-height:1.2; }
+.cta-card-body { font-size:12.5px; font-weight:300; color:var(--muted); line-height:1.7; margin-bottom:28px; }
+.cta-card-note { font-family:var(--ff-mono); font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-top:14px; line-height:1.6; }
+.cta-actions { display:flex; flex-direction:column; gap:10px; }
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════ */
+footer {
+  background: #060D14; border-top:1px solid var(--border);
+  padding:72px var(--pad) 40px;
+}
+.footer-inner { max-width:var(--max); margin:0 auto; }
+.footer-top { display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px; margin-bottom:56px; }
+.footer-brand {}
+.footer-wordmark { font-family:var(--ff-body); font-size:18px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--white); margin-bottom:4px; }
+.footer-brand-tag { font-family:var(--ff-mono); font-size:9px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; }
+.footer-brand-desc { font-size:12.5px; font-weight:300; color:var(--muted); line-height:1.7; max-width:260px; }
+.footer-col-head { font-family:var(--ff-mono); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+.footer-links { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.footer-links li a { font-size:12.5px; font-weight:300; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.footer-links li a:hover { color:var(--white); }
+.footer-bottom {
+  padding-top:28px; border-top:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.footer-copy { font-family:var(--ff-mono); font-size:9px; letter-spacing:0.1em; color:var(--muted2); }
+.footer-zoho {
+  display:flex; align-items:center; gap:8px;
+  border:1px solid rgba(200,151,28,0.15); padding:6px 12px;
+  font-family:var(--ff-mono); font-size:8.5px; letter-spacing:0.12em;
+  text-transform:uppercase; color:rgba(200,151,28,0.55);
+}
+.footer-tagline {
+  font-family:var(--ff-display); font-size:clamp(22px,3vw,36px);
+  font-weight:600; color:var(--white); text-align:center;
+  margin-bottom:8px; font-style:italic;
+}
+.footer-tagline span { color:var(--gold-lt); }
+.footer-sub-tagline {
+  font-family:var(--ff-mono); font-size:9.5px; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:56px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns:1fr; }
+  .hero-diagram-wrap { display:none; }
+  .problem-grid, .cta-inner, .dream-layout { grid-template-columns:1fr; }
+  .dream-phases-col { padding-left:0; padding-top:40px; }
+  .dream-diagram-col { position:static; }
+  .services-grid, .caps-grid, .industry-grid { grid-template-columns:1fr 1fr; }
+  .dep-stats { grid-template-columns:1fr 1fr; }
+  .footer-top { grid-template-columns:1fr; gap:40px; }
+}
+@media (max-width:600px) {
+  .services-grid, .caps-grid, .industry-grid { grid-template-columns:1fr; }
+  .deployment-grid, .dep-stats { grid-template-columns:1fr; }
+  .footer-bottom { flex-direction:column; gap:16px; }
+  .nav-links { display:none; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCORECARD MODAL SYSTEM
+═══════════════════════════════════════════════════════ */
+.sc-modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(6,13,20,0.92);
+  backdrop-filter: blur(10px);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+  animation: scFadeIn 0.3s ease;
+}
+.sc-modal-overlay.open { display: flex; }
+@keyframes scFadeIn { from{opacity:0;} to{opacity:1;} }
+
+.sc-modal {
+  width: 100%; max-width: 820px; max-height: 92vh;
+  background: #0D1B2A;
+  border: 1px solid rgba(200,151,28,0.2);
+  border-top: 3px solid #C8971C;
+  overflow-y: auto;
+  position: relative;
+  animation: scSlideUp 0.35s ease;
+  scrollbar-width: thin; scrollbar-color: rgba(200,151,28,0.3) transparent;
+}
+@keyframes scSlideUp { from{opacity:0; transform:translateY(32px);} to{opacity:1; transform:translateY(0);} }
+
+.sc-modal-close {
+  position: sticky; top: 0; left: 0; right: 0;
+  display: flex; justify-content: flex-end; align-items: center;
+  padding: 10px 16px; background: rgba(13,27,42,0.95);
+  border-bottom: 1px solid rgba(200,151,28,0.1);
+  z-index: 10;
+}
+.sc-modal-close-label {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(200,151,28,0.6); margin-right: 12px;
+}
+.sc-modal-close-btn {
+  width: 28px; height: 28px; border: 1px solid rgba(200,151,28,0.25);
+  background: transparent; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; color: rgba(200,151,28,0.7); font-size: 16px;
+  transition: border-color 0.2s, color 0.2s; flex-shrink: 0;
+}
+.sc-modal-close-btn:hover { border-color: #C8971C; color: #C8971C; }
+
+/* ── Scope all scorecard styles inside .sc-modal ── */
+.sc-modal .grid-bg { display: none; }
+.sc-modal .screen {
+  display: none; min-height: auto;
+  animation: scFadeUp 0.4s ease both;
+}
+.sc-modal .screen.active { display: flex; flex-direction: column; align-items: center; }
+@keyframes scFadeUp { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:translateY(0);} }
+
+.sc-modal .progress-bar-wrap {
+  position: sticky; top: 49px; z-index: 9;
+  height: 3px; background: rgba(255,255,255,0.08); width: 100%;
+}
+.sc-modal .progress-bar-fill { height: 100%; background: #C8971C; transition: width 0.4s ease; }
+
+/* Intro screen */
+.sc-modal #screen-intro {
+  padding: 48px 32px 52px;
+  background: linear-gradient(160deg,#0D1B2A 0%,#1B3A6B 60%,#0F2340 100%);
+}
+.sc-modal .intro-inner { max-width: 640px; width: 100%; text-align: center; gap: 0; display:flex; flex-direction:column; align-items:center; }
+.sc-modal .brand-lockup { display:flex; align-items:center; gap:12px; margin-bottom: 40px; }
+.sc-modal .fz-mark { width:32px; height:32px; }
+.sc-modal .brand-name { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.8); }
+.sc-modal .intro-eyebrow { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#C8971C; background:rgba(200,151,28,0.08); border:1px solid rgba(200,151,28,0.2); padding:6px 14px; margin-bottom:24px; }
+.sc-modal .intro-headline { font-family:'Cormorant Garamond',serif; font-size:clamp(28px,4vw,46px); font-weight:600; color:#fff; line-height:1.1; margin-bottom:16px; letter-spacing:-0.01em; }
+.sc-modal .intro-headline em { color:#E8B84B; font-style:italic; }
+.sc-modal .intro-sub { font-family:'DM Sans',sans-serif; font-size:13.5px; font-weight:300; color:rgba(255,255,255,0.55); line-height:1.7; max-width:480px; margin-bottom:32px; }
+.sc-modal .intro-meta { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:36px; }
+.sc-modal .meta-item { display:flex; align-items:center; gap:8px; font-family:'DM Mono',monospace; font-size:9.5px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.4); }
+.sc-modal .meta-dot { width:5px; height:5px; background:#C8971C; border-radius:50%; }
+.sc-modal .start-btn { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; background:#C8971C; color:#0D1B2A; border:none; padding:14px 32px; cursor:pointer; transition:background 0.2s; }
+.sc-modal .start-btn:hover { background:#E8B84B; }
+.sc-modal .intro-sections { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:28px; }
+.sc-modal .section-pill { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; border:1px solid rgba(200,151,28,0.2); color:rgba(200,151,28,0.6); padding:5px 10px; }
+
+/* Questions screen */
+.sc-modal #screen-questions { padding: 40px 32px 48px; width: 100%; }
+.sc-modal .question-meta { display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; flex-wrap:wrap; gap:12px; }
+.sc-modal .q-section { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:#C8971C; }
+.sc-modal .q-counter { font-family:'DM Mono',monospace; font-size:11px; color:rgba(255,255,255,0.3); }
+.sc-modal .question-text { font-family:'Cormorant Garamond',serif; font-size:clamp(18px,2.8vw,26px); font-weight:500; color:#fff; line-height:1.35; margin-bottom:28px; }
+.sc-modal .options-list { display:flex; flex-direction:column; gap:8px; margin-bottom:32px; list-style:none; }
+.sc-modal .option-btn {
+  width:100%; text-align:left; background:rgba(27,58,107,0.25); border:1px solid rgba(200,151,28,0.15);
+  padding:14px 18px; cursor:pointer; display:flex; align-items:flex-start; gap:14px;
+  transition:background 0.2s, border-color 0.2s; font-family:'DM Sans',sans-serif;
+}
+.sc-modal .option-btn:hover { background:rgba(27,58,107,0.5); border-color:rgba(200,151,28,0.35); }
+.sc-modal .option-btn.selected { background:rgba(200,151,28,0.12); border-color:#C8971C; }
+.sc-modal .option-key { font-family:'DM Mono',monospace; font-size:10px; color:#C8971C; flex-shrink:0; margin-top:2px; width:18px; }
+.sc-modal .option-text { font-size:13px; font-weight:300; color:rgba(255,255,255,0.8); line-height:1.55; }
+.sc-modal .option-btn.selected .option-text { color:#fff; }
+.sc-modal .q-nav { display:flex; justify-content:space-between; align-items:center; }
+.sc-modal .btn-back,.sc-modal .btn-next { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:11px 22px; cursor:pointer; border:none; transition:background 0.2s, color 0.2s; }
+.sc-modal .btn-back { background:transparent; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.45); }
+.sc-modal .btn-back:hover { border-color:rgba(255,255,255,0.3); color:rgba(255,255,255,0.7); }
+.sc-modal .btn-next { background:#C8971C; color:#0D1B2A; }
+.sc-modal .btn-next:hover { background:#E8B84B; }
+.sc-modal .btn-next:disabled { background:rgba(200,151,28,0.25); color:rgba(13,27,42,0.5); cursor:not-allowed; }
+
+/* Gate / email capture */
+.sc-modal #screen-gate { padding: 48px 32px; width: 100%; }
+.sc-modal .gate-inner { max-width: 560px; margin: 0 auto; width: 100%; }
+.sc-modal .gate-headline { font-family:'Cormorant Garamond',serif; font-size:clamp(24px,3vw,36px); font-weight:600; color:#fff; margin-bottom:12px; line-height:1.15; }
+.sc-modal .gate-sub { font-size:13px; font-weight:300; color:rgba(255,255,255,0.5); margin-bottom:32px; line-height:1.65; }
+.sc-modal .gate-form { display:flex; flex-direction:column; gap:14px; }
+.sc-modal .gate-field { display:flex; flex-direction:column; gap:6px; }
+.sc-modal .gate-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#C8971C; }
+.sc-modal .gate-input { background:rgba(27,58,107,0.3); border:1px solid rgba(200,151,28,0.2); color:#fff; padding:12px 16px; font-family:'DM Sans',sans-serif; font-size:13.5px; font-weight:300; outline:none; transition:border-color 0.2s; }
+.sc-modal .gate-input:focus { border-color:#C8971C; }
+.sc-modal .gate-input::placeholder { color:rgba(255,255,255,0.3); }
+.sc-modal .gate-submit { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; background:#C8971C; color:#0D1B2A; border:none; padding:14px 28px; cursor:pointer; margin-top:8px; transition:background 0.2s; }
+.sc-modal .gate-submit:hover { background:#E8B84B; }
+.sc-modal .gate-privacy { font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:0.08em; color:rgba(255,255,255,0.25); margin-top:12px; line-height:1.6; }
+.sc-modal .gate-preview { background:rgba(27,58,107,0.2); border:1px solid rgba(200,151,28,0.1); padding:20px; margin-bottom:28px; }
+.sc-modal .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.sc-modal .form-field { display:flex; flex-direction:column; gap:6px; }
+.sc-modal .form-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:#C8971C; }
+.sc-modal .form-input, .sc-modal .form-select { background:rgba(27,58,107,0.3); border:1px solid rgba(200,151,28,0.2); color:#fff; padding:12px 16px; font-family:'DM Sans',sans-serif; font-size:13.5px; font-weight:300; outline:none; transition:border-color 0.2s; width:100%; }
+.sc-modal .form-input:focus, .sc-modal .form-select:focus { border-color:#C8971C; }
+.sc-modal .form-input::placeholder { color:rgba(255,255,255,0.3); }
+.sc-modal .form-select option { background:#0D1B2A; color:#fff; }
+@media(max-width:500px){ .sc-modal .form-row { grid-template-columns:1fr; } }
+.sc-modal .preview-label { font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:0.15em; text-transform:uppercase; color:#C8971C; margin-bottom:10px; }
+.sc-modal .preview-score { font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:600; color:#fff; line-height:1; margin-bottom:6px; }
+.sc-modal .preview-score .preview-blur { filter:blur(6px); }
+.sc-modal .preview-tier { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.3); }
+.sc-modal .btn-reveal { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; background:#C8971C; color:#0D1B2A; border:none; padding:14px 28px; cursor:pointer; margin-top:24px; transition:background 0.2s; width:100%; }
+.sc-modal .btn-reveal:hover { background:#E8B84B; }
+
+/* Results screen */
+.sc-modal #screen-results { padding: 40px 32px 48px; width: 100%; }
+.sc-modal .results-header { text-align:center; margin-bottom:36px; padding-bottom:28px; border-bottom:1px solid rgba(200,151,28,0.15); }
+.sc-modal .results-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#C8971C; margin-bottom:14px; }
+.sc-modal .results-score-ring { width:120px; height:120px; border-radius:50%; border:3px solid rgba(200,151,28,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; margin:0 auto 16px; background:rgba(27,58,107,0.2); }
+.sc-modal .results-score-num { font-family:'Cormorant Garamond',serif; font-size:42px; font-weight:600; color:#E8B84B; line-height:1; }
+.sc-modal .results-score-denom { font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,0.35); }
+.sc-modal .results-tier-name { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:600; color:#fff; margin-bottom:8px; }
+.sc-modal .results-tier-desc { font-size:13px; font-weight:300; color:rgba(255,255,255,0.55); line-height:1.65; max-width:480px; margin:0 auto 20px; }
+.sc-modal .section-scores { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:32px; }
+.sc-modal .section-score-card { background:rgba(27,58,107,0.25); border:1px solid rgba(200,151,28,0.12); padding:14px 12px; text-align:center; }
+.sc-modal .ss-name { font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:6px; }
+.sc-modal .ss-score { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:600; color:#E8B84B; line-height:1; }
+.sc-modal .ss-denom { font-size:9px; color:rgba(255,255,255,0.3); }
+.sc-modal .findings-section { margin-bottom:28px; }
+.sc-modal .findings-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:#C8971C; margin-bottom:14px; }
+.sc-modal .findings-grid { display:flex; flex-direction:column; gap:8px; }
+.sc-modal .finding-card { padding:16px 18px; border-left:3px solid; }
+.sc-modal .finding-card.critical { border-color:#8B2020; background:rgba(139,32,32,0.08); }
+.sc-modal .finding-card.moderate { border-color:#7A5C00; background:rgba(122,92,0,0.08); }
+.sc-modal .finding-card.strength { border-color:#1A4A2A; background:rgba(26,74,42,0.08); }
+.sc-modal .finding-badge { font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:6px; }
+.sc-modal .finding-card.critical .finding-badge { color:#c44; }
+.sc-modal .finding-card.moderate .finding-badge { color:#C8971C; }
+.sc-modal .finding-card.strength .finding-badge { color:#4a9; }
+.sc-modal .finding-title { font-size:13px; font-weight:500; color:#fff; margin-bottom:6px; }
+.sc-modal .finding-desc { font-size:12px; font-weight:300; color:rgba(255,255,255,0.55); line-height:1.6; }
+.sc-modal .results-cta { background:rgba(200,151,28,0.06); border:1px solid rgba(200,151,28,0.2); border-top:2px solid #C8971C; padding:28px 24px; text-align:center; }
+.sc-modal #ctaHeadline { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:#fff; margin-bottom:8px; }
+.sc-modal #ctaSub { font-size:12.5px; font-weight:300; color:rgba(255,255,255,0.55); line-height:1.65; margin-bottom:20px; }
+.sc-modal .cta-btn-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.sc-modal .cta-btn-primary { font-family:'DM Sans',sans-serif; font-size:11.5px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; background:#C8971C; color:#0D1B2A; border:none; padding:13px 24px; cursor:pointer; transition:background 0.2s; text-decoration:none; display:inline-block; }
+.sc-modal .cta-btn-primary:hover { background:#E8B84B; }
+.sc-modal .share-btn { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; background:transparent; border:1px solid rgba(200,151,28,0.3); color:rgba(200,151,28,0.8); padding:13px 20px; cursor:pointer; transition:border-color 0.2s; }
+.sc-modal .share-btn:hover { border-color:#C8971C; color:#C8971C; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="300" fill="#1B3A6B"/>
+          <rect x="55" y="88" width="30" height="164" fill="#C8971C"/>
+          <rect x="55" y="152" width="106" height="28" fill="#C8971C"/>
+          <rect x="55" y="55" width="210" height="33" fill="white"/>
+          <polygon points="218,88 244,88 178,219 152,219" fill="white"/>
+          <rect x="55" y="219" width="210" height="33" fill="white"/>
+        </svg>
+      </div>
+      <div class="nav-logo-text">
+        <span class="nav-wordmark">Finlanza</span>
+        <span class="nav-tagline">Systems Architecture</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#infrastructure">Services</a>
+      <a href="#dream">DREAM™</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#industries">Industries</a>
+      <a href="#" data-open-scorecard style="color:var(--gold);">Scorecard</a>
+      <a href="#cta" class="nav-cta">Book a Review</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orbit"></div>
+  <div class="hero-orbit-2"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="zoho-badge reveal">
+        <span class="zoho-badge-logo">ZOHO</span>
+        <span class="zoho-badge-sep"></span>
+        <span class="zoho-badge-label">Authorized Partner · Africa</span>
+      </div>
+      <h1 class="hero-title reveal reveal-delay-1">
+        We Engineer<br><span>Scalable Business</span><br>Systems
+      </h1>
+      <div class="hero-services reveal reveal-delay-2">
+        <span class="hero-service-tag">Enterprise Automation</span>
+        <span class="hero-service-tag">Finance Infrastructure</span>
+        <span class="hero-service-tag">ERP Architecture</span>
+        <span class="hero-service-tag">AI Enablement</span>
+      </div>
+      <div class="hero-actions reveal reveal-delay-3">
+        <a href="#cta" class="btn-primary">Book a Systems Review</a>
+        <a href="#" class="btn-outline" data-open-scorecard>Take the Diagnostic Scorecard</a>
+      </div>
+    </div>
+    <div class="hero-diagram-wrap reveal reveal-delay-2">
+      <!-- DREAM Cycle Diagram -->
+      <svg id="heroDiagram" class="hero-diagram-svg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="h-glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="hg0" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#D4A830"/><stop offset="100%" stop-color="#9A6E10"/></linearGradient>
+          <linearGradient id="hg1" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C8971C"/><stop offset="100%" stop-color="#8A6510"/></linearGradient>
+          <linearGradient id="hg2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#E0A828"/><stop offset="100%" stop-color="#9A6E10"/></linearGradient>
+          <linearGradient id="hg3" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#BF9218"/><stop offset="100%" stop-color="#7A5C00"/></linearGradient>
+          <linearGradient id="hg4" x1="0%" y1="50%" x2="100%" y2="50%"><stop offset="0%" stop-color="#D4A830"/><stop offset="100%" stop-color="#8A6510"/></linearGradient>
+        </defs>
+        <!-- Generated by JS below -->
+        <g id="heroArcs"></g>
+        <circle cx="240" cy="240" r="88" fill="rgba(13,27,42,0.9)" stroke="rgba(200,151,28,0.25)" stroke-width="1.5"/>
+        <circle cx="240" cy="240" r="65" fill="#0D1B2A" stroke="rgba(200,151,28,0.4)" stroke-width="1.5"/>
+        <text x="240" y="234" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="18" font-weight="600" fill="rgba(200,151,28,0.9)" letter-spacing="2">DREAM</text>
+        <text x="240" y="254" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,0.35)" letter-spacing="1">Framework</text>
+        <g id="heroTicks"></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STRUCTURAL PROBLEM ════════════════════════════════════════ -->
+<section id="problem">
+  <div class="wrap">
+    <div class="problem-grid">
+      <div>
+        <div class="section-label reveal">Structural Problem</div>
+        <h2 class="section-title reveal reveal-delay-1">Growth Without Structure<br>Creates <em>Operational Friction</em></h2>
+        <ul class="problem-list reveal reveal-delay-2">
+          <li>Disconnected operational systems operating in silos</li>
+          <li>Manual financial reconciliation cycles consuming senior capacity</li>
+          <li>Delayed executive reporting limiting governance quality</li>
+          <li>Approval bottlenecks across departments slowing execution</li>
+          <li>Limited cross-functional visibility at leadership level</li>
+        </ul>
+        <div class="problem-verdict reveal reveal-delay-3">"Technology alone does not solve this. Architecture does."</div>
+        <p class="problem-proof reveal reveal-delay-3">Proven across multi-location environments in Kenya and Zambia.</p>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="problem-visual">
+          <div class="problem-stat">
+            <div class="problem-stat-num">50+</div>
+            <div class="problem-stat-label">System transformation engagements delivered</div>
+          </div>
+          <div class="problem-stat">
+            <div class="problem-stat-num">100+</div>
+            <div class="problem-stat-label">User enterprise systems engineered</div>
+          </div>
+          <div class="problem-stat">
+            <div class="problem-stat-num">3+</div>
+            <div class="problem-stat-label">Countries of active deployment — Kenya, Zambia, and expanding</div>
+          </div>
+          <div class="problem-stat">
+            <div class="problem-stat-num">∞</div>
+            <div class="problem-stat-label">Legacy systems successfully migrated from QuickBooks, Sage, and Tally</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INFRASTRUCTURE LAYER ══════════════════════════════════════ -->
+<section id="infrastructure">
+  <div class="wrap">
+    <div class="section-label reveal">Infrastructure Layer</div>
+    <h2 class="section-title reveal reveal-delay-1">We Operate at the Level<br>of <em>Infrastructure</em></h2>
+    <p class="section-intro reveal reveal-delay-2">We engineer interconnected operational systems aligned to governance, control, and scale — not software installations.</p>
+    <div class="services-grid reveal reveal-delay-2">
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+        <div class="service-name">CRM Architecture</div>
+        <div class="service-desc">Structured revenue architecture and lifecycle governance from lead acquisition through to recognition.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg></div>
+        <div class="service-name">Finance Infrastructure</div>
+        <div class="service-desc">Multi-entity financial governance, consolidated reporting systems, and audit-aligned controls.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
+        <div class="service-name">Procurement Architecture</div>
+        <div class="service-desc">Approval frameworks, vendor governance, and structured spend control aligned to budget thresholds.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></div>
+        <div class="service-name">Inventory & Operations</div>
+        <div class="service-desc">Multi-location inventory visibility and operational process control across branches and warehouses.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div>
+        <div class="service-name">Workforce Governance</div>
+        <div class="service-desc">HR systems architecture, payroll integration, and structured accountability frameworks.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+        <div class="service-name">Executive Reporting</div>
+        <div class="service-desc">Real-time performance dashboards aligned to leadership decisions and KPI governance cycles.</div>
+      </div>
+    </div>
+    <div class="services-footer reveal">All systems engineered under the DREAM™ Transformation Framework</div>
+  </div>
+</section>
+
+<!-- ═══ DREAM FRAMEWORK ════════════════════════════════════════════ -->
+<section id="dream">
+  <div class="dream-header wrap">
+    <div class="section-label reveal">The DREAM™ Framework</div>
+    <h2 class="section-title reveal reveal-delay-1">Scalable Organizations Are<br><em>Engineered — Not Installed</em></h2>
+    <p class="dream-hero-text reveal reveal-delay-2"><strong>Most automation fails not because of technology — but because structure was never redesigned.</strong> Before systems scale, architecture must be intentional. DREAM is the five-phase transformation discipline Finlanza applies across every engagement.</p>
+    <p class="dream-hero-text reveal reveal-delay-3" style="font-family:var(--ff-mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-top:4px;">From Chaos to Control.</p>
+  </div>
+
+  <div class="dream-layout wrap">
+    <!-- Left: Diagram -->
+    <div class="dream-diagram-col reveal">
+      <svg id="dreamSvg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="d-glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="dg0" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#D4A830"/><stop offset="100%" stop-color="#9A6E10"/></linearGradient>
+          <linearGradient id="dg1" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C8971C"/><stop offset="100%" stop-color="#8A6510"/></linearGradient>
+          <linearGradient id="dg2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#E0A828"/><stop offset="100%" stop-color="#9A6E10"/></linearGradient>
+          <linearGradient id="dg3" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#BF9218"/><stop offset="100%" stop-color="#7A5C00"/></linearGradient>
+          <linearGradient id="dg4" x1="0%" y1="50%" x2="100%" y2="50%"><stop offset="0%" stop-color="#D4A830"/><stop offset="100%" stop-color="#8A6510"/></linearGradient>
+        </defs>
+        <g id="dreamArcs"></g>
+        <!-- Ticks -->
+        <g id="dreamTicks"></g>
+        <!-- Spinning outer -->
+        <circle id="dreamOrbit" cx="240" cy="240" r="225" fill="none" stroke="rgba(200,151,28,0.07)" stroke-width="1" stroke-dasharray="3 9"/>
+        <!-- Centre -->
+        <circle cx="240" cy="240" r="92" fill="none" stroke="rgba(200,151,28,0.15)" stroke-width="1"/>
+        <circle cx="240" cy="240" r="80" fill="rgba(13,27,42,0.92)" stroke="rgba(200,151,28,0.3)" stroke-width="1.5"/>
+        <circle cx="240" cy="240" r="58" fill="#0D1B2A" stroke="rgba(200,151,28,0.4)" stroke-width="1.5"/>
+        <text x="240" y="233" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="20" font-weight="600" fill="rgba(200,151,28,0.95)" letter-spacing="2">DREAM</text>
+        <text x="240" y="252" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.35)" letter-spacing="1">Framework</text>
+        <line x1="200" y1="260" x2="280" y2="260" stroke="rgba(200,151,28,0.2)" stroke-width="0.5"/>
+        <text x="240" y="273" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(255,255,255,0.2)" letter-spacing="1">© FINLANZA</text>
+        <g id="dreamConnectors"></g>
+      </svg>
+    </div>
+
+    <!-- Right: Phase tabs -->
+    <div class="dream-phases-col">
+      <div class="dream-phases-nav">
+        <div class="dream-phase-tab active" data-phase="0">
+          <div class="dream-tab-letter">D</div>
+          <div class="dream-tab-info">
+            <div class="dream-tab-name">Diagnose</div>
+            <div class="dream-tab-tagline">Current State Analysis</div>
+          </div>
+          <div class="dream-tab-num">01</div>
+        </div>
+        <div class="dream-phase-tab" data-phase="1">
+          <div class="dream-tab-letter">R</div>
+          <div class="dream-tab-info">
+            <div class="dream-tab-name">Reengineer</div>
+            <div class="dream-tab-tagline">Future State Design</div>
+          </div>
+          <div class="dream-tab-num">02</div>
+        </div>
+        <div class="dream-phase-tab" data-phase="2">
+          <div class="dream-tab-letter">E</div>
+          <div class="dream-tab-info">
+            <div class="dream-tab-name">Execute</div>
+            <div class="dream-tab-tagline">Build & Deploy</div>
+          </div>
+          <div class="dream-tab-num">03</div>
+        </div>
+        <div class="dream-phase-tab" data-phase="3">
+          <div class="dream-tab-letter">A</div>
+          <div class="dream-tab-info">
+            <div class="dream-tab-name">Align</div>
+            <div class="dream-tab-tagline">Embed & Adopt</div>
+          </div>
+          <div class="dream-tab-num">04</div>
+        </div>
+        <div class="dream-phase-tab" data-phase="4">
+          <div class="dream-tab-letter">M</div>
+          <div class="dream-tab-info">
+            <div class="dream-tab-name">Measure</div>
+            <div class="dream-tab-tagline">Govern & Improve</div>
+          </div>
+          <div class="dream-tab-num">05</div>
+        </div>
+      </div>
+
+      <!-- Phase details -->
+      <div class="dream-detail active" data-detail="0">
+        <div class="dream-detail-label">Phase 01 · Diagnose</div>
+        <div class="dream-detail-title">Current State Analysis</div>
+        <div class="dream-detail-body">A rigorous, evidence-based analysis of how your organization actually operates — before any system is configured. We map processes, evaluate technology infrastructure, assess financial architecture, and identify governance gaps. The output is an unvarnished picture of operational reality, not a vendor sales narrative.</div>
+        <div class="dream-deliverables">
+          <div class="dream-del-head">Key Deliverables</div>
+          <div class="dream-del-item">Diagnostic Report & Systems Inventory</div>
+          <div class="dream-del-item">Process & Governance Gap Analysis</div>
+          <div class="dream-del-item">Technology Architecture Assessment</div>
+          <div class="dream-del-item">Transformation Roadmap with Priorities</div>
+        </div>
+      </div>
+      <div class="dream-detail" data-detail="1">
+        <div class="dream-detail-label">Phase 02 · Reengineer</div>
+        <div class="dream-detail-title">Future State Design</div>
+        <div class="dream-detail-body">We redesign the operating model on paper before a single system is configured. Reengineering establishes the right workflows, governance structures, approval frameworks, and data architecture for your scale. Technology built on reengineered foundations performs. Technology deployed on broken processes fails faster and more expensively.</div>
+        <div class="dream-deliverables">
+          <div class="dream-del-head">Key Deliverables</div>
+          <div class="dream-del-item">Future-State Process Architecture</div>
+          <div class="dream-del-item">Standard Operating Procedures (SOPs)</div>
+          <div class="dream-del-item">Operating Model & Governance Design</div>
+          <div class="dream-del-item">Role & Responsibility Matrix</div>
+        </div>
+      </div>
+      <div class="dream-detail" data-detail="2">
+        <div class="dream-detail-label">Phase 03 · Execute</div>
+        <div class="dream-detail-title">Build & Deploy</div>
+        <div class="dream-detail-body">We configure and deploy enterprise systems engineered precisely to the operating model defined in Phase R — not a generic implementation from a configuration checklist. For most engagements, this means deploying the Zoho platform across CRM, finance, operations, HR, and reporting, with structured integrations and data migration from legacy systems.</div>
+        <div class="dream-deliverables">
+          <div class="dream-del-head">Key Deliverables</div>
+          <div class="dream-del-item">Enterprise Platform Configuration</div>
+          <div class="dream-del-item">System Integrations & Data Migration</div>
+          <div class="dream-del-item">User Acceptance Testing (UAT)</div>
+          <div class="dream-del-item">Controlled Go-Live & Hypercare</div>
+        </div>
+      </div>
+      <div class="dream-detail" data-detail="3">
+        <div class="dream-detail-label">Phase 04 · Align</div>
+        <div class="dream-detail-title">Embed & Adopt</div>
+        <div class="dream-detail-body">A system that nobody uses is an expensive liability. Align is a dedicated phase ensuring technology and redesigned processes are genuinely embedded in how people work — not just deployed and abandoned. We run structured training programmes, manage the change process, and track adoption to ensure the transformation holds.</div>
+        <div class="dream-deliverables">
+          <div class="dream-del-head">Key Deliverables</div>
+          <div class="dream-del-item">Structured Training Programme</div>
+          <div class="dream-del-item">Role-Based User Guides</div>
+          <div class="dream-del-item">Change Management & Adoption Tracking</div>
+          <div class="dream-del-item">Issue Resolution & Stabilization</div>
+        </div>
+      </div>
+      <div class="dream-detail" data-detail="4">
+        <div class="dream-detail-label">Phase 05 · Measure</div>
+        <div class="dream-detail-title">Govern & Improve</div>
+        <div class="dream-detail-body">We install the KPI frameworks, executive dashboards, and governance structures that make transformation permanent and visible. Leadership gains real-time operational clarity to make confident decisions. Measure then feeds back into Diagnose — creating a continuous improvement loop that prevents regression and enables deliberate scale.</div>
+        <div class="dream-deliverables">
+          <div class="dream-del-head">Key Deliverables</div>
+          <div class="dream-del-item">KPI Framework & Governance Structure</div>
+          <div class="dream-del-item">Executive Dashboard Architecture</div>
+          <div class="dream-del-item">Monthly Performance Review Cadence</div>
+          <div class="dream-del-item">Continuous Improvement Framework</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DEPLOYMENT SCALE ════════════════════════════════════════════ -->
+<section id="deployment">
+  <div class="wrap">
+    <div class="section-label reveal">Deployment Scale</div>
+    <h2 class="section-title reveal reveal-delay-1">Proven Across Complex, Multi-Location,<br><em>Multi-Entity Environments</em></h2>
+    <p class="section-intro reveal reveal-delay-2">Structured system engineering delivered across finance, operations, and governance layers — in organizations where the cost of getting it wrong is high.</p>
+    <div class="dep-stats reveal reveal-delay-2" style="margin-bottom:2px;">
+      <div class="dep-stat"><div class="dep-stat-n">50+</div><div class="dep-stat-l">System transformation engagements</div></div>
+      <div class="dep-stat"><div class="dep-stat-n">100+</div><div class="dep-stat-l">User enterprise systems engineered</div></div>
+      <div class="dep-stat"><div class="dep-stat-n">3+</div><div class="dep-stat-l">Countries of active deployment</div></div>
+      <div class="dep-stat"><div class="dep-stat-n">Multi</div><div class="dep-stat-l">Legacy platform migrations from QuickBooks, Sage & Tally</div></div>
+    </div>
+    <div class="deployment-grid reveal reveal-delay-3">
+      <div class="dep-panel">
+        <div class="dep-panel-head">Deployment Indicators</div>
+        <ul class="dep-list">
+          <li>Multi-location ERP deployments with consolidated reporting</li>
+          <li>Multi-branch financial consolidation environments</li>
+          <li>Legacy migrations from QuickBooks, Sage, and Tally</li>
+          <li>Structured procurement and approval automation</li>
+          <li>100+ user enterprise systems with role-based governance</li>
+          <li>Multi-entity chart of accounts and reporting structures</li>
+        </ul>
+      </div>
+      <div class="dep-panel">
+        <div class="dep-panel-head">Complexity Signals We Operate In</div>
+        <ul class="dep-list">
+          <li>Multi-entity financial architecture and intercompany structures</li>
+          <li>Cross-functional system integration requirements</li>
+          <li>Role-based governance and approval matrix design</li>
+          <li>Executive dashboard frameworks aligned to board reporting</li>
+          <li>Audit-aligned reporting systems and compliance controls</li>
+          <li>Structured data standardization across legacy environments</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ENGINEERING CAPABILITIES ══════════════════════════════════ -->
+<section id="capabilities">
+  <div class="wrap">
+    <div class="section-label reveal">Engineering Capabilities</div>
+    <h2 class="section-title reveal reveal-delay-1">Structured System Architecture<br>Across <em>Core Business Functions</em></h2>
+    <p class="section-intro reveal reveal-delay-2">Each engagement is engineered across interconnected operational layers — not siloed software installations.</p>
+    <div class="caps-grid reveal reveal-delay-2">
+      <div class="cap-card">
+        <div class="cap-num">01</div>
+        <div class="cap-name">Enterprise ERP Implementation</div>
+        <div class="cap-desc">Multi-entity ERP architecture aligned to financial governance, operational control, and consolidated reporting structures.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">02</div>
+        <div class="cap-name">Finance Infrastructure & Controls</div>
+        <div class="cap-desc">Structured financial systems with consolidated multi-entity reporting, budget controls, and audit-ready frameworks.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">03</div>
+        <div class="cap-name">Procurement & Approval Architecture</div>
+        <div class="cap-desc">Budget thresholds, role-based approval workflows, vendor governance, and structured spend control automation.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">04</div>
+        <div class="cap-name">CRM & Revenue Architecture</div>
+        <div class="cap-desc">Lifecycle governance from lead acquisition through qualification, pipeline management, and structured revenue recognition.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">05</div>
+        <div class="cap-name">Data & Executive Reporting</div>
+        <div class="cap-desc">Real-time executive dashboards aligned to KPI governance, decision cycles, and board-level reporting requirements.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">06</div>
+        <div class="cap-name">Custom Operational Systems</div>
+        <div class="cap-desc">Tailored system engineering using Zoho Creator and controlled integrations — built to specification, not off-the-shelf.</div>
+      </div>
+    </div>
+    <div class="caps-footer reveal">All service deployments executed under the DREAM™ Transformation Discipline</div>
+  </div>
+</section>
+
+<!-- ═══ INDUSTRY CONTEXT ════════════════════════════════════════════ -->
+<section id="industries">
+  <div class="wrap">
+    <div class="section-label reveal">Industry Context</div>
+    <h2 class="section-title reveal reveal-delay-1">Engineered Across Complex<br><em>Operating Environments</em></h2>
+    <p class="section-intro reveal reveal-delay-2">Systems architecture tailored to sector-specific governance, reporting, and operational demands — where generic implementations fail.</p>
+    <div class="industry-grid reveal reveal-delay-2">
+      <div class="industry-card">
+        <div class="ind-name">NGOs & Donor-Funded Programs</div>
+        <div class="ind-tags">
+          <span class="ind-tag">Grant Tracking</span>
+          <span class="ind-tag">Multi-Project Budgeting</span>
+          <span class="ind-tag">Compliance Reporting</span>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="ind-name">Logistics & Transport</div>
+        <div class="ind-tags">
+          <span class="ind-tag">Trip Management</span>
+          <span class="ind-tag">Fleet Oversight</span>
+          <span class="ind-tag">Multi-Branch Consolidation</span>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="ind-name">Manufacturing</div>
+        <div class="ind-tags">
+          <span class="ind-tag">BoM Architecture</span>
+          <span class="ind-tag">Production Cost Visibility</span>
+          <span class="ind-tag">Material Variance</span>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="ind-name">Education Institutions</div>
+        <div class="ind-tags">
+          <span class="ind-tag">Term-Based Billing</span>
+          <span class="ind-tag">Fee Management</span>
+          <span class="ind-tag">Financial Visibility</span>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="ind-name">Retail & Distribution</div>
+        <div class="ind-tags">
+          <span class="ind-tag">Inventory Governance</span>
+          <span class="ind-tag">Warehouse Control</span>
+          <span class="ind-tag">Revenue Reporting</span>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="ind-name">Construction & Field Operations</div>
+        <div class="ind-tags">
+          <span class="ind-tag">Project Budgeting</span>
+          <span class="ind-tag">Approval Workflows</span>
+          <span class="ind-tag">Cost Monitoring</span>
+        </div>
+      </div>
+    </div>
+    <div class="industry-footer reveal">Regional deployment footprint across Kenya, Zambia, and multi-country environments</div>
+  </div>
+</section>
+
+<!-- ═══ CTA ════════════════════════════════════════════════════════ -->
+<section id="cta">
+  <div class="wrap">
+    <div class="cta-inner">
+      <div>
+        <div class="section-label reveal">Systems Architecture Review</div>
+        <h2 class="section-title reveal reveal-delay-1">Engage at the Level<br>of <em>Infrastructure</em></h2>
+        <p class="section-intro reveal reveal-delay-2" style="margin-bottom:0;">For organizations experiencing operational friction, reporting delays, or governance complexity — we begin with a structured Systems Architecture Review.</p>
+        <ul class="cta-list reveal reveal-delay-3">
+          <li>System architecture gaps and infrastructure readiness</li>
+          <li>Financial reporting alignment and consolidation maturity</li>
+          <li>Governance structure and approval framework assessment</li>
+          <li>Cross-functional integration maturity and data flow analysis</li>
+        </ul>
+        <p class="problem-verdict reveal reveal-delay-3" style="margin-bottom:12px;">"This is not a demo. It is a structural assessment."</p>
+        <p class="cta-note reveal reveal-delay-4">Designed for multi-location, multi-entity, and growth-stage organizations.</p>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="cta-card">
+          <div class="cta-card-head">Book a Systems Architecture Review</div>
+          <div class="cta-card-body">A 60-minute structured session in which we assess your operational systems, governance architecture, and transformation readiness. You receive a written assessment within 5 business days.</div>
+          <div class="cta-actions">
+            <a href="#" class="btn-primary" style="text-align:center;">Book a Systems Architecture Review</a>
+            <a href="#" class="btn-outline" style="text-align:center;" data-open-scorecard>Take the Diagnostic Scorecard</a>
+          </div>
+          <div class="cta-card-note">No product demo. No sales pitch.<br>A structural conversation about your business.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-tagline"><span>Scalability</span> is not an accident.<br>It is engineered.</div>
+    <div class="footer-sub-tagline">Zoho Authorized Partner · Enterprise Implementation Specialists · Africa</div>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-wordmark">Finlanza</div>
+        <div class="footer-brand-tag">Business Systems Architecture Firm</div>
+        <div class="footer-brand-desc">We engineer scalable business systems for multi-location, multi-entity organizations across Africa. Built on the DREAM™ Transformation Framework.</div>
+      </div>
+      <div>
+        <div class="footer-col-head">Services</div>
+        <ul class="footer-links">
+          <li><a href="#infrastructure">CRM Architecture</a></li>
+          <li><a href="#infrastructure">Finance Infrastructure</a></li>
+          <li><a href="#infrastructure">Procurement Architecture</a></li>
+          <li><a href="#capabilities">ERP Implementation</a></li>
+          <li><a href="#capabilities">Executive Reporting</a></li>
+          <li><a href="#capabilities">Custom Systems</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-head">Company</div>
+        <ul class="footer-links">
+          <li><a href="#dream">The DREAM™ Framework</a></li>
+          <li><a href="#industries">Industries</a></li>
+          <li><a href="#deployment">Deployment Scale</a></li>
+          <li><a href="#cta">Book a Review</a></li>
+          <li><a href="#" data-open-scorecard>Diagnostic Scorecard</a></li>
+        </ul>
+        <div style="margin-top:24px; font-family:var(--ff-mono); font-size:9px; color:var(--muted2); line-height:1.8;">
+          hello@finlanza.com<br>
+          Nairobi, Kenya<br>
+          finlanza.com
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Finlanza. All rights reserved. DREAM™ is a proprietary transformation framework.</div>
+      <div class="footer-zoho">
+        <span style="font-size:9px;letter-spacing:0.08em;">ZOHO</span>
+        <span style="width:1px;height:10px;background:rgba(200,151,28,0.2);display:inline-block;"></span>
+        <span>Authorized Partner</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ JAVASCRIPT ══════════════════════════════════════════════════ -->
+<script>
+// ── Build SVG diagrams ─────────────────────────────────────────────
+function buildDiagram(arcGroupId, ticksId, cx, cy, outerR, innerR, gap, gradPrefix, filter) {
+  const phases = ['D','R','E','A','M'];
+  const grads  = [`${gradPrefix}0`,`${gradPrefix}1`,`${gradPrefix}2`,`${gradPrefix}3`,`${gradPrefix}4`];
+  const arcGroup = document.getElementById(arcGroupId);
+  const tickGroup = document.getElementById(ticksId);
+  const NS = 'http://www.w3.org/2000/svg';
+
+  function polar(r, deg) {
+    const rad = (deg - 90) * Math.PI / 180;
+    return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+  }
+
+  function arcPath(or, ir, start, end) {
+    const [x1,y1] = polar(or, start), [x2,y2] = polar(or, end);
+    const [x3,y3] = polar(ir, end),   [x4,y4] = polar(ir, start);
+    const large = (end - start > 180) ? 1 : 0;
+    return `M${x1},${y1} A${or},${or} 0 ${large} 1 ${x2},${y2} L${x3},${y3} A${ir},${ir} 0 ${large} 0 ${x4},${y4} Z`;
+  }
+
+  const segDeg = 360 / 5;
+  phases.forEach((letter, i) => {
+    const start = i * segDeg + gap/2;
+    const end   = (i+1) * segDeg - gap/2;
+    const mid   = (start + end) / 2;
+    const midR  = (outerR + innerR) / 2;
+
+    const g = document.createElementNS(NS, 'g');
+    g.style.cursor = 'pointer';
+    g.dataset.phase = i;
+
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', arcPath(outerR, innerR, start, end));
+    path.setAttribute('fill', `url(#${grads[i]})`);
+    if (filter) path.setAttribute('filter', `url(#${filter})`);
+    path.style.opacity = '0.88';
+    path.style.transition = 'opacity 0.25s, filter 0.25s';
+    g.appendChild(path);
+
+    const [lx,ly] = polar(midR, mid);
+    const text = document.createElementNS(NS, 'text');
+    text.setAttribute('x', lx); text.setAttribute('y', ly);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('dominant-baseline', 'central');
+    text.setAttribute('font-family', 'Cormorant Garamond, serif');
+    text.setAttribute('font-size', outerR > 160 ? '32' : '22');
+    text.setAttribute('font-weight', '600');
+    text.setAttribute('fill', 'rgba(255,255,255,0.92)');
+    text.style.pointerEvents = 'none';
+    text.textContent = letter;
+    g.appendChild(text);
+
+    // Outer label (larger diagram only)
+    if (outerR > 160) {
+      const labelR = outerR + 32;
+      const [nlx, nly] = polar(labelR, mid);
+      const nl = document.createElementNS(NS, 'text');
+      nl.setAttribute('x', nlx); nl.setAttribute('y', nly - 7);
+      nl.setAttribute('text-anchor', 'middle');
+      nl.setAttribute('font-family', 'DM Sans, sans-serif');
+      nl.setAttribute('font-size', '9');
+      nl.setAttribute('font-weight', '500');
+      nl.setAttribute('fill', 'rgba(255,255,255,0.55)');
+      nl.setAttribute('letter-spacing', '1.5');
+      nl.textContent = ['DIAGNOSE','REENGINEER','EXECUTE','ALIGN','MEASURE'][i].toUpperCase();
+      nl.style.pointerEvents = 'none';
+      g.appendChild(nl);
+    }
+
+    g.addEventListener('mouseenter', () => { path.style.opacity = '1'; path.style.filter = 'brightness(1.15)'; });
+    g.addEventListener('mouseleave', () => { path.style.opacity = '0.88'; path.style.filter = ''; });
+
+    // Click on dream diagram activates phase tab
+    if (arcGroupId === 'dreamArcs') {
+      g.addEventListener('click', () => activateDreamPhase(i));
+    }
+
+    arcGroup.appendChild(g);
+  });
+
+  // Tick marks
+  if (tickGroup) {
+    for (let t = 0; t < 72; t++) {
+      const ang = t * 5;
+      const major = (t % 5 === 0);
+      const r1 = outerR + (major ? 12 : 6);
+      const r2 = outerR + 2;
+      const [x1,y1] = polar(r1, ang);
+      const [x2,y2] = polar(r2, ang);
+      const line = document.createElementNS(NS, 'line');
+      line.setAttribute('x1',x1); line.setAttribute('y1',y1);
+      line.setAttribute('x2',x2); line.setAttribute('y2',y2);
+      line.setAttribute('stroke', major ? 'rgba(200,151,28,0.25)' : 'rgba(200,151,28,0.1)');
+      line.setAttribute('stroke-width', major ? '1.5' : '0.8');
+      tickGroup.appendChild(line);
+    }
+  }
+}
+
+buildDiagram('heroArcs',  'heroTicks',  240, 240, 175, 100, 4, 'hg', null);
+buildDiagram('dreamArcs', 'dreamTicks', 240, 240, 185, 105, 4, 'dg', 'd-glow');
+
+// Spinning orbit
+const dreamOrbit = document.getElementById('dreamOrbit');
+let orbitAngle = 0;
+function spinOrbit() {
+  orbitAngle += 0.008;
+  const ox = 240 + 225 * Math.cos(orbitAngle);
+  const oy = 240 + 225 * Math.sin(orbitAngle);
+  requestAnimationFrame(spinOrbit);
+}
+spinOrbit();
+
+// ── DREAM Phase Tabs ───────────────────────────────────────────────
+function activateDreamPhase(idx) {
+  document.querySelectorAll('.dream-phase-tab').forEach((tab, i) => {
+    tab.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.dream-detail').forEach((detail, i) => {
+    detail.classList.toggle('active', i === idx);
+  });
+  // Dim other arc segments
+  document.querySelectorAll('#dreamArcs g').forEach((g, i) => {
+    const path = g.querySelector('path');
+    if (path) path.style.opacity = (i === idx) ? '1' : '0.2';
+  });
+}
+
+document.querySelectorAll('.dream-phase-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    activateDreamPhase(parseInt(tab.dataset.phase));
+  });
+});
+
+// ── Scroll Reveal ──────────────────────────────────────────────────
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => observer.observe(el));
+
+// ── Nav active state ───────────────────────────────────────────────
+const sections = document.querySelectorAll('section[id], footer');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === `#${current}` ? 'rgba(200,151,28,0.9)' : '';
+  });
+}, { passive: true });
+
+
+// ── SCORECARD MODAL CONTROLS ───────────────────────────────────────────────
+function openScModal() {
+  document.getElementById('scModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeScModal() {
+  document.getElementById('scModalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('scModalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeScModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeScModal();
+});
+
+// ── SCORECARD LOGIC (from finlanza-scorecard.html) ─────────────────────────
+// ── QUESTION DATA ─────────────────────────────────────────────────────────
+const QUESTIONS = [
+
+  // SECTION 1: Process & Operations (Q1–3)
+  {
+    section: "Process & Operations",
+    text: "How would you describe the way core business processes are documented in your organisation?",
+    options: [
+      { text: "We have no written documentation — processes live in people's heads.", score: 0 },
+      { text: "Some things are written down but it's inconsistent and often outdated.", score: 1 },
+      { text: "Most processes are documented but not always followed consistently.", score: 2 },
+      { text: "We have clear, current SOPs that staff actively follow.", score: 3 },
+    ]
+  },
+  {
+    section: "Process & Operations",
+    text: "When a key employee leaves, how much operational disruption does their departure typically cause?",
+    options: [
+      { text: "It's a crisis — we lose significant knowledge and capability with each departure.", score: 0 },
+      { text: "It takes weeks of firefighting to stabilise things.", score: 1 },
+      { text: "Some disruption, but we recover relatively quickly.", score: 2 },
+      { text: "Minimal disruption — our systems carry the knowledge, not individuals.", score: 3 },
+    ]
+  },
+  {
+    section: "Process & Operations",
+    text: "How consistently are your operational processes actually executed across the business?",
+    options: [
+      { text: "Every person does things their own way — there is no standard.", score: 0 },
+      { text: "There is a rough standard but significant variation in practice.", score: 1 },
+      { text: "Mostly consistent, with occasional deviations that get corrected.", score: 2 },
+      { text: "High consistency — deviations are rare and flagged immediately.", score: 3 },
+    ]
+  },
+
+  // SECTION 2: Finance Infrastructure (Q4–6)
+  {
+    section: "Finance Infrastructure",
+    text: "How quickly can your finance team produce a clear picture of the business's financial position?",
+    options: [
+      { text: "It takes days or weeks — we're often not sure where we stand.", score: 0 },
+      { text: "We can get there eventually but it requires significant manual work.", score: 1 },
+      { text: "We can pull together a reasonable picture within a day or two.", score: 2 },
+      { text: "Real-time or near-real-time visibility — dashboards are updated automatically.", score: 3 },
+    ]
+  },
+  {
+    section: "Finance Infrastructure",
+    text: "How would you describe your invoicing, collections, and accounts receivable process?",
+    options: [
+      { text: "Ad hoc and manual — invoices are sent inconsistently and chasing is reactive.", score: 0 },
+      { text: "We have a process but it relies heavily on one person and misses frequently.", score: 1 },
+      { text: "Generally works but has gaps — some invoices still slip through.", score: 2 },
+      { text: "Systematic and largely automated — AR is tracked and chased consistently.", score: 3 },
+    ]
+  },
+  {
+    section: "Finance Infrastructure",
+    text: "How accurately can you forecast cashflow for the next 90 days?",
+    options: [
+      { text: "We cannot forecast cashflow — we find out when there's a problem.", score: 0 },
+      { text: "Very rough estimates only — we're frequently surprised by cashflow gaps.", score: 1 },
+      { text: "Reasonable accuracy, built on some data and some assumptions.", score: 2 },
+      { text: "Strong accuracy — we build rolling forecasts based on real pipeline and cost data.", score: 3 },
+    ]
+  },
+
+  // SECTION 3: Data & Reporting (Q7–9)
+  {
+    section: "Data & Reporting",
+    text: "When leadership wants to understand business performance, how do you get the answer?",
+    options: [
+      { text: "Someone has to manually compile data from multiple places — it takes time and is often incomplete.", score: 0 },
+      { text: "We have some reports but they're not always accurate or current.", score: 1 },
+      { text: "We have dashboards but they require some manual updating.", score: 2 },
+      { text: "We have live dashboards that give leadership real-time performance visibility.", score: 3 },
+    ]
+  },
+  {
+    section: "Data & Reporting",
+    text: "How confident are you in the accuracy of the data your business decisions are based on?",
+    options: [
+      { text: "Not confident — data quality is a known problem but nothing has been done about it.", score: 0 },
+      { text: "Somewhat confident, but we know there are gaps and errors we haven't fixed.", score: 1 },
+      { text: "Reasonably confident — we've cleaned things up but know there's more to do.", score: 2 },
+      { text: "Very confident — data governance is taken seriously and quality is maintained.", score: 3 },
+    ]
+  },
+  {
+    section: "Data & Reporting",
+    text: "How are KPIs tracked and communicated across your organisation?",
+    options: [
+      { text: "We don't have defined KPIs — performance is tracked informally if at all.", score: 0 },
+      { text: "KPIs exist on paper but aren't regularly tracked or reviewed.", score: 1 },
+      { text: "KPIs are tracked and shared in monthly or quarterly reviews.", score: 2 },
+      { text: "KPIs are tracked in real time and reviewed formally at all levels of the business.", score: 3 },
+    ]
+  },
+
+  // SECTION 4: Technology Stack (Q10–12)
+  {
+    section: "Technology Stack",
+    text: "How integrated are the software systems your business uses day-to-day?",
+    options: [
+      { text: "No integration — different teams use different tools and data never comes together.", score: 0 },
+      { text: "Minimal integration — some manual exports and imports between systems.", score: 1 },
+      { text: "Partially integrated — some systems talk to each other but not all.", score: 2 },
+      { text: "Fully integrated — data flows automatically between all core systems.", score: 3 },
+    ]
+  },
+  {
+    section: "Technology Stack",
+    text: "How much time does your team spend on manual, repetitive administrative tasks each week?",
+    options: [
+      { text: "An enormous amount — manual work is one of our biggest productivity drains.", score: 0 },
+      { text: "Significant — several hours per person per week on avoidable manual tasks.", score: 1 },
+      { text: "Some — we've automated parts of it but a meaningful amount remains.", score: 2 },
+      { text: "Very little — most routine work is automated.", score: 3 },
+    ]
+  },
+  {
+    section: "Technology Stack",
+    text: "How would you describe your organisation's technology adoption and utilisation?",
+    options: [
+      { text: "We are significantly behind where we should be — tech is a competitive disadvantage.", score: 0 },
+      { text: "We have technology but don't use it well — poor adoption is a recurring issue.", score: 1 },
+      { text: "Decent adoption but we know we're only using a fraction of what's available to us.", score: 2 },
+      { text: "Strong — we use technology as a strategic asset and continuously improve our stack.", score: 3 },
+    ]
+  },
+
+  // SECTION 5: People & Alignment (Q13–15)
+  {
+    section: "People & Alignment",
+    text: "How clearly do team members understand what is expected of them and how their work connects to business goals?",
+    options: [
+      { text: "Most people don't have a clear picture — roles and expectations are vague.", score: 0 },
+      { text: "Job descriptions exist but there's often confusion about priorities and expectations.", score: 1 },
+      { text: "Generally clear, though alignment breaks down during busy periods.", score: 2 },
+      { text: "Very clear — every person understands their role, KPIs, and how they contribute.", score: 3 },
+    ]
+  },
+  {
+    section: "People & Alignment",
+    text: "How effectively does information flow across departments and teams in your organisation?",
+    options: [
+      { text: "Poorly — silos are a serious problem. Teams operate without awareness of what others are doing.", score: 0 },
+      { text: "There are silos but people work around them — it creates friction.", score: 1 },
+      { text: "Reasonable flow, but we miss things and important updates don't always reach the right people.", score: 2 },
+      { text: "Strong cross-functional visibility — teams are aligned and communication is systematic.", score: 3 },
+    ]
+  },
+  {
+    section: "People & Alignment",
+    text: "When you implement a new process or system, how well does your organisation actually adopt it?",
+    options: [
+      { text: "Poorly — change rarely sticks. New initiatives are launched but old habits return.", score: 0 },
+      { text: "Mixed — some people adopt, others resist. Compliance is inconsistent.", score: 1 },
+      { text: "Reasonable adoption with management follow-through, though it takes time.", score: 2 },
+      { text: "Strong — we have a structured approach to change and people generally follow through.", score: 3 },
+    ]
+  },
+
+  // SECTION 6: Growth Readiness (Q16–18)
+  {
+    section: "Growth Readiness",
+    text: "If your revenue doubled in the next 12 months, how well could your current systems handle that growth?",
+    options: [
+      { text: "They would completely break down — we couldn't handle double the volume with current systems.", score: 0 },
+      { text: "We would struggle significantly and need to rebuild almost everything under pressure.", score: 1 },
+      { text: "We could manage but it would be stressful and we'd need to upgrade key areas.", score: 2 },
+      { text: "We are built to scale — our systems can handle significantly more without breaking.", score: 3 },
+    ]
+  },
+  {
+    section: "Growth Readiness",
+    text: "How confident are you that your leadership team has real-time visibility of the information needed to make good decisions?",
+    options: [
+      { text: "Not confident — decisions are often made on gut feel or outdated information.", score: 0 },
+      { text: "Partially — some good information exists but significant blind spots remain.", score: 1 },
+      { text: "Mostly confident — visibility is reasonable but not complete.", score: 2 },
+      { text: "Very confident — we have the information we need when we need it.", score: 3 },
+    ]
+  },
+  {
+    section: "Growth Readiness",
+    text: "Overall, to what extent do your business systems feel like an asset versus a liability?",
+    options: [
+      { text: "Significant liability — our systems hold us back more than they help us move forward.", score: 0 },
+      { text: "More liability than asset — we spend too much time managing system failures.", score: 1 },
+      { text: "Broadly neutral — they work but they're not a source of competitive advantage.", score: 2 },
+      { text: "Clear asset — our systems genuinely enable performance and growth.", score: 3 },
+    ]
+  },
+];
+
+const SECTIONS = ["Process & Operations","Finance Infrastructure","Data & Reporting","Technology Stack","People & Alignment","Growth Readiness"];
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let currentQ = 0;
+let answers  = new Array(QUESTIONS.length).fill(null);
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function startAssessment() {
+  currentQ = 0;
+  answers  = new Array(QUESTIONS.length).fill(null);
+  document.getElementById('progressWrap').style.display = 'block';
+  showScreen('screen-questions');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  document.getElementById('qSectionLabel').textContent = q.section;
+  document.getElementById('qNumber').textContent       = `Question ${currentQ+1} of ${QUESTIONS.length}`;
+  document.getElementById('qCounter').textContent      = `${String(currentQ+1).padStart(2,'0')} / ${String(QUESTIONS.length).padStart(2,'0')}`;
+  document.getElementById('qText').textContent         = q.text;
+
+  const pct = ((currentQ) / QUESTIONS.length) * 100;
+  document.getElementById('progressFill').style.width  = pct + '%';
+
+  const keys = ['A','B','C','D'];
+  const container = document.getElementById('qOptions');
+  container.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-option' + (answers[currentQ] === i ? ' selected' : '');
+    div.innerHTML = `
+      <div class="opt-key">${keys[i]}</div>
+      <div class="opt-text">${opt.text}</div>
+      <div class="opt-score-badge">${opt.score}/3</div>
+    `;
+    div.onclick = () => selectOption(i);
+    container.appendChild(div);
+  });
+
+  // nav button states
+  document.getElementById('btnBack').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  const nextBtn = document.getElementById('btnNext');
+  if (answers[currentQ] !== null) {
+    nextBtn.classList.add('enabled');
+    nextBtn.textContent = currentQ === QUESTIONS.length - 1 ? 'See My Score →' : 'Next →';
+  } else {
+    nextBtn.classList.remove('enabled');
+    nextBtn.textContent = 'Next →';
+  }
+}
+
+function selectOption(i) {
+  answers[currentQ] = i;
+  renderQuestion();
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === null) return;
+  if (currentQ < QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion();
+    document.getElementById('qOptions').style.animation = 'none';
+    setTimeout(() => document.getElementById('qOptions').style.animation = '', 10);
+  } else {
+    document.getElementById('progressFill').style.width = '100%';
+    showScreen('screen-gate');
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) { currentQ--; renderQuestion(); }
+}
+
+// ── RESULTS LOGIC ─────────────────────────────────────────────────────────
+function computeScores() {
+  const sectionScores = {};
+  const sectionMax    = {};
+  SECTIONS.forEach(s => { sectionScores[s] = 0; sectionMax[s] = 0; });
+
+  QUESTIONS.forEach((q, i) => {
+    const sel = answers[i];
+    sectionMax[q.section] += 3;
+    if (sel !== null) sectionScores[q.section] += q.options[sel].score;
+  });
+
+  let total = 0, maxTotal = 0;
+  SECTIONS.forEach(s => { total += sectionScores[s]; maxTotal += sectionMax[s]; });
+
+  const overall = Math.round((total / maxTotal) * 100);
+  const sectionPcts = {};
+  SECTIONS.forEach(s => { sectionPcts[s] = Math.round((sectionScores[s] / sectionMax[s]) * 100); });
+
+  return { overall, sectionPcts };
+}
+
+function getTier(score) {
+  if (score >= 80) return {
+    name: "Systems Strong",
+    sub: "Your business is operating with above-average systems maturity. There are still opportunities to optimise, but you have solid foundations in place.",
+    color: "#1A4A2A",
+    ringColor: "#2ECC71",
+    diagnosis: {
+      title: "You are ahead of most businesses your size.",
+      body: "Your systems are broadly functional and you have meaningful infrastructure in place. The opportunity now is to close the remaining gaps, integrate your stack more tightly, and build the kind of real-time visibility that separates good businesses from great ones. A Finlanza engagement at this stage focuses on precision optimisation — finding the 20% of improvements that unlock 80% of the next level of performance."
+    },
+    ctaHeadline: "You're close to world-class — let's close the gap.",
+    ctaSub: "Even strong systems have blind spots. A free 30-minute consultation will show you exactly where your biggest remaining opportunities are.",
+    findings: [
+      { type: 'strength', title: 'Solid Foundations', desc: 'Your core systems are functional and your team understands how to use them.' },
+      { type: 'moderate', title: 'Integration Gaps', desc: 'Even strong businesses typically have disconnected systems creating invisible inefficiency.' },
+      { type: 'moderate', title: 'Optimisation Opportunity', desc: 'Tightening your stack and reporting infrastructure will unlock the next level of performance.' },
+    ]
+  };
+  if (score >= 60) return {
+    name: "Developing Infrastructure",
+    sub: "You have systems in place but they are not working together effectively. Operational drag is increasing as your business grows.",
+    color: var_gold_amber,
+    ringColor: "#E8B84B",
+    diagnosis: {
+      title: "Your systems are starting to hold your growth back.",
+      body: "You have invested in processes and technology, but they are not integrated and not consistently followed. The result is a growing gap between where your business is and where it could be — and the gap widens as you grow. This is the inflection point where many African businesses get stuck. The work required is not starting from scratch — it is reengineering what exists into something coherent, integrated, and scalable."
+    },
+    ctaHeadline: "This is the inflection point. Let's engineer your systems for scale.",
+    ctaSub: "Businesses at this stage that act now grow faster and more profitably. Those that wait spend the next two years firefighting.",
+    findings: [
+      { type: 'critical', title: 'Integration Risk', desc: 'Disconnected systems are creating invisible costs and slowing your team down daily.' },
+      { type: 'moderate', title: 'Process Inconsistency', desc: 'Standards exist but are not embedded — performance depends too much on individuals.' },
+      { type: 'strength', title: 'Reform-Ready', desc: 'You have enough infrastructure to build on — this is an optimisation, not a rebuild from zero.' },
+    ]
+  };
+  if (score >= 40) return {
+    name: "Operational Strain",
+    sub: "Your business is running on informal systems and individual effort. Growth is constrained and risk is accumulating beneath the surface.",
+    color: "#7A5C00",
+    ringColor: "#C8971C",
+    diagnosis: {
+      title: "Your business is carrying a significant systems debt.",
+      body: "The informal arrangements and manual workarounds that got you to this point are now active constraints on your growth. Revenue is being lost to inefficiency, key-person dependencies are creating fragility, and leadership is spending too much time managing operations rather than building the business. The cost of doing nothing is real and growing. The DREAM Framework is designed exactly for businesses at this stage — a structured transformation that replaces operational drag with scalable infrastructure."
+    },
+    ctaHeadline: "Your systems are costing you more than a Finlanza engagement.",
+    ctaSub: "At your current scale, operational inefficiency costs most businesses KES 4–8M per year in lost productivity and missed revenue. Let's quantify yours.",
+    findings: [
+      { type: 'critical', title: 'Key-Person Dependency', desc: 'Critical knowledge and processes are locked in individuals — a major business risk.' },
+      { type: 'critical', title: 'Manual Process Overhead', desc: 'Significant revenue and time is being consumed by avoidable manual work.' },
+      { type: 'moderate', title: 'Reporting Blind Spots', desc: 'Leadership is making decisions without the data infrastructure to support them.' },
+    ]
+  };
+  return {
+    name: "Systems at Crisis Point",
+    sub: "Your business is operating without the foundational systems it needs. Every day without intervention increases cost and risk.",
+    color: "#8B2020",
+    ringColor: "#E74C3C",
+    diagnosis: {
+      title: "Your business is being held hostage by its own systems — or lack of them.",
+      body: "At this score, your operational infrastructure is a significant constraint on everything the business is trying to do. Processes are not documented, technology is not integrated, financial visibility is poor, and your organisation is running on heroic individual effort. This is not a criticism — it is the starting point for almost every business we have transformed. The DREAM Framework was built for exactly this situation. The question is not whether to act, but how quickly."
+    },
+    ctaHeadline: "Every month of delay compounds the cost. Let's start the diagnosis.",
+    ctaSub: "A free 30-minute consultation is the first step of DREAM Phase 1 — Diagnose. No pitch. Just a clear picture of what needs to change and in what order.",
+    findings: [
+      { type: 'critical', title: 'No Process Documentation', desc: 'The business runs on individual knowledge — a fragile, unscalable foundation.' },
+      { type: 'critical', title: 'Financial Visibility Gap', desc: 'Leadership cannot see the business clearly — decisions are made on incomplete information.' },
+      { type: 'critical', title: 'Technology Underutilisation', desc: 'Available technology is not being used effectively, or the right tools are not in place.' },
+    ]
+  };
+}
+
+const var_gold_amber = "#7A5C00"; // fallback for template literal issue
+
+function revealResults() {
+  const fname = document.getElementById('firstName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  if (!fname || !email) {
+    alert('Please enter at least your name and email to see your results.');
+    return;
+  }
+
+  const { overall, sectionPcts } = computeScores();
+  const tier = getTier(overall);
+
+  showScreen('screen-results');
+  document.getElementById('progressWrap').style.display = 'none';
+
+  // Animate score ring
+  const circumference = 477.5;
+  const offset = circumference - (overall / 100) * circumference;
+  const ring = document.getElementById('scoreRingFill');
+  ring.style.stroke = tier.ringColor;
+  setTimeout(() => { ring.style.strokeDashoffset = offset; }, 200);
+
+  // Count-up score number
+  let count = 0;
+  const target = overall;
+  const interval = setInterval(() => {
+    count += Math.ceil(target / 60);
+    if (count >= target) { count = target; clearInterval(interval); }
+    document.getElementById('scoreDisplay').textContent = count;
+  }, 20);
+
+  document.getElementById('tierName').textContent = tier.name;
+  document.getElementById('tierSub').textContent  = tier.sub;
+
+  // Section breakdown bars
+  const barsEl = document.getElementById('breakdownBars');
+  barsEl.innerHTML = '';
+  SECTIONS.forEach(s => {
+    const pct = sectionPcts[s];
+    const div = document.createElement('div');
+    div.className = 'breakdown-item';
+    div.innerHTML = `
+      <div class="breakdown-label">${s}</div>
+      <div class="breakdown-bar-track">
+        <div class="breakdown-bar-fill" style="width:0%" data-pct="${pct}"></div>
+      </div>
+      <div class="breakdown-pct">${pct}%</div>
+    `;
+    barsEl.appendChild(div);
+  });
+  setTimeout(() => {
+    document.querySelectorAll('.breakdown-bar-fill').forEach(b => {
+      b.style.width = b.dataset.pct + '%';
+    });
+  }, 300);
+
+  // Diagnosis
+  document.getElementById('diagnosisTitle').textContent = tier.diagnosis.title;
+  document.getElementById('diagnosisBody').textContent  = tier.diagnosis.body;
+
+  // Findings
+  const grid = document.getElementById('findingsGrid');
+  grid.innerHTML = '';
+  tier.findings.forEach(f => {
+    const card = document.createElement('div');
+    card.className = `finding-card ${f.type}`;
+    const badgeMap = { critical: 'Critical Issue', moderate: 'Area to Address', strength: 'Strength' };
+    card.innerHTML = `
+      <div class="finding-badge">${badgeMap[f.type]}</div>
+      <div class="finding-title">${f.title}</div>
+      <div class="finding-desc">${f.desc}</div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // CTA
+  document.getElementById('ctaHeadline').textContent = tier.ctaHeadline;
+  document.getElementById('ctaSub').textContent      = tier.ctaSub;
+}
+
+function retakeAssessment() {
+  currentQ = 0;
+  answers  = new Array(QUESTIONS.length).fill(null);
+  document.getElementById('progressWrap').style.display = 'block';
+  showScreen('screen-questions');
+  renderQuestion();
+}
+
+function shareLinkedIn() {
+  const { overall } = computeScores();
+  const tier = getTier(overall);
+  const text = encodeURIComponent(`I just completed the Finlanza Business Systems Health Check and scored ${overall}/100 — ${tier.name}. Find out how your business systems stack up: https://finlanza.com/health-check`);
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://finlanza.com/health-check&summary=${text}`, '_blank');
+}
+
+// Keyboard navigation — only when modal is open
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('scModalOverlay').classList.contains('open')) return;
+  const active = document.querySelector('.screen.active');
+  if (!active || active.id !== 'screen-questions') return;
+  const keys = {'a':0,'b':1,'c':2,'d':3,'1':0,'2':1,'3':2,'4':3};
+  const key = e.key.toLowerCase();
+  if (keys[key] !== undefined) selectOption(keys[key]);
+  if (e.key === 'Enter' || e.key === 'ArrowRight') nextQuestion();
+  if (e.key === 'ArrowLeft') prevQuestion();
+});
+
+// ── Wire "Take Diagnostic Scorecard" buttons ──────────────────────────────
+document.querySelectorAll('[data-open-scorecard]').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    openScModal();
+  });
+});
+
+</script>
+
+<!-- ═══ DIAGNOSTIC SCORECARD MODAL ════════════════════════════════ -->
+<div class="sc-modal-overlay" id="scModalOverlay" role="dialog" aria-modal="true">
+  <div class="sc-modal" id="scModal">
+    <div class="sc-modal-close">
+      <span class="sc-modal-close-label">Business Systems Health Check</span>
+      <button class="sc-modal-close-btn" onclick="closeScModal()" aria-label="Close">✕</button>
+    </div>
+
+<div class="grid-bg"></div>
+
+<!-- Progress bar -->
+<div class="progress-bar-wrap" id="progressWrap" style="display:none;">
+  <div class="progress-bar-fill" id="progressFill"></div>
+</div>
+
+<!-- ══ SCREEN 1: INTRO ══════════════════════════════════════════════════════ -->
+<div class="screen active" id="screen-intro">
+  <div class="intro-inner">
+
+    <div class="brand-lockup">
+      <svg class="fz-mark" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="300" height="300" fill="#1B3A6B"/>
+        <rect x="55" y="88" width="30" height="164" fill="#C8971C"/>
+        <rect x="55" y="152" width="106" height="28" fill="#C8971C"/>
+        <rect x="55" y="55" width="210" height="33" fill="white"/>
+        <polygon points="218,88 244,88 178,219 152,219" fill="white"/>
+        <rect x="55" y="219" width="210" height="33" fill="white"/>
+      </svg>
+      <span class="brand-name">Finlanza</span>
+    </div>
+
+    <div class="intro-eyebrow">Free Assessment</div>
+
+    <h1 class="intro-headline">
+      How healthy are your<br><em>business systems?</em>
+    </h1>
+
+    <p class="intro-sub">
+      Take the 5-minute Finlanza Business Systems Health Check. 
+      Get an instant score across 6 operational dimensions — 
+      and a personalised diagnosis of where your business is bleeding efficiency.
+    </p>
+
+    <div class="section-pills">
+      <div class="pill"><span class="pill-dot"></span>Process & Operations</div>
+      <div class="pill"><span class="pill-dot"></span>Finance Infrastructure</div>
+      <div class="pill"><span class="pill-dot"></span>Data & Reporting</div>
+      <div class="pill"><span class="pill-dot"></span>Technology Stack</div>
+      <div class="pill"><span class="pill-dot"></span>People & Alignment</div>
+      <div class="pill"><span class="pill-dot"></span>Growth Readiness</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-num">18</span>
+        <span class="stat-label">Diagnostic questions</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">5</span>
+        <span class="stat-label">Minutes to complete</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">6</span>
+        <span class="stat-label">Operational dimensions</span>
+      </div>
+    </div>
+
+    <button class="start-btn" onclick="startAssessment()">Begin Health Check →</button>
+    <p class="intro-note">No payment required · Instant results · Used by African businesses</p>
+
+  </div>
+</div>
+
+<!-- ══ SCREEN 2: QUESTIONS ══════════════════════════════════════════════════ -->
+<div class="screen" id="screen-questions">
+  <div class="q-header">
+    <div class="q-brand">
+      <svg width="28" height="28" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="300" height="300" fill="#1B3A6B"/>
+        <rect x="55" y="88" width="30" height="164" fill="#C8971C"/>
+        <rect x="55" y="152" width="106" height="28" fill="#C8971C"/>
+        <rect x="55" y="55" width="210" height="33" fill="white"/>
+        <polygon points="218,88 244,88 178,219 152,219" fill="white"/>
+        <rect x="55" y="219" width="210" height="33" fill="white"/>
+      </svg>
+      <span class="q-brand-name">Business Systems Health Check</span>
+    </div>
+    <span class="q-counter" id="qCounter">01 / 18</span>
+  </div>
+
+  <div class="q-body">
+    <div class="q-section-label" id="qSectionLabel">Process & Operations</div>
+    <div class="q-number" id="qNumber">Question 1 of 18</div>
+    <div class="q-text" id="qText"></div>
+    <div class="q-options" id="qOptions"></div>
+    <div class="q-nav">
+      <button class="btn-back" id="btnBack" onclick="prevQuestion()">← Back</button>
+      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN 3: EMAIL GATE ═════════════════════════════════════════════════ -->
+<div class="screen" id="screen-gate">
+  <div class="gate-inner">
+
+    <div class="gate-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C8971C" stroke-width="1.5">
+        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+
+    <div class="gate-eyebrow">Assessment Complete</div>
+    <h2 class="gate-headline">Your results are ready.<br>Where should we send them?</h2>
+    <p class="gate-sub">
+      Enter your details below to unlock your full Business Systems Health Score — 
+      including a section-by-section breakdown and personalised recommendations.
+    </p>
+
+    <div class="gate-form">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">First Name</label>
+          <input class="form-input" type="text" id="firstName" placeholder="Amara" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Last Name</label>
+          <input class="form-input" type="text" id="lastName" placeholder="Osei" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Work Email</label>
+        <input class="form-input" type="email" id="email" placeholder="amara@company.com" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Company Name</label>
+        <input class="form-input" type="text" id="company" placeholder="Your company" />
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Role</label>
+          <select class="form-select" id="role">
+            <option value="">Select role</option>
+            <option>Founder / CEO</option>
+            <option>Managing Director</option>
+            <option>COO / Operations</option>
+            <option>CFO / Finance</option>
+            <option>Other Director</option>
+            <option>Manager</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Company Size</label>
+          <select class="form-select" id="companySize">
+            <option value="">Select size</option>
+            <option>1–10 employees</option>
+            <option>11–50 employees</option>
+            <option>51–200 employees</option>
+            <option>200+ employees</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-reveal" onclick="revealResults()">Reveal My Score →</button>
+    </div>
+    <p class="gate-privacy">We respect your privacy. No spam — ever. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- ══ SCREEN 4: RESULTS ════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-results">
+
+  <div class="results-hero">
+    <div class="results-eyebrow">Your Business Systems Health Score</div>
+
+    <div class="score-ring-wrap">
+      <svg class="score-ring-svg" viewBox="0 0 180 180">
+        <circle class="score-ring-track" cx="90" cy="90" r="76"/>
+        <circle class="score-ring-fill" id="scoreRingFill" cx="90" cy="90" r="76"
+          stroke-dasharray="477.5" stroke-dashoffset="477.5"/>
+      </svg>
+      <div class="score-text-inner">
+        <span class="score-num" id="scoreDisplay">0</span>
+        <span class="score-denom">/ 100</span>
+      </div>
+    </div>
+
+    <div class="score-tier-name" id="tierName"></div>
+    <div class="score-tier-sub" id="tierSub"></div>
+  </div>
+
+  <div class="results-body">
+
+    <!-- Section breakdown -->
+    <div class="section-breakdown">
+      <div class="breakdown-title">Score by Dimension</div>
+      <div id="breakdownBars"></div>
+    </div>
+
+    <!-- Diagnosis -->
+    <div class="diagnosis-block" id="diagnosisBlock">
+      <h3 id="diagnosisTitle"></h3>
+      <p id="diagnosisBody"></p>
+    </div>
+
+    <!-- Key findings -->
+    <div class="breakdown-title" style="margin-bottom:16px;">Key Findings</div>
+    <div class="findings-grid" id="findingsGrid"></div>
+
+    <!-- CTA -->
+    <div class="cta-block">
+      <div class="cta-eyebrow">Your Next Step</div>
+      <h3 class="cta-headline" id="ctaHeadline"></h3>
+      <p class="cta-sub" id="ctaSub"></p>
+      <a class="cta-btn" href="https://finlanza.com/health-check" target="_blank" id="ctaBtn">Book a Free Consultation →</a>
+      <p class="cta-note">30-minute call · No commitment · With a senior Finlanza consultant</p>
+
+      <div class="share-row">
+        <button class="share-btn" onclick="shareLinkedIn()">Share on LinkedIn</button>
+        <button class="share-btn" onclick="retakeAssessment()">Retake Assessment</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ JAVASCRIPT ════════════════════════════════════════════════════════════ -->
+
+  </div>
+</div>
+
+</body>
+</html>

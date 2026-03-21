@@ -1,0 +1,1410 @@
+<?php
+/* Template Name: Finlanza Garage ERP */
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The DREAM™ Framework — Finlanza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #152232;
+    --navy-light: #1E3045;
+    --gold: #C8971C;
+    --gold-light: #E8B84B;
+    --gold-pale: #FBF0D4;
+    --cream: #F5EFE0;
+    --white: #FFFFFF;
+    --text: #E8E2D4;
+    --text-muted: #8A9BAD;
+    --border: rgba(200,151,28,0.2);
+    --border-light: rgba(255,255,255,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ─────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAV ───────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 60px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(13,27,42,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    text-decoration: none;
+  }
+  .nav-logo-f {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+  .nav-logo-tag {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-left: 6px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a.active { color: var(--white); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 10px 24px !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px !important;
+    transition: background 0.2s, transform 0.1s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+  /* ── PAGE SYSTEM ───────────────────────────────────────── */
+  .page { display: none; min-height: 100vh; padding-top: 72px; }
+  .page.active { display: block; }
+
+  /* ── SHARED LAYOUT ─────────────────────────────────────── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+  .section { padding: 100px 0; }
+  .section-sm { padding: 60px 0; }
+
+  .label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .display-xl {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 10vw, 140px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+  .display-lg {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .display-md {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .serif-lg {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 3vw, 42px);
+    line-height: 1.2;
+    color: var(--white);
+  }
+
+  .gold { color: var(--gold); }
+  .muted { color: var(--text-muted); }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 16px 36px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white);
+    padding: 16px 36px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border-light);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Gold line divider */
+  .gold-line {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  /* Grid helpers */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+
+  /* ── HOME PAGE ─────────────────────────────────────────── */
+  .hero {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(200,151,28,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 80% at 10% 30%, rgba(30,48,69,0.8) 0%, transparent 50%);
+  }
+
+  .hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,151,28,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,151,28,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 60px;
+    width: 100%;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-eyebrow-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero-eyebrow span {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .hero-headline {
+    animation: fadeUp 0.8s ease 0.15s both;
+    margin-bottom: 32px;
+  }
+
+  .hero-sub {
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    animation: fadeUp 0.8s ease 0.45s both;
+  }
+
+  .hero-stat-row {
+    display: flex;
+    gap: 60px;
+    margin-top: 80px;
+    padding-top: 60px;
+    border-top: 1px solid var(--border-light);
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+  .hero-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hero-stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* Marquee */
+  .marquee-section {
+    background: var(--gold);
+    padding: 18px 0;
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--navy);
+    padding: 0 48px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+  .marquee-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--navy);
+    border-radius: 50%;
+    opacity: 0.4;
+  }
+
+  /* Problem section */
+  .problem-section {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .problem-left {
+    padding: 100px 80px 100px 0;
+    border-right: 1px solid var(--border);
+  }
+  .problem-right {
+    padding: 100px 0 100px 80px;
+  }
+  .problem-list {
+    list-style: none;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .problem-list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    font-size: 16px;
+    color: var(--text-muted);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .problem-list li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+    font-weight: 300;
+  }
+
+  /* Process section */
+  .process-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 40px;
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border-light);
+    position: relative;
+  }
+  .process-step:last-child { border-bottom: none; }
+  .process-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.3;
+    transition: opacity 0.3s;
+  }
+  .process-step:hover .process-num { opacity: 1; }
+  .process-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  /* Industries */
+  .industry-card {
+    border: 1px solid var(--border-light);
+    padding: 32px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .industry-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .industry-card:hover { border-color: var(--border); background: var(--navy-mid); }
+  .industry-card:hover::before { transform: scaleX(1); }
+  .industry-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-top: 16px;
+  }
+  .industry-icon { font-size: 28px; }
+
+  /* Testimonials */
+  .testimonial {
+    background: var(--navy-light);
+    border: 1px solid var(--border-light);
+    padding: 48px;
+    position: relative;
+  }
+  .testimonial::before {
+    content: '"';
+    font-family: 'DM Serif Display', serif;
+    font-size: 120px;
+    color: var(--gold);
+    opacity: 0.15;
+    position: absolute;
+    top: -20px;
+    left: 32px;
+    line-height: 1;
+  }
+  .testimonial-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .testimonial-author {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .testimonial-role {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── ABOUT PAGE ────────────────────────────────────────── */
+  .page-hero {
+    padding: 100px 0 80px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200,151,28,0.05) 0%, transparent 60%);
+  }
+
+  .about-manifesto {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    padding: 80px;
+    position: relative;
+    margin: 60px 0;
+  }
+  .about-manifesto::before {
+    content: 'MANIFESTO';
+    position: absolute;
+    top: -13px;
+    left: 60px;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    padding: 4px 16px;
+  }
+
+  .value-card {
+    border-top: 2px solid var(--gold);
+    padding-top: 32px;
+  }
+  .value-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .value-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .team-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+  }
+  .team-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--navy-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .team-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, var(--navy) 100%);
+  }
+  .team-info {
+    padding: 24px;
+  }
+  .team-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .team-role {
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* ── DREAM PAGE ────────────────────────────────────────── */
+  .dream-phase {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .dream-phase:last-child { border-bottom: none; }
+  .dream-letter {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 160px;
+    line-height: 0.85;
+    padding: 40px 40px 40px 0;
+    border-right: 1px solid var(--border-light);
+    display: flex;
+    align-items: flex-start;
+  }
+  .dream-body {
+    padding: 48px 0 48px 60px;
+  }
+  .dream-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .dream-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .dream-deliverables {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .dream-tag {
+    background: rgba(200,151,28,0.1);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+  }
+
+  /* ── SERVICES PAGE ─────────────────────────────────────── */
+  .service-card {
+    border: 1px solid var(--border-light);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  .service-card:hover { background: var(--navy-mid); transform: translateY(-4px); }
+  .service-tier {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .service-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+  .service-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .service-features li {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+  .service-features li::before {
+    content: '→';
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── CASE STUDIES ──────────────────────────────────────── */
+  .case-card {
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .case-card:hover { border-color: var(--border); }
+  .case-header {
+    background: var(--navy-light);
+    padding: 40px;
+    position: relative;
+  }
+  .case-industry {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .case-client {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .case-location {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .case-body { padding: 40px; }
+  .case-challenge {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .case-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 32px;
+  }
+  .case-result-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .case-result-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── PRICING PAGE ──────────────────────────────────────── */
+  .pricing-card {
+    border: 1px solid var(--border-light);
+    padding: 48px;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .pricing-card.featured {
+    border-color: var(--gold);
+    background: var(--navy-mid);
+  }
+  .pricing-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 4px 16px;
+    white-space: nowrap;
+  }
+  .pricing-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .pricing-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .pricing-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .pricing-note {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+  }
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 40px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 32px;
+  }
+  .pricing-features li {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+  .pricing-features li.included { color: var(--text); }
+  .pricing-features li::before { content: '✓'; color: var(--gold); flex-shrink: 0; }
+  .pricing-features li.excluded { opacity: 0.4; }
+  .pricing-features li.excluded::before { content: '–'; color: var(--text-muted); }
+
+  /* ── BLOG PAGE ─────────────────────────────────────────── */
+  .post-card {
+    border-bottom: 1px solid var(--border-light);
+    padding: 48px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .post-card:first-child { border-top: 1px solid var(--border-light); }
+  .post-card:hover .post-title { color: var(--gold); }
+  .post-meta {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    gap: 20px;
+  }
+  .post-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    line-height: 1.3;
+    color: var(--white);
+    transition: color 0.2s;
+    margin-bottom: 16px;
+  }
+  .post-excerpt {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .post-read {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+  }
+
+  /* ── CONTACT PAGE ──────────────────────────────────────── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 70vh;
+  }
+  .contact-left {
+    padding: 80px;
+    background: var(--navy-mid);
+    border-right: 1px solid var(--border);
+  }
+  .contact-right { padding: 80px; }
+
+  .contact-info-item {
+    display: flex;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .contact-info-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .contact-info-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .contact-info-val {
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+  .form-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: var(--navy-mid);
+    border: 1px solid var(--border-light);
+    color: var(--text);
+    padding: 14px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-select { appearance: none; cursor: pointer; }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); opacity: 0.5; }
+
+  /* ── FOOTER ────────────────────────────────────────────── */
+  footer {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    padding: 60px 0 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 32px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 3px;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .footer-tagline {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+  .footer-col-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .footer-legal a:hover { color: var(--white); }
+
+  /* ── ANIMATIONS ────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .fade-in { animation: fadeIn 0.5s ease both; }
+
+  /* ── CTA BAND ──────────────────────────────────────────── */
+  .cta-band {
+    background: var(--gold);
+    padding: 80px 0;
+    text-align: center;
+  }
+  .cta-band .display-lg { color: var(--navy); }
+  .cta-band p { color: var(--navy); opacity: 0.7; font-size: 18px; margin: 20px 0 40px; }
+  .btn-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--navy);
+    color: var(--white);
+    padding: 18px 44px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-dark:hover { background: var(--navy-light); transform: translateY(-1px); }
+
+  /* Horizontal rule */
+  hr { border: none; border-top: 1px solid var(--border-light); }
+
+
+  .nav-hamburger { display:none; background:none; border:1px solid var(--border); color:var(--text); padding:6px 12px; cursor:pointer; font-size:17px; }
+  .nav-gold { color: var(--gold) !important; }
+  .nav-links a.active { color: var(--white) !important; }
+  @media(max-width:900px){
+    nav { padding: 0 24px; }
+    .nav-links { display:none; flex-direction:column; position:absolute; top:72px; left:0; right:0; background:rgba(13,27,42,0.98); border-bottom:1px solid var(--border); padding:20px 24px; gap:16px; }
+    .nav-links.mob-open { display:flex; }
+    .nav-hamburger { display:block; }
+  }
+
+  /* reveal */
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.65s ease,transform 0.65s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-d1 { transition-delay:0.1s; }
+  .reveal-d2 { transition-delay:0.2s; }
+  .reveal-d3 { transition-delay:0.3s; }
+  .reveal-d4 { transition-delay:0.4s; }
+
+  .dream-phase-block { display:grid; grid-template-columns:80px 1fr 320px; gap:40px; align-items:start; padding:48px 0; border-bottom:1px solid var(--border-light); }
+  .dream-phase-block:last-child { border-bottom:none; }
+  .phase-num { font-family:'Bebas Neue',sans-serif; font-size:72px; color:rgba(200,151,28,0.15); line-height:1; }
+  .phase-letter-big { font-family:'DM Serif Display',serif; font-size:56px; color:var(--gold); line-height:1; margin-bottom:4px; }
+  .phase-name { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:2px; color:var(--white); margin-bottom:4px; }
+  .phase-tagline { font-size:14px; color:var(--gold-light); font-style:italic; margin-bottom:16px; }
+  .phase-body { font-size:15px; color:var(--text-muted); line-height:1.8; }
+  .phase-dels { background:rgba(200,151,28,0.05); border:1px solid var(--border); padding:20px 22px; }
+  .phase-dels-head { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+  .phase-del-item { display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:1px solid var(--border-light); font-size:13px; color:var(--text-muted); }
+  .phase-del-item:last-child { border-bottom:none; }
+  .phase-del-item::before { content:'—'; color:var(--gold); flex-shrink:0; font-size:11px; margin-top:2px; }
+  .cycle-banner { background:var(--navy-mid); border:1px solid var(--border); padding:32px 36px; display:flex; align-items:center; gap:32px; margin-bottom:40px; }
+  .cycle-banner-text { font-family:'DM Serif Display',serif; font-size:22px; color:var(--white); line-height:1.3; }
+  .cycle-banner-sub { font-size:14px; color:var(--text-muted); margin-top:6px; line-height:1.7; }
+  @media(max-width:900px){ .dream-phase-block{grid-template-columns:1fr;} .phase-num{display:none;} .cycle-banner{flex-direction:column;} }
+
+</style>
+
+<?php wp_head(); ?>
+</head>
+<body>
+  <nav id="main-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="https://finlanza.com/index.html">
+      <!-- SEO: Added alt text to logo image -->
+
+    <img src="data:image/png;base64,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" alt="Finlanza" style="height:36px;width:auto;display:block;">
+  </a>
+ <ul class="nav-links" id="navLinks">
+  <li>
+    <a href="<?php echo home_url('/'); ?>"
+       <?php if(is_front_page()) echo 'class="active" aria-current="page"'; ?>>
+      Home
+    </a>
+  </li>
+  <li>
+    <a href="<?php echo home_url('/services/'); ?>"
+       <?php if(is_page('services')) echo 'class="active" aria-current="page"'; ?>>
+      Services
+    </a>
+  </li>
+   <li>
+    <a href="<?php echo home_url('/products/'); ?>"
+       <?php if(is_page('products')) echo 'class="active" aria-current="page"'; ?>>
+      Products
+    </a>
+  </li>
+  <li>
+    <a href="<?php echo home_url('/dream/'); ?>"
+       <?php if(is_page('dream')) echo 'class="active" aria-current="page"'; ?>>
+      DREAM™
+    </a>
+  </li>
+ 
+  <li>
+    <a href="<?php echo home_url('/insights/'); ?>"
+       <?php if(is_page('insights') || is_single()) echo 'class="active" aria-current="page"'; ?>>
+      Insights
+    </a>
+  </li>
+  <li>
+    <a href="<?php echo home_url('/scorecard/'); ?>"
+       class="nav-gold<?php if(is_page('scorecard')) echo ' active'; ?>"
+       <?php if(is_page('scorecard')) echo 'aria-current="page"'; ?>>
+      Free Scorecard
+    </a>
+  </li>
+  <li>
+    <a href="<?php echo home_url('/contact/'); ?>"
+       class="nav-cta<?php if(is_page('contact')) echo ' active'; ?>"
+       <?php if(is_page('contact')) echo 'aria-current="page"'; ?>>
+      Book a Review
+    </a>
+  </li>
+</ul>
+  <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('mob-open')" aria-label="Menu">☰</button>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container" style="position:relative;z-index:2;padding-top:100px;padding-bottom:60px;">
+    <span class="label reveal">Proprietary Methodology</span>
+    <div class="display-lg reveal reveal-d1">THE DREAM™<br><span class="gold">FRAMEWORK.</span></div>
+    <p style="color:var(--text-muted);font-size:18px;max-width:600px;line-height:1.8;margin-top:20px;" class="reveal reveal-d2">Five phases. One transformation. Engineered for African business. Scalable organizations are engineered — not installed.</p>
+    <div style="margin-top:24px;font-family:'DM Serif Display',serif;font-size:22px;font-style:italic;color:var(--gold-light);" class="reveal reveal-d3">"From Chaos to Control."</div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--navy-mid);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 440px;gap:64px;align-items:center;">
+      <div class="reveal">
+        <span class="label">The Architecture Problem</span>
+        <div class="display-md" style="margin-bottom:16px;">MOST AUTOMATION FAILS NOT BECAUSE OF <span class="gold">TECHNOLOGY —</span></div>
+        <p style="font-family:'DM Serif Display',serif;font-size:20px;font-style:italic;color:var(--text);line-height:1.6;margin-bottom:16px;">but because structure was never redesigned.</p>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.8;margin-bottom:16px;">Before systems scale, architecture must be intentional. Most implementations skip the diagnosis and go straight to configuration — deploying software on broken foundations, then wondering why it doesn't perform.</p>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.8;">DREAM reverses the sequence. We diagnose before we design. We design before we build. We build before we train. We train before we measure. In that order. Always.</p>
+      </div>
+      <div class="reveal reveal-d2" style="text-align:center;">
+        <svg viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;" id="dreamDiag">
+          <defs>
+            <linearGradient id="dg0" x1="0%"y1="0%"x2="100%"y2="100%"><stop offset="0%" stop-color="#D4A830"/><stop offset="100%" stop-color="#8A6510"/></linearGradient>
+            <linearGradient id="dg1" x1="100%"y1="0%"x2="0%"y2="100%"><stop offset="0%" stop-color="#C8971C"/><stop offset="100%" stop-color="#7A5C00"/></linearGradient>
+            <linearGradient id="dg2" x1="0%"y1="100%"x2="100%"y2="0%"><stop offset="0%" stop-color="#E0A828"/><stop offset="100%" stop-color="#9A6E10"/></linearGradient>
+            <linearGradient id="dg3" x1="50%"y1="0%"x2="50%"y2="100%"><stop offset="0%" stop-color="#BF9218"/><stop offset="100%" stop-color="#7A5C00"/></linearGradient>
+            <linearGradient id="dg4" x1="0%"y1="50%"x2="100%"y2="50%"><stop offset="0%" stop-color="#D4A830"/><stop offset="100%" stop-color="#8A6510"/></linearGradient>
+          </defs>
+          <g id="dreamArcs"></g><g id="dreamTicks"></g>
+          <circle cx="220"cy="220"r="95" fill="rgba(13,27,42,0.92)" stroke="rgba(200,151,28,0.2)" stroke-width="1.5"/>
+          <circle cx="220"cy="220"r="70" fill="#0D1B2A" stroke="rgba(200,151,28,0.38)" stroke-width="1.5"/>
+          <text x="220"y="212" text-anchor="middle" font-family="DM Serif Display,serif" font-size="18" fill="rgba(200,151,28,0.92)" letter-spacing="2">DREAM</text>
+          <text x="220"y="234" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,0.3)">Framework</text>
+          <text x="220"y="252" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8" fill="rgba(200,151,28,0.3)">© Finlanza</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="label reveal">The Five Phases</span>
+    <div class="display-md reveal reveal-d1" style="margin-bottom:8px;">A CONTINUOUS <span class="gold">IMPROVEMENT CYCLE.</span></div>
+    <p style="color:var(--text-muted);font-size:16px;max-width:580px;line-height:1.8;margin-bottom:48px;" class="reveal reveal-d2">Each phase builds on the last. The end feeds the beginning. Every Finlanza engagement is executed in this sequence — no shortcuts, no skipped gates.</p>
+
+    <div class="dream-phase-block reveal">
+      <div><div class="phase-num">01</div></div>
+      <div>
+        <div class="phase-letter-big">D</div>
+        <div class="phase-name">DIAGNOSE</div>
+        <div class="phase-tagline">Current State Analysis</div>
+        <div class="phase-body">A rigorous, evidence-based analysis of how your organization actually operates — before any system is configured. We map processes, evaluate technology infrastructure, assess financial architecture, and identify governance gaps. The output is an unvarnished picture of operational reality, not a vendor sales narrative.<br><br>Stand-alone, or as the entry point to Transform. The Diagnose Report is yours to keep and act on independently.</div>
+      </div>
+      <div class="phase-dels">
+        <div class="phase-dels-head">Key Deliverables</div>
+        <div class="phase-del-item">Diagnostic Report &amp; Systems Inventory</div>
+        <div class="phase-del-item">Process &amp; Governance Gap Analysis</div>
+        <div class="phase-del-item">Technology Architecture Assessment</div>
+        <div class="phase-del-item">Zoho Architecture Recommendation</div>
+        <div class="phase-del-item">Transformation Roadmap with Priorities</div>
+      </div>
+    </div>
+
+    <div class="dream-phase-block reveal">
+      <div><div class="phase-num">02</div></div>
+      <div>
+        <div class="phase-letter-big">R</div>
+        <div class="phase-name">REENGINEER</div>
+        <div class="phase-tagline">Future State Design</div>
+        <div class="phase-body">We redesign the operating model on paper before a single system is configured. Reengineering establishes the right workflows, governance structures, approval frameworks, and data architecture for your scale.<br><br>Technology built on reengineered foundations performs. Technology deployed on broken processes fails faster and more expensively.</div>
+      </div>
+      <div class="phase-dels">
+        <div class="phase-dels-head">Key Deliverables</div>
+        <div class="phase-del-item">Future-State Process Architecture</div>
+        <div class="phase-del-item">Standard Operating Procedures (SOPs)</div>
+        <div class="phase-del-item">Operating Model &amp; Governance Design</div>
+        <div class="phase-del-item">Role &amp; Responsibility Matrix</div>
+        <div class="phase-del-item">Change Impact Assessment</div>
+      </div>
+    </div>
+
+    <div class="dream-phase-block reveal">
+      <div><div class="phase-num">03</div></div>
+      <div>
+        <div class="phase-letter-big">E</div>
+        <div class="phase-name">EXECUTE</div>
+        <div class="phase-tagline">Build &amp; Deploy</div>
+        <div class="phase-body">We configure and deploy enterprise systems engineered precisely to the operating model defined in Phase R — not a generic implementation from a configuration checklist. For most engagements, this means deploying the Zoho platform across CRM, finance, operations, HR, and reporting, with structured integrations and data migration from legacy systems.</div>
+      </div>
+      <div class="phase-dels">
+        <div class="phase-dels-head">Key Deliverables</div>
+        <div class="phase-del-item">Enterprise Platform Configuration</div>
+        <div class="phase-del-item">System Integrations &amp; Data Migration</div>
+        <div class="phase-del-item">User Acceptance Testing (UAT)</div>
+        <div class="phase-del-item">Controlled Go-Live &amp; Hypercare</div>
+      </div>
+    </div>
+
+    <div class="dream-phase-block reveal">
+      <div><div class="phase-num">04</div></div>
+      <div>
+        <div class="phase-letter-big">A</div>
+        <div class="phase-name">ALIGN</div>
+        <div class="phase-tagline">Embed &amp; Adopt</div>
+        <div class="phase-body">A system that nobody uses is an expensive liability. Align is a dedicated phase ensuring technology and redesigned processes are genuinely embedded in how people work — not just deployed and abandoned. We run structured training programmes, manage the change process, and track adoption to ensure the transformation holds.</div>
+      </div>
+      <div class="phase-dels">
+        <div class="phase-dels-head">Key Deliverables</div>
+        <div class="phase-del-item">Structured Training Programme</div>
+        <div class="phase-del-item">Role-Based User Guides</div>
+        <div class="phase-del-item">Change Management &amp; Adoption Tracking</div>
+        <div class="phase-del-item">Issue Resolution &amp; Stabilization</div>
+      </div>
+    </div>
+
+    <div class="dream-phase-block reveal">
+      <div><div class="phase-num">05</div></div>
+      <div>
+        <div class="phase-letter-big">M</div>
+        <div class="phase-name">MEASURE</div>
+        <div class="phase-tagline">Govern &amp; Improve</div>
+        <div class="phase-body">We install the KPI frameworks, executive dashboards, and governance structures that make transformation permanent and visible. Leadership gains real-time operational clarity to make confident decisions.<br><br>Measure then feeds back into Diagnose — creating a continuous improvement loop that prevents regression and enables deliberate scale.</div>
+      </div>
+      <div class="phase-dels">
+        <div class="phase-dels-head">Key Deliverables</div>
+        <div class="phase-del-item">KPI Framework &amp; Governance Structure</div>
+        <div class="phase-del-item">Executive Dashboard Architecture</div>
+        <div class="phase-del-item">Monthly Performance Review Cadence</div>
+        <div class="phase-del-item">Continuous Improvement Framework</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--navy-mid);border-top:1px solid var(--border);">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+      <div class="reveal">
+        <span class="label">Begin Your Transformation</span>
+        <div class="display-md" style="margin-bottom:16px;">READY TO MOVE FROM <span class="gold">CHAOS TO CONTROL?</span></div>
+        <p style="color:var(--text-muted);font-size:16px;line-height:1.8;margin-bottom:24px;">The DREAM Framework begins with a Diagnose engagement. We assess your business systems and deliver a clear transformation roadmap — then we build it.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="https://finlanza.com/contact.html" class="btn-primary">Book a Systems Review →</a>
+          <a href="https://finlanza.com/scorecard.html" class="btn-ghost">Take the Diagnostic Scorecard</a>
+        </div>
+      </div>
+      <div class="reveal reveal-d2" style="background:var(--navy);border:1px solid var(--border);border-top:3px solid var(--gold);padding:36px;">
+        <div style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--white);margin-bottom:12px;line-height:1.3;">Not sure which phase you need?</div>
+        <p style="color:var(--text-muted);font-size:14px;line-height:1.75;margin-bottom:22px;">Take our 18-question Business Systems Health Check. In 5 minutes you'll know exactly where your operational gaps are and which part of the DREAM cycle applies to you right now.</p>
+        <a href="https://finlanza.com/scorecard.html" class="btn-ghost" style="display:block;text-align:center;">Take the Free Scorecard →</a>
+        <p style="color:var(--text-muted);font-size:12px;margin-top:10px;text-align:center;">Free · No demo attached · Results emailed to you</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div style="text-align:center;padding:40px 0 32px;border-bottom:1px solid var(--border-light);">
+      <div class="display-md" style="font-size:clamp(22px,3vw,38px);margin-bottom:8px;"><span class="gold">Scalability</span> is not an accident.<br>It is engineered.</div>
+      <div class="label" style="margin-top:12px;">Zoho Authorized Partner · Enterprise Implementation Specialists · Africa</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding:40px 0 32px;border-bottom:1px solid var(--border-light);">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--white);margin-bottom:4px;">FINLANZA</div>
+        <div class="label" style="margin-bottom:12px;">Business Systems Architecture Firm</div>
+        <p style="color:var(--text-muted);font-size:13px;line-height:1.7;">We engineer scalable business systems for multi-location, multi-entity organizations across Africa — built on the DREAM™ Transformation Framework.</p>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:14px;">Services</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <a href="https://finlanza.com/services.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Diagnose</a>
+          <a href="https://finlanza.com/services.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Transform</a>
+          <a href="https://finlanza.com/services.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Managed</a>
+          <a href="https://finlanza.com/contact.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Book a Scoping Call</a>
+        </div>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:14px;">Company</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <a href="https://finlanza.com/dream.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">DREAM™ Framework</a>
+          <a href="https://finlanza.com/scorecard.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Free Scorecard</a>
+          <a href="https://finlanza.com/insights.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Insights</a>
+          <a href="https://finlanza.com/contact.html" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:14px;">Contact</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:var(--text-muted);">
+          <a href="/cdn-cgi/l/email-protection#9dfceef6ddfbf4f3f1fcf3e7fcb3fef2f0" style="color:var(--text-muted);text-decoration:none;"><span class="__cf_email__" data-cfemail="dbbaa8b09bbdb2b5b7bab5a1baf5b8b4b6">[email&#160;protected]</span></a>
+          <a href="tel:+254724463536" style="color:var(--text-muted);text-decoration:none;">+254 724 463 536</a>
+          <span>Nairobi, Kenya</span>
+          <div style="margin-top:16px;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(200,151,28,0.16);padding:6px 12px;opacity:0.65;">
+          <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.45);">ZOHO</span>
+          <span style="display:inline-block;width:1px;height:14px;background:rgba(200,151,28,0.25);"></span>
+          <span style="font-family:'Space Mono',monospace;font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,151,28,0.7);">Authorised Partner · Africa</span>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom" style="border-top:none;padding-top:24px;">
+      <div class="footer-copy">© 2026 Finlanza. All rights reserved. DREAM™ is a proprietary transformation framework.</div>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); } });
+  },{threshold:0.07,rootMargin:'0px 0px -20px 0px'});
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  const ag=document.getElementById('dreamArcs'); if(!ag)return;
+  const tg=document.getElementById('dreamTicks');
+  const cx=220,cy=220,outerR=170,innerR=100,gap=4;
+  const grads=['dg0','dg1','dg2','dg3','dg4'];
+  const L=['D','R','E','A','M'];
+  function polar(r,deg){const rad=(deg-90)*Math.PI/180;return[cx+r*Math.cos(rad),cy+r*Math.sin(rad)];}
+  function arc(or,ir,s,e){const[x1,y1]=polar(or,s),[x2,y2]=polar(or,e),[x3,y3]=polar(ir,e),[x4,y4]=polar(ir,s);const l=e-s>180?1:0;return`M${x1},${y1} A${or},${or} 0 ${l} 1 ${x2},${y2} L${x3},${y3} A${ir},${ir} 0 ${l} 0 ${x4},${y4} Z`;}
+  L.forEach((lt,i)=>{
+    const s=i*72+gap/2,e=(i+1)*72-gap/2,mid=(s+e)/2,mr=(outerR+innerR)/2;
+    const g=document.createElementNS(NS,'g');
+    const p=document.createElementNS(NS,'path');
+    p.setAttribute('d',arc(outerR,innerR,s,e));
+    p.setAttribute('fill',`url(#${grads[i]})`);
+    p.style.opacity='0.88';p.style.transition='opacity 0.25s';
+    g.appendChild(p);
+    const[lx,ly]=polar(mr,mid);
+    const t=document.createElementNS(NS,'text');
+    t.setAttribute('x',lx);t.setAttribute('y',ly);
+    t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','central');
+    t.setAttribute('font-family','DM Serif Display,serif');
+    t.setAttribute('font-size','30');
+    t.setAttribute('fill','rgba(255,255,255,0.9)');
+    t.style.pointerEvents='none';t.textContent=lt;
+    g.appendChild(t);
+    const lr=outerR+28;
+    const[nlx,nly]=polar(lr,mid);
+    const nl=document.createElementNS(NS,'text');
+    nl.setAttribute('x',nlx);nl.setAttribute('y',nly);
+    nl.setAttribute('text-anchor','middle');nl.setAttribute('dominant-baseline','central');
+    nl.setAttribute('font-family','DM Sans,sans-serif');
+    nl.setAttribute('font-size','8.5');
+    nl.setAttribute('fill','rgba(255,255,255,0.4)');
+    nl.setAttribute('letter-spacing','1.2');
+    nl.style.pointerEvents='none';
+    nl.textContent=['DIAGNOSE','REENGINEER','EXECUTE','ALIGN','MEASURE'][i];
+    g.appendChild(nl);
+    g.addEventListener('mouseenter',()=>{p.style.opacity='1';p.style.filter='brightness(1.15)';});
+    g.addEventListener('mouseleave',()=>{p.style.opacity='0.88';p.style.filter='';});
+    ag.appendChild(g);
+  });
+  if(tg){
+    for(let t=0;t<72;t++){
+      const a=t*5,m=t%5===0;
+      const r1=outerR+(m?12:6),r2=outerR+2;
+      const[x1,y1]=polar(r1,a),[x2,y2]=polar(r2,a);
+      const l=document.createElementNS(NS,'line');
+      l.setAttribute('x1',x1);
+      l.setAttribute('y1',y1);
+      l.setAttribute('x2',x2);
+      l.setAttribute('y2',y2);
+      l.setAttribute('stroke',m?'rgba(200,151,28,0.4)':'rgba(200,151,28,0.15)');
+      l.setAttribute('stroke-width',m?'1.5':'0.75');
+      tg.appendChild(l);
+    }
+  }
+})();
+</script>
+
+<?php wp_footer(); ?>
+</body>
+</html>
