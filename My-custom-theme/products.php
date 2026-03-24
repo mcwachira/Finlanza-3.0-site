@@ -1,5 +1,5 @@
 <?php
-/* Template Name: Finlanza Services */
+/* Template Name: Finlanza Products */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,297 +7,90 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>F2 Transform — Vertical Products · Finlanza</title>
+<meta name="description" content="F2 Transform vertical products built for specific industries — GarageERP, PoultryOS, PayrollOS and more. Purpose-built on Zoho Creator, deployed across East Africa by Finlanza.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="<?php echo home_url('/products/'); ?>">
+<meta property="og:title" content="F2 Transform — Vertical Products · Finlanza">
+<meta property="og:description" content="Purpose-built vertical business systems for specific industries, engineered on Zoho Creator and deployed across East Africa.">
+<meta property="og:url" content="<?php echo home_url('/products/'); ?>">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Finlanza">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0D1B2A;
-    --navy-mid: #152232;
-    --navy-light: #1E3045;
-    --gold: #C8971C;
-    --gold-light: #E8B84B;
-    --gold-pale: #FBF0D4;
-    --white: #FFFFFF;
-    --text: #E8E2D4;
-    --text-muted: #8A9BAD;
-    --border: rgba(200,151,28,0.2);
-    --border-light: rgba(255,255,255,0.08);
+    --navy: #0D1B2A; --navy-mid: #152232; --navy-light: #1E3045;
+    --gold: #C8971C; --gold-light: #E8B84B; --gold-pale: #FBF0D4;
+    --white: #FFFFFF; --text: #E8E2D4; --text-muted: #8A9BAD;
+    --border: rgba(200,151,28,0.2); --border-light: rgba(255,255,255,0.08);
   }
-
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--navy);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 17px;
-    line-height: 1.65;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    opacity: 0.025;
-    pointer-events: none;
-    z-index: 9999;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    padding: 0 60px;
-    height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(13,27,42,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    transition: border-color 0.3s;
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    gap: 0;
-  }
-  .nav-logo img {
-    height: 36px;
-    width: auto;
-    display: block;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 36px;
-    list-style: none;
-  }
-  .nav-links a {
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    transition: color 0.2s;
-  }
+  body { background: var(--navy); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.65; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.025; pointer-events: none; z-index: 9999; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0 60px; height: 72px; display: flex; align-items: center; justify-content: space-between; background: rgba(13,27,42,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: border-color 0.3s; }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 13px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); transition: color 0.2s; }
   .nav-links a:hover { color: var(--gold); }
   .nav-links a.active { color: var(--white); }
-  .nav-cta {
-    background: var(--gold) !important;
-    color: var(--navy) !important;
-    padding: 10px 24px !important;
-    font-weight: 500 !important;
-  }
+  .nav-cta { background: var(--gold) !important; color: var(--navy) !important; padding: 10px 24px !important; font-weight: 500 !important; }
   .nav-cta:hover { background: var(--gold-light) !important; }
-
-  /* LAYOUT */
+  .nav-gold { color: var(--gold) !important; }
   .container { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
-
-  .label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .display-xl {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(64px, 10vw, 140px);
-    line-height: 0.9;
-    letter-spacing: 2px;
-    color: var(--white);
-  }
-  .display-lg {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 6vw, 88px);
-    line-height: 0.95;
-    letter-spacing: 1px;
-    color: var(--white);
-  }
-  .display-md {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(36px, 4vw, 56px);
-    line-height: 1;
-    letter-spacing: 1px;
-    color: var(--white);
-  }
-
+  .label { font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
+  .display-xl { font-family: 'Bebas Neue', sans-serif; font-size: clamp(64px, 10vw, 140px); line-height: 0.9; letter-spacing: 2px; color: var(--white); }
+  .display-lg { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 6vw, 88px); line-height: 0.95; letter-spacing: 1px; color: var(--white); }
+  .display-md { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 4vw, 56px); line-height: 1; letter-spacing: 1px; color: var(--white); }
   .gold { color: var(--gold); }
-
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: var(--gold); color: var(--navy);
-    padding: 14px 32px; font-size: 13px; font-weight: 600;
-    letter-spacing: 2px; text-transform: uppercase;
-    text-decoration: none; border: none; cursor: pointer; transition: all 0.2s;
-  }
+  .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--navy); padding: 14px 32px; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; }
   .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-  .btn-ghost {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: transparent; color: var(--white);
-    padding: 14px 32px; font-size: 13px; font-weight: 500;
-    letter-spacing: 2px; text-transform: uppercase;
-    text-decoration: none; border: 1px solid var(--border-light); cursor: pointer; transition: all 0.2s;
-  }
+  .btn-ghost { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: var(--white); padding: 14px 32px; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; border: 1px solid var(--border-light); cursor: pointer; transition: all 0.2s; }
   .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-
-  /* ANIMATIONS */
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: none; }
-  .reveal-d1 { transition-delay: 0.1s; }
-  .reveal-d2 { transition-delay: 0.2s; }
-  .reveal-d3 { transition-delay: 0.3s; }
-  .reveal-d4 { transition-delay: 0.4s; }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex; align-items: center;
-    padding-top: 72px;
-    position: relative; overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 60% 60% at 80% 50%, rgba(200,151,28,0.06) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(200,151,28,0.04) 0%, transparent 70%);
-  }
-  .hero-rule {
-    position: absolute; top: 0; right: 0;
-    width: 1px; height: 100%;
-    background: linear-gradient(to bottom, transparent, var(--gold) 40%, transparent);
-    opacity: 0.15;
-    transform: translateX(-340px) skewX(-12deg);
-  }
+  .reveal-d1 { transition-delay: 0.1s; } .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; } .reveal-d4 { transition-delay: 0.4s; }
+  .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 72px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 80% 50%, rgba(200,151,28,0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 10% 80%, rgba(200,151,28,0.04) 0%, transparent 70%); }
+  .hero-rule { position: absolute; top: 0; right: 0; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, var(--gold) 40%, transparent); opacity: 0.15; transform: translateX(-340px) skewX(-12deg); }
   .hero-inner { position: relative; z-index: 2; padding: 80px 0; }
-
-  .hero-eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 32px;
-    display: flex; align-items: center; gap: 16px;
-  }
+  .hero-eyebrow { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; display: flex; align-items: center; gap: 16px; }
   .hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--gold); opacity: 0.6; }
-
-  .hero-sub {
-    font-size: 18px; font-weight: 300; color: var(--text-muted);
-    max-width: 560px; line-height: 1.75; margin: 28px 0 48px;
-  }
-  .hero-stats {
-    display: flex; gap: 48px;
-    padding-top: 48px; border-top: 1px solid var(--border-light); margin-top: 48px;
-  }
-  .hero-stat-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px; letter-spacing: 1px; color: var(--gold); display: block;
-  }
+  .hero-sub { font-size: 18px; font-weight: 300; color: var(--text-muted); max-width: 560px; line-height: 1.75; margin: 28px 0 48px; }
+  .hero-stats { display: flex; gap: 48px; padding-top: 48px; border-top: 1px solid var(--border-light); margin-top: 48px; }
+  .hero-stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 1px; color: var(--gold); display: block; }
   .hero-stat-label { font-size: 12px; color: var(--text-muted); letter-spacing: 1px; }
-
-  /* PRODUCT GRID */
   .products-section { padding: 100px 0; background: var(--navy-mid); }
-
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px; margin-top: 60px;
-  }
-
-  /* BETA CARD */
-  .product-card {
-    background: var(--navy); padding: 48px 40px;
-    position: relative; overflow: hidden;
-    transition: transform 0.3s ease, background 0.3s ease;
-    display: flex; flex-direction: column; min-height: 380px;
-  }
-  .product-card::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 100%; height: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-    opacity: 0; transition: opacity 0.3s;
-  }
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 60px; }
+  .product-card { background: var(--navy); padding: 48px 40px; position: relative; overflow: hidden; transition: transform 0.3s ease, background 0.3s ease; display: flex; flex-direction: column; min-height: 380px; }
+  .product-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); opacity: 0; transition: opacity 0.3s; }
   .product-card:hover { background: var(--navy-light); transform: translateY(-3px); }
   .product-card:hover::before { opacity: 1; }
-
-  .product-card-tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
-    padding: 5px 12px; margin-bottom: 28px; align-self: flex-start;
-  }
-  .tag-beta {
-    background: rgba(200,151,28,0.12); color: var(--gold);
-    border: 1px solid rgba(200,151,28,0.3);
-  }
-  .tag-beta::before {
-    content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
-  }
-
-  .product-card-vertical {
-    font-family: 'Space Mono', monospace; font-size: 10px;
-    letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;
-  }
-  .product-card-name {
-    font-family: 'Bebas Neue', sans-serif; font-size: 42px;
-    letter-spacing: 2px; color: var(--white); line-height: 1; margin-bottom: 16px;
-  }
-  .product-card-hook {
-    font-family: 'DM Serif Display', serif; font-style: italic;
-    font-size: 15px; color: var(--gold-light); margin-bottom: 16px;
-  }
-  .product-card-desc {
-    font-size: 14px; color: var(--text-muted); line-height: 1.75; flex: 1; margin-bottom: 32px;
-  }
-  .product-card-cta {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--gold); text-decoration: none; transition: gap 0.2s; align-self: flex-start;
-  }
+  .product-card-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; padding: 5px 12px; margin-bottom: 28px; align-self: flex-start; }
+  .tag-beta { background: rgba(200,151,28,0.12); color: var(--gold); border: 1px solid rgba(200,151,28,0.3); }
+  .tag-beta::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+  .product-card-vertical { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+  .product-card-name { font-family: 'Bebas Neue', sans-serif; font-size: 42px; letter-spacing: 2px; color: var(--white); line-height: 1; margin-bottom: 16px; }
+  .product-card-hook { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 15px; color: var(--gold-light); margin-bottom: 16px; }
+  .product-card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.75; flex: 1; margin-bottom: 32px; }
+  .product-card-cta { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: gap 0.2s; align-self: flex-start; }
   .product-card-cta:hover { gap: 16px; }
   .product-card-cta::after { content: '→'; }
-
-  /* PIPELINE CARD */
-  .product-card-pipeline {
-    background: rgba(13,27,42,0.4); padding: 48px 40px;
-    position: relative; overflow: hidden;
-    display: flex; flex-direction: column; min-height: 380px;
-    border: 1px solid var(--border-light);
-  }
-  .tag-pipeline {
-    display: inline-block;
-    background: rgba(255,255,255,0.04); color: var(--text-muted);
-    border: 1px solid var(--border-light);
-    font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
-    padding: 5px 12px; margin-bottom: 28px;
-  }
+  .product-card-pipeline { background: rgba(13,27,42,0.4); padding: 48px 40px; position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 380px; border: 1px solid var(--border-light); }
+  .tag-pipeline { display: inline-block; background: rgba(255,255,255,0.04); color: var(--text-muted); border: 1px solid var(--border-light); font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; padding: 5px 12px; margin-bottom: 28px; }
   .product-card-pipeline .product-card-name { color: rgba(255,255,255,0.2); }
   .product-card-pipeline .product-card-vertical { color: rgba(138,155,173,0.35); }
   .product-card-pipeline .product-card-hook { color: rgba(232,184,75,0.2); }
   .product-card-pipeline .product-card-desc { color: rgba(138,155,173,0.45); }
-  .product-card-pipeline::after {
-    content: ''; position: absolute; inset: 0;
-    background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(255,255,255,0.012) 8px, rgba(255,255,255,0.012) 9px);
-    pointer-events: none;
-  }
-  .pipeline-label {
-    font-family: 'Space Mono', monospace; font-size: 10px;
-    letter-spacing: 3px; color: rgba(138,155,173,0.3); text-transform: uppercase;
-    margin-top: auto; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.04);
-  }
-
-  /* ABOUT */
+  .product-card-pipeline::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(255,255,255,0.012) 8px, rgba(255,255,255,0.012) 9px); pointer-events: none; }
+  .pipeline-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; color: rgba(138,155,173,0.3); text-transform: uppercase; margin-top: auto; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.04); }
   .about-section { padding: 100px 0; }
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   .about-principle { padding: 28px 0; border-bottom: 1px solid var(--border-light); }
@@ -305,73 +98,29 @@
   .about-principle-num { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 2px; margin-bottom: 8px; }
   .about-principle-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1.5px; color: var(--white); margin-bottom: 8px; }
   .about-principle-body { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
-
-  /* CTA */
   .cta-section { padding: 100px 0; background: var(--navy-mid); text-align: center; }
-
-  /* FOOTER */
   footer { border-top: 1px solid var(--border-light); }
   .footer-top { text-align: center; padding: 40px 0 32px; border-bottom: 1px solid var(--border-light); }
-  .footer-grid {
-    display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
-    gap: 40px; padding: 40px 0 32px; border-bottom: 1px solid var(--border-light);
-  }
-  .footer-col-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--white); margin-bottom: 4px; }
+  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; padding: 40px 0 32px; border-bottom: 1px solid var(--border-light); }
   .footer-links { display: flex; flex-direction: column; gap: 9px; }
   .footer-links a { color: var(--text-muted); font-size: 13px; text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--gold); }
-
-  .footer-bottom {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 0; font-size: 12px; color: var(--text-muted);
-    flex-wrap: wrap; gap: 12px;
-  }
-
-  /* ZOHO PARTNER BADGE */
-  .zoho-partner-badge {
-    display: inline-flex; align-items: center; gap: 10px;
-    border: 1px solid rgba(200,151,28,0.18);
-    padding: 7px 14px;
-    opacity: 0.65;
-    transition: opacity 0.3s;
-  }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; font-size: 12px; color: var(--text-muted); flex-wrap: wrap; gap: 12px; }
+  .zoho-partner-badge { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(200,151,28,0.18); padding: 7px 14px; opacity: 0.65; transition: opacity 0.3s; }
   .zoho-partner-badge:hover { opacity: 0.9; }
-  .zoho-partner-badge-logo {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; letter-spacing: 2px;
-    color: rgba(255,255,255,0.5);
-    font-weight: 700;
-  }
-  .zoho-partner-badge-sep {
-    width: 1px; height: 16px;
-    background: rgba(200,151,28,0.3);
-  }
-  .zoho-partner-badge-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
-    color: rgba(200,151,28,0.75);
-  }
-
-  .footer-logo img { height: 28px; width: auto; opacity: 0.85; margin-bottom: 12px; display: block; }
-
-  /* HAMBURGER */
+  .zoho-partner-badge-logo { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,0.5); font-weight: 700; }
+  .zoho-partner-badge-sep { width: 1px; height: 16px; background: rgba(200,151,28,0.3); }
+  .zoho-partner-badge-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(200,151,28,0.75); }
   .nav-hamburger { display: none; background: none; border: none; color: var(--white); font-size: 22px; cursor: pointer; }
-
   @media (max-width: 900px) {
-    nav { padding: 0 24px; }
-    .container { padding: 0 24px; }
+    nav { padding: 0 24px; } .container { padding: 0 24px; }
     .products-grid { grid-template-columns: 1fr; gap: 2px; }
     .about-grid { grid-template-columns: 1fr; gap: 48px; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .hero-stats { flex-direction: column; gap: 24px; }
     .nav-links { display: none; }
     .nav-hamburger { display: block; }
-    .nav-links.mob-open {
-      display: flex; flex-direction: column;
-      position: fixed; top: 72px; left: 0; right: 0;
-      background: var(--navy); padding: 24px; gap: 20px;
-      border-bottom: 1px solid var(--border);
-    }
+    .nav-links.mob-open { display: flex; flex-direction: column; position: fixed; top: 72px; left: 0; right: 0; background: var(--navy); padding: 24px; gap: 20px; border-bottom: 1px solid var(--border); }
     .footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
   }
 </style>
@@ -379,84 +128,69 @@
 </head>
 <body>
 
-<!-- NAV -->
- <!-- Accessibility: Added role and aria-label to navigation -->
   <nav id="main-nav" role="navigation" aria-label="Main navigation">
-    <a class="nav-logo" href="https://finlanza.com/index.html">
-      <!-- SEO: Added alt text to logo image -->
-
-
+  <a class="nav-logo" href="<?php echo home_url('/'); ?>">
     <img src="data:image/png;base64,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" alt="Finlanza" style="height:36px;width:auto;display:block;">
   </a>
-
-<ul class="nav-links" id="navLinks">
-  <li>
-    <a href="<?php echo home_url('/'); ?>"
-       <?php if(is_front_page()) echo 'class="active" aria-current="page"'; ?>>
-      Home
-    </a>
-  </li>
-  <li>
-    <a href="<?php echo home_url('/services/'); ?>"
-       <?php if(is_page('services')) echo 'class="active" aria-current="page"'; ?>>
-      Services
-    </a>
-  </li>
-   <li>
-    <a href="<?php echo home_url('/products/'); ?>"
-       <?php if(is_page('products')) echo 'class="active" aria-current="page"'; ?>>
-      Products
-    </a>
-  </li>
-  <li>
-    <a href="<?php echo home_url('/dream/'); ?>"
-       <?php if(is_page('dream')) echo 'class="active" aria-current="page"'; ?>>
-      DREAM™
-    </a>
-  </li>
- 
-  <li>
-    <a href="<?php echo home_url('/insights/'); ?>"
-       <?php if(is_page('insights') || is_single()) echo 'class="active" aria-current="page"'; ?>>
-      Insights
-    </a>
-  </li>
-  <li>
-    <a href="<?php echo home_url('/scorecard/'); ?>"
-       class="nav-gold<?php if(is_page('scorecard')) echo ' active'; ?>"
-       <?php if(is_page('scorecard')) echo 'aria-current="page"'; ?>>
-      Free Scorecard
-    </a>
-  </li>
-  <li>
-    <a href="<?php echo home_url('/contact/'); ?>"
-       class="nav-cta<?php if(is_page('contact')) echo ' active'; ?>"
-       <?php if(is_page('contact')) echo 'aria-current="page"'; ?>>
-      Book a Review
-    </a>
-  </li>
-</ul>
-  <!-- Accessibility: Improved hamburger menu button with descriptive label -->
-  <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('mob-open')" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li>
+      <a href="<?php echo home_url('/'); ?>"
+         <?php if(is_front_page()) echo 'class="active" aria-current="page"'; ?>>Home</a>
+    </li>
+    <li>
+      <a href="<?php echo home_url('/services/'); ?>"
+         <?php if(is_page('services')) echo 'class="active" aria-current="page"'; ?>>Services</a>
+    </li>
+    <li>
+      <a href="<?php echo home_url('/products/'); ?>"
+         <?php if(is_page('products')) echo 'class="active" aria-current="page"'; ?>>Products</a>
+    </li>
+    <li>
+      <a href="<?php echo home_url('/dream/'); ?>"
+         <?php if(is_page('dream')) echo 'class="active" aria-current="page"'; ?>>DREAM™</a>
+    </li>
+    <li>
+      <a href="<?php echo home_url('/insights/'); ?>"
+         <?php if(is_page('insights') || is_single()) echo 'class="active" aria-current="page"'; ?>>Insights</a>
+    </li>
+    <li>
+      <a href="<?php echo home_url('/scorecard/'); ?>"
+         class="nav-gold<?php if(is_page('scorecard')) echo ' active'; ?>"
+         <?php if(is_page('scorecard')) echo 'aria-current="page"'; ?>>Free Scorecard</a>
+    </li>
+    <li>
+      <a href="<?php echo home_url('/contact/'); ?>"
+         class="nav-cta<?php if(is_page('contact')) echo ' active'; ?>"
+         <?php if(is_page('contact')) echo 'aria-current="page"'; ?>>Book a Review</a>
+    </li>
+  </ul>
+  <button class="nav-hamburger"
+    onclick="document.getElementById('navLinks').classList.toggle('mob-open');
+             this.setAttribute('aria-expanded',
+             this.getAttribute('aria-expanded')==='false'?'true':'false');"
+    aria-label="Toggle navigation menu"
+    aria-expanded="false">☰</button>
 </nav>
 
+<main>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-rule"></div>
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-rule" aria-hidden="true"></div>
   <div class="container">
     <div class="hero-inner">
       <div class="hero-eyebrow reveal">F2 Transform · Vertical Products</div>
-      <div class="display-xl reveal reveal-d1">BUILT FOR<br>YOUR <span class="gold">INDUSTRY.</span></div>
+      <h1 class="display-xl reveal reveal-d1">BUILT FOR<br>YOUR <span class="gold">INDUSTRY.</span></h1>
       <p class="hero-sub reveal reveal-d2">
         Most business software is built for everyone — which means it fits no one precisely.
         F2 Transform products are purpose-built vertical systems for specific industries,
         engineered on Zoho Creator and deployed across East Africa.
       </p>
       <div style="display:flex;gap:16px;flex-wrap:wrap;" class="reveal reveal-d3">
-        <a href="https://finlanza.com/contact.html" class="btn-primary">Discuss Your Industry</a>
-        <a href="https://finlanza.com/services.html" class="btn-ghost">How We Implement</a>
+        <!-- FIXED: WordPress URLs -->
+        <a href="<?php echo home_url('/contact/'); ?>" class="btn-primary">Discuss Your Industry</a>
+        <a href="<?php echo home_url('/services/'); ?>" class="btn-ghost">How We Implement</a>
       </div>
       <div class="hero-stats reveal reveal-d4">
         <div>
@@ -494,7 +228,8 @@
         <div class="product-card-name">GarageERP</div>
         <div class="product-card-hook">"Run your workshop. Not spreadsheets."</div>
         <p class="product-card-desc">A complete garage management system — job cards, quotations, parts tracking, technician scheduling, insurance claims, and owner dashboards. All in one Zoho Creator system.</p>
-        <a href="https://finlanza.com/GarageERP_Website.html" class="product-card-cta">Explore GarageERP</a>
+        <!-- FIXED: WordPress URL for GarageERP product page -->
+        <a href="<?php echo home_url('/garage-erp/'); ?>" class="product-card-cta">Explore GarageERP</a>
       </div>
 
       <!-- BETA: PoultryOS -->
@@ -504,7 +239,8 @@
         <div class="product-card-name">PoultryOS</div>
         <div class="product-card-hook">"Know your true cost per bird."</div>
         <p class="product-card-desc">Batch management, feed tracking, mortality recording, flock performance analytics, and cost-per-bird reporting built specifically for commercial poultry operations.</p>
-        <a href="https://finlanza.com/PoultryOS_Website.html" class="product-card-cta">Explore PoultryOS</a>
+        <!-- FIXED: WordPress URL for PoultryOS — update slug when page is created -->
+        <a href="<?php echo home_url('/poultry-os/'); ?>" class="product-card-cta">Explore PoultryOS</a>
       </div>
 
       <!-- PIPELINE: PayrollOS -->
@@ -567,7 +303,7 @@
     <div class="about-grid">
       <div>
         <span class="label reveal">Our Build Philosophy</span>
-        <div class="display-lg reveal reveal-d1">HOW WE <span class="gold">BUILD.</span></div>
+        <h2 class="display-lg reveal reveal-d1">HOW WE <span class="gold">BUILD.</span></h2>
         <p style="color:var(--text-muted);font-size:16px;line-height:1.8;margin-top:24px;" class="reveal reveal-d2">
           Every F2 Transform product starts the same way — with a sector problem, not a feature list. We implement with a real client first, then productise. Nothing ships until it's been run in production.
         </p>
@@ -603,25 +339,28 @@
         If one of the in-development products solves a problem you're facing right now, reach out. Early clients shape the product — and get preferential pricing.
       </p>
       <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;" class="reveal reveal-d3">
-        <a href="https://finlanza.com/contact.html" class="btn-primary">Register Your Interest</a>
-        <a href="https://finlanza.com/scorecard.html" class="btn-ghost">Take the Free Scorecard</a>
+        <!-- FIXED: WordPress URLs -->
+        <a href="<?php echo home_url('/contact/'); ?>" class="btn-primary">Register Your Interest</a>
+        <a href="<?php echo home_url('/scorecard/'); ?>" class="btn-ghost">Take the Free Scorecard</a>
       </div>
     </div>
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
-<footer>
+<footer role="contentinfo" aria-label="Site footer">
   <div class="container">
     <div class="footer-top">
       <div class="display-md" style="font-size:clamp(22px,3vw,38px);margin-bottom:8px;"><span class="gold">Scalability</span> is not an accident.<br>It is engineered.</div>
       <div class="label" style="margin-top:12px;">Zoho Authorized Partner · Enterprise Implementation Specialists · Africa</div>
     </div>
     <div class="footer-grid">
-      <div class="footer-logo">
-        <img src="data:image/png;base64,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" alt="Finlanza">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--white);margin-bottom:4px;">FINLANZA</div>
+        <div class="label" style="margin-bottom:12px;">Business Systems Architecture Firm</div>
         <p style="color:var(--text-muted);font-size:13px;line-height:1.7;max-width:280px;">We engineer scalable business systems for multi-location, multi-entity organizations across Africa — built on the DREAM™ Transformation Framework.</p>
-        <!-- Zoho Authorized Partner badge -->
         <div class="zoho-partner-badge" style="margin-top:20px;">
           <span class="zoho-partner-badge-logo">ZOHO</span>
           <span class="zoho-partner-badge-sep"></span>
@@ -631,33 +370,40 @@
       <div>
         <div class="label" style="margin-bottom:14px;">Services</div>
         <div class="footer-links">
-          <a href="https://finlanza.com/services.html">Diagnose</a>
-          <a href="https://finlanza.com/services.html">Transform</a>
-          <a href="https://finlanza.com/services.html">Managed</a>
-          <a href="https://finlanza.com/pricing.html">Pricing</a>
+          <!-- FIXED: All footer links use WordPress URLs -->
+          <a href="<?php echo home_url('/services/'); ?>">Diagnose</a>
+          <a href="<?php echo home_url('/services/'); ?>">Transform</a>
+          <a href="<?php echo home_url('/services/'); ?>">Managed</a>
+          <a href="<?php echo home_url('/pricing/'); ?>">Pricing</a>
         </div>
       </div>
       <div>
         <div class="label" style="margin-bottom:14px;">Products</div>
         <div class="footer-links">
-          <a href="https://finlanza.com/GarageERP_Website.html">GarageERP</a>
-          <a href="https://finlanza.com/PoultryOS_Website.html">PoultryOS</a>
-          <a href="https://finlanza.com/products.html">Full Suite →</a>
+          <!-- FIXED: WordPress URLs for product pages -->
+          <a href="<?php echo home_url('/garage-erp/'); ?>">GarageERP</a>
+          <a href="<?php echo home_url('/poultry-os/'); ?>">PoultryOS</a>
+          <a href="<?php echo home_url('/products/'); ?>">Full Suite →</a>
         </div>
       </div>
       <div>
         <div class="label" style="margin-bottom:14px;">Company</div>
         <div class="footer-links">
-          <a href="https://finlanza.com/dream.html">DREAM™ Framework</a>
-          <a href="https://finlanza.com/insights.html">Insights</a>
-          <a href="https://finlanza.com/scorecard.html">Free Scorecard</a>
-          <a href="https://finlanza.com/contact.html">Contact</a>
+          <a href="<?php echo home_url('/dream/'); ?>">DREAM™ Framework</a>
+          <a href="<?php echo home_url('/insights/'); ?>">Insights</a>
+          <a href="<?php echo home_url('/scorecard/'); ?>">Free Scorecard</a>
+          <a href="<?php echo home_url('/contact/'); ?>">Contact</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <div>© 2026 Finlanza Limited. All rights reserved. DREAM™ is a proprietary transformation framework.</div>
-      <div>collins@finlanza.com · +254 724 463 536 · finlanza.com</div>
+      <!-- FIXED: Dynamic copyright year -->
+      <div>© <?php echo date('Y'); ?> Finlanza Limited. All rights reserved. DREAM™ is a proprietary transformation framework.</div>
+      <div>
+        <a href="mailto:ask@finlanza.com" style="color:var(--text-muted);text-decoration:none;">ask@finlanza.com</a>
+        · <a href="tel:+254724463536" style="color:var(--text-muted);text-decoration:none;">+254 724 463 536</a>
+        · <a href="<?php echo home_url('/'); ?>" style="color:var(--text-muted);text-decoration:none;">finlanza.com</a>
+      </div>
     </div>
   </div>
 </footer>
@@ -665,7 +411,9 @@
 <script>
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
 
@@ -674,6 +422,7 @@
       window.scrollY > 40 ? 'rgba(200,151,28,0.2)' : 'rgba(200,151,28,0.1)';
   });
 </script>
+
 <?php wp_footer(); ?>
 </body>
-</html>
+</html>s

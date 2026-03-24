@@ -1,0 +1,564 @@
+<?php
+/* Template Name: Finlanza Contact */
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finlanza — Business Systems Architecture Firm</title>
+<meta name="description" content="Finlanza is a Business Systems Architecture Firm specialising in Zoho implementation across East Africa. Something new is coming.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --navy:        #0D1B2A;
+    --navy-mid:    #152232;
+    --navy-light:  #1E3045;
+    --gold:        #C8971C;
+    --gold-light:  #E8B84B;
+    --white:       #FFFFFF;
+    --text:        #E8E2D4;
+    --text-muted:  #8A9BAD;
+    --border:      rgba(200,151,28,0.2);
+    --border-dim:  rgba(255,255,255,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── NOISE ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── GEOMETRIC BACKGROUND ── */
+  .bg-geo {
+    position: fixed; inset: 0; z-index: 0; overflow: hidden;
+  }
+  .bg-geo::before {
+    content: '';
+    position: absolute;
+    width: 900px; height: 900px;
+    border: 1px solid rgba(200,151,28,0.06);
+    border-radius: 50%;
+    top: -300px; right: -200px;
+    animation: slow-spin 80s linear infinite;
+  }
+  .bg-geo::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border: 1px solid rgba(200,151,28,0.04);
+    border-radius: 50%;
+    bottom: -200px; left: -100px;
+    animation: slow-spin 60s linear infinite reverse;
+  }
+  @keyframes slow-spin { to { transform: rotate(360deg); } }
+
+  /* diagonal gold lines */
+  .bg-lines {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(135deg, transparent 48%, rgba(200,151,28,0.025) 49%, rgba(200,151,28,0.025) 51%, transparent 52%),
+      linear-gradient(135deg, transparent 72%, rgba(200,151,28,0.015) 73%, rgba(200,151,28,0.015) 74%, transparent 75%);
+    background-size: 100% 100%;
+  }
+
+  /* radial glow */
+  .bg-glow {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 50% 70% at 75% 40%, rgba(200,151,28,0.055) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 40% at 15% 70%, rgba(200,151,28,0.03) 0%, transparent 60%);
+  }
+
+  /* ── GOLD TOP BAR ── */
+  .gold-bar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold-light) 60%, var(--gold) 80%, transparent);
+    z-index: 100;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    position: relative; z-index: 1;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    min-height: 100vh;
+  }
+
+  /* ── LEFT PANEL ── */
+  .left {
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    padding: 60px 64px 56px;
+    border-right: 1px solid var(--border-dim);
+  }
+
+  /* Logo */
+  .logo img { height: 40px; width: auto; }
+
+  /* Main content */
+  .main-content { padding: 40px 0; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 40px;
+    opacity: 0; animation: fade-up 0.8s ease 0.2s forwards;
+  }
+  .eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); opacity: 0.5; }
+
+  .headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 7vw, 110px);
+    line-height: 0.88;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 36px;
+    opacity: 0; animation: fade-up 0.9s ease 0.35s forwards;
+  }
+  .headline .gold { color: var(--gold); }
+  .headline .serif {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 0.75em;
+    letter-spacing: 0;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1.1;
+  }
+
+  .sub {
+    font-size: 16px; font-weight: 300; color: var(--text-muted);
+    line-height: 1.8; max-width: 460px; margin-bottom: 48px;
+    opacity: 0; animation: fade-up 0.9s ease 0.5s forwards;
+  }
+
+  /* Pillars */
+  .pillars {
+    display: flex; flex-direction: column; gap: 0;
+    border-top: 1px solid var(--border-dim);
+    margin-bottom: 48px;
+    opacity: 0; animation: fade-up 0.9s ease 0.65s forwards;
+  }
+  .pillar {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-dim);
+  }
+  .pillar-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: var(--gold); letter-spacing: 2px;
+    padding-top: 2px; min-width: 24px;
+  }
+  .pillar-body {}
+  .pillar-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px; letter-spacing: 2px; color: var(--white);
+    margin-bottom: 4px;
+  }
+  .pillar-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+  /* Footer left */
+  .left-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+    opacity: 0; animation: fade-up 0.9s ease 0.8s forwards;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 4px; }
+  .contact-links a {
+    font-size: 12px; color: var(--text-muted); text-decoration: none;
+    letter-spacing: 0.5px; transition: color 0.2s;
+  }
+  .contact-links a:hover { color: var(--gold); }
+
+  /* Zoho badge */
+  .zoho-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(200,151,28,0.16);
+    padding: 6px 12px; opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+  .zoho-badge:hover { opacity: 0.9; }
+  .zoho-badge-word {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.45);
+  }
+  .zoho-badge-sep { width: 1px; height: 14px; background: rgba(200,151,28,0.25); }
+  .zoho-badge-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8.5px; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(200,151,28,0.7);
+  }
+
+  /* ── RIGHT PANEL ── */
+  .right {
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 60px 56px;
+    background: rgba(21,34,50,0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  .right-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 32px;
+    opacity: 0; animation: fade-up 0.9s ease 0.4s forwards;
+  }
+
+  .right-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; letter-spacing: 2px; color: var(--white);
+    margin-bottom: 12px;
+    opacity: 0; animation: fade-up 0.9s ease 0.5s forwards;
+  }
+
+  .right-sub {
+    font-size: 14px; color: var(--text-muted); line-height: 1.75;
+    margin-bottom: 36px;
+    opacity: 0; animation: fade-up 0.9s ease 0.6s forwards;
+  }
+
+  /* Form */
+  .form-group {
+    display: flex; flex-direction: column; gap: 12px;
+    opacity: 0; animation: fade-up 0.9s ease 0.7s forwards;
+  }
+
+  .form-field {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .form-label {
+    font-size: 10px; font-weight: 500; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+  .form-input {
+    background: rgba(13,27,42,0.8);
+    border: 1px solid var(--border-dim);
+    color: var(--white);
+    padding: 13px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-input::placeholder { color: rgba(138,155,173,0.4); }
+  .form-input:focus { border-color: var(--gold); }
+
+  .form-select {
+    background: rgba(13,27,42,0.8);
+    border: 1px solid var(--border-dim);
+    color: var(--text-muted);
+    padding: 13px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A9BAD' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+  }
+  .form-select:focus { border-color: var(--gold); }
+  .form-select option { background: var(--navy-mid); color: var(--text); }
+
+  .form-btn {
+    background: var(--gold);
+    color: var(--navy);
+    border: none; cursor: pointer;
+    padding: 15px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    transition: all 0.2s;
+    margin-top: 4px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .form-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .form-btn:active { transform: none; }
+
+  .form-note {
+    font-size: 11px; color: rgba(138,155,173,0.5);
+    margin-top: 12px; line-height: 1.6; letter-spacing: 0.3px;
+  }
+
+  /* Success state */
+  .form-success {
+    display: none;
+    text-align: center; padding: 40px 24px;
+  }
+  .success-mark {
+    width: 56px; height: 56px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 22px; color: var(--gold);
+  }
+  .success-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 2px; color: var(--white);
+    margin-bottom: 12px;
+  }
+  .success-sub { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  /* Divider */
+  .right-divider {
+    border: none; border-top: 1px solid var(--border-dim);
+    margin: 36px 0;
+    opacity: 0; animation: fade-up 0.9s ease 0.75s forwards;
+  }
+
+  /* Social */
+  .social-row {
+    display: flex; align-items: center; gap: 20px;
+    opacity: 0; animation: fade-up 0.9s ease 0.85s forwards;
+  }
+  .social-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .social-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12px; color: var(--text-muted); text-decoration: none;
+    border: 1px solid var(--border-dim); padding: 6px 12px;
+    transition: all 0.2s; letter-spacing: 1px;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .page { grid-template-columns: 1fr; min-height: auto; }
+    .left { padding: 48px 28px 40px; border-right: none; border-bottom: 1px solid var(--border-dim); }
+    .right { padding: 48px 28px; }
+    .headline { font-size: clamp(52px, 12vw, 80px); }
+    .left-footer { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .bg-geo::before { width: 500px; height: 500px; top: -100px; right: -150px; }
+  }
+
+</style>
+
+<?php wp_head(); ?>
+</head>
+<body>
+
+<div class="gold-bar"></div>
+<div class="bg-geo"></div>
+<div class="bg-lines"></div>
+<div class="bg-glow"></div>
+
+<div class="page">
+
+  <!-- LEFT PANEL -->
+  <div class="left">
+
+    <div class="logo">
+      <img src="data:image/png;base64,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" alt="Finlanza">
+    </div>
+
+    <div class="main-content">
+
+      <div class="eyebrow">New Site · Coming Soon</div>
+
+      <h1 class="headline">
+        WE DON'T<br>
+        BUILD <span class="gold">FORMS.</span><br>
+        <span class="serif">We engineer systems.</span>
+      </h1>
+
+      <p class="sub">
+        Finlanza is a Business Systems Architecture Firm — Zoho implementation, integration,
+        and vertical product engineering across East Africa.
+        Our new site is on its way. In the meantime, we're still building — and still taking client work.
+      </p>
+
+      <div class="pillars">
+        <div class="pillar">
+          <span class="pillar-num">D·R·E·A·M</span>
+          <div class="pillar-body">
+            <div class="pillar-title">Proprietary Implementation Framework</div>
+            <p class="pillar-desc">Every engagement — Diagnose, Reengineer, Execute, Align, Measure. Structure before software, every time.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">F2</span>
+          <div class="pillar-body">
+            <div class="pillar-title">Vertical Products on Zoho Creator</div>
+            <p class="pillar-desc">GarageERP and PoultryOS are live and accepting pilot clients. Five more in the build pipeline.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">01</span>
+          <div class="pillar-body">
+            <div class="pillar-title">Authorised Zoho Partner · East Africa</div>
+            <p class="pillar-desc">Zoho One, CRM, Books, People, Creator, Desk, Projects — implemented as a connected system, not isolated tools.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="left-footer">
+      <div class="contact-links">
+        <a href="mailto:collins@finlanza.com">collins@finlanza.com</a>
+        <a href="tel:+254724463536">+254 724 463 536</a>
+        <a href="https://finlanza.com">finlanza.com</a>
+      </div>
+      <div class="zoho-badge">
+        <span class="zoho-badge-word">ZOHO</span>
+        <span class="zoho-badge-sep"></span>
+        <span class="zoho-badge-label">Authorised Partner · Africa</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right">
+
+    <div class="right-eyebrow">Get Early Access</div>
+
+    <div class="right-title">BE THE FIRST TO KNOW.</div>
+
+    <p class="right-sub">
+      Leave your details and we'll reach out personally when the site goes live —
+      or sooner, if your business has a systems problem we can solve right now.
+    </p>
+
+    <!-- FORM -->
+    <div id="formWrap">
+      <div class="form-group">
+
+        <div class="form-field">
+          <label class="form-label" for="name">Full Name</label>
+          <input class="form-input" type="text" id="name" placeholder="Your name" autocomplete="name">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="email">Work Email</label>
+          <input class="form-input" type="email" id="email" placeholder="you@company.com" autocomplete="email">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="company">Company</label>
+          <input class="form-input" type="text" id="company" placeholder="Your company name">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="interest">I'm interested in</label>
+          <select class="form-select" id="interest">
+            <option value="" disabled selected>Select an area</option>
+            <option value="zoho-implementation">Zoho Implementation</option>
+            <option value="garageerp">GarageERP — Automotive</option>
+            <option value="poultryo">PoultryOS — Poultry Farming</option>
+            <option value="payrollos">PayrollOS — Kenya Payroll</option>
+            <option value="databridge">DataBridge — Data Migration</option>
+            <option value="aiden">AIDEN™ — AI Agents</option>
+            <option value="transport">Transport OS — Fleet &amp; Logistics</option>
+            <option value="education">Education EMS — Schools</option>
+            <option value="general">General Enquiry</option>
+          </select>
+        </div>
+
+        <button class="form-btn" onclick="handleSubmit()">
+          Notify Me When Live
+          <span>→</span>
+        </button>
+
+        <p class="form-note">
+          No spam. No newsletters. One message when the site is live —
+          and a direct response from Collins if your enquiry is time-sensitive.
+        </p>
+
+      </div>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="form-success" id="formSuccess">
+      <div class="success-mark">✓</div>
+      <div class="success-title">YOU'RE ON THE LIST.</div>
+      <p class="success-sub">
+        We'll be in touch when the site goes live.<br>
+        If it's urgent — email <a href="mailto:collins@finlanza.com" style="color:var(--gold);text-decoration:none;">collins@finlanza.com</a> directly.
+      </p>
+    </div>
+
+    <hr class="right-divider">
+
+    <div class="social-row">
+      <span class="social-label">Find us</span>
+      <a href="https://linkedin.com/company/finlanza" class="social-link" target="_blank" rel="noopener">
+        LinkedIn
+      </a>
+      <a href="mailto:collins@finlanza.com" class="social-link">
+        Email Us
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function handleSubmit() {
+    const name     = document.getElementById('name').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    const company  = document.getElementById('company').value.trim();
+    const interest = document.getElementById('interest').value;
+
+    if (!name || !email) {
+      document.getElementById('email').focus();
+      document.getElementById('email').style.borderColor = 'rgba(200,151,28,0.6)';
+      return;
+    }
+
+    // Build mailto with captured data
+    const subject = encodeURIComponent('Finlanza Site Launch — Early Access Registration');
+    const body    = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nCompany: ${company || '—'}\nInterest: ${interest || '—'}`
+    );
+    window.location.href = `mailto:collins@finlanza.com?subject=${subject}&body=${body}`;
+
+    // Show success state
+    document.getElementById('formWrap').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+
+  // Allow Enter key on inputs
+  document.querySelectorAll('.form-input').forEach(input => {
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') handleSubmit(); });
+  });
+</script>
+<?php wp_footer(); ?>
+</body>
+</html>

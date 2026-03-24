@@ -6,9 +6,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finlanza Garage ERP — Run Your Workshop. Not Your Spreadsheets.</title>
+<title>Finlanza GarageERP — Run Your Workshop. Not Your Spreadsheets.</title>
+<meta name="description" content="GarageERP is a complete garage management system built on Zoho Creator by Finlanza. Job cards, quotations, parts, insurance claims, technician scheduling, and owner reporting — all in one system. Now accepting pilot clients in Kenya.">
+<meta name="robots" content="index, follow">
+<!-- FIXED: WordPress canonical URL -->
+<link rel="canonical" href="<?php echo home_url('/garage-erp/'); ?>">
+<meta property="og:title" content="Finlanza GarageERP — Run Your Workshop. Not Your Spreadsheets.">
+<meta property="og:description" content="A complete garage management system built on Zoho Creator. Job cards, quotations, parts, insurance claims, and owner dashboards — all in one system.">
+<meta property="og:url" content="<?php echo home_url('/garage-erp/'); ?>">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Finlanza">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Finlanza GarageERP — Run Your Workshop. Not Your Spreadsheets.">
+<meta name="twitter:description" content="Complete garage management system on Zoho Creator. Now accepting pilot clients.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Finlanza GarageERP",
+  "description": "A complete garage management system built on Zoho Creator covering job cards, quotations, parts tracking, insurance claims, technician scheduling, and owner dashboards.",
+  "url": "<?php echo home_url('/garage-erp/'); ?>",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Finlanza Limited",
+    "url": "<?php echo home_url('/'); ?>",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Nairobi",
+      "addressCountry": "Kenya"
+    }
+  }
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<?php wp_head(); ?>
 <style>
   :root {
     --navy:#0D1B2A;--navy2:#112338;--navy3:#0A1520;
@@ -17,9 +51,13 @@
     --light:#F4F5F7;--mid:#374151;
     --green:#16A34A;--amber:#D97706;--red:#DC2626;--teal:#0E7490;
   }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;}
+
+  /* Nav */
   nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(13,27,42,0.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,151,28,0.15);}
   .nav-logo img{height:28px;width:auto;}
   .nav-links{display:flex;align-items:center;gap:2.5rem;}
@@ -27,7 +65,15 @@
   .nav-links a:hover{color:var(--gold);}
   .nav-cta{background:var(--gold);color:var(--navy);padding:0.5rem 1.4rem;font-size:0.8rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background 0.2s;}
   .nav-cta:hover{background:var(--gold-light);}
+  .nav-hamburger{display:none;background:none;border:1px solid rgba(200,151,28,0.3);color:var(--white);padding:6px 12px;cursor:pointer;font-size:17px;}
+  @media(max-width:900px){
+    nav{padding:1rem 24px;}
+    .nav-links{display:none;flex-direction:column;position:absolute;top:65px;left:0;right:0;background:rgba(13,27,42,0.98);border-bottom:1px solid rgba(200,151,28,0.15);padding:20px 24px;gap:16px;}
+    .nav-links.mob-open{display:flex;}
+    .nav-hamburger{display:block;}
+  }
 
+  /* Hero */
   .hero{min-height:100vh;display:flex;align-items:center;padding:8rem 4rem 5rem;position:relative;overflow:hidden;}
   .hero::before{content:'';position:absolute;top:0;right:0;width:45%;height:100%;background:radial-gradient(ellipse at 80% 40%,rgba(200,151,28,0.07) 0%,transparent 65%);pointer-events:none;}
   .hero-left{max-width:640px;position:relative;z-index:2;}
@@ -50,6 +96,7 @@
   .section-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,2.8rem);color:var(--white);line-height:1.15;margin-bottom:1rem;}
   .section-sub{font-size:1rem;color:var(--grey);line-height:1.7;max-width:580px;margin-bottom:3rem;}
 
+  /* Modules */
   .module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
   .module-card{background:var(--navy2);border:1px solid rgba(30,48,80,0.8);padding:1.5rem;position:relative;}
   .module-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--gold);}
@@ -57,6 +104,7 @@
   .module-name{font-size:1rem;font-weight:600;color:var(--white);margin-bottom:0.5rem;}
   .module-desc{font-size:0.86rem;color:var(--grey);line-height:1.6;}
 
+  /* Workflow */
   .workflow-steps{display:flex;flex-direction:column;gap:0;max-width:900px;}
   .workflow-step{display:grid;grid-template-columns:2.5rem 1fr;gap:1.5rem;align-items:start;padding:1.2rem 1.5rem;background:var(--navy2);border:1px solid rgba(30,48,80,0.8);border-top:none;}
   .workflow-step:first-child{border-top:1px solid rgba(30,48,80,0.8);}
@@ -65,6 +113,7 @@
   .step-desc{font-size:0.86rem;color:var(--grey);line-height:1.6;}
   .step-gate{font-size:0.75rem;color:var(--amber);margin-top:0.4rem;}
 
+  /* Pricing */
   .pricing-section{background:var(--navy3);}
   .tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
   .tier-card{background:var(--navy2);border:1px solid rgba(30,48,80,0.8);padding:2rem;}
@@ -81,50 +130,66 @@
   .support-name{font-size:0.9rem;font-weight:600;color:var(--white);margin-bottom:0.4rem;}
   .support-desc{font-size:0.82rem;color:var(--grey);line-height:1.5;}
 
+  /* Integrations */
   .integration-strip{background:var(--navy3);padding:3rem 4rem;display:flex;align-items:center;gap:3rem;flex-wrap:wrap;}
   .int-label{font-size:0.72rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--grey);flex-shrink:0;}
   .int-apps{display:flex;gap:1.2rem;flex-wrap:wrap;}
   .int-app{background:var(--navy2);border:1px solid rgba(30,48,80,0.8);padding:0.5rem 1.2rem;font-size:0.85rem;font-weight:500;color:var(--white);}
 
+  /* CTA */
   .cta-section{text-align:center;padding:7rem 4rem;position:relative;overflow:hidden;}
   .cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(200,151,28,0.08) 0%,transparent 65%);pointer-events:none;}
   .cta-section h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:1rem;line-height:1.15;}
   .cta-section h2 em{color:var(--gold);font-style:italic;}
   .cta-section p{font-size:1rem;color:var(--grey);margin-bottom:2.5rem;max-width:520px;margin-left:auto;margin-right:auto;}
 
-  footer{background:var(--navy3);border-top:1px solid rgba(200,151,28,0.15);padding:2.5rem 4rem;display:flex;align-items:center;justify-content:space-between;}
-  .footer-brand{font-size:0.78rem;color:var(--grey);}
-  .footer-brand strong{color:var(--white);}
-  .footer-links{display:flex;gap:2rem;}
-  .footer-links a{font-size:0.78rem;color:var(--grey);text-decoration:none;transition:color 0.2s;}
-  .footer-links a:hover{color:var(--gold);}
+  /* Footer */
+  footer{background:var(--navy3);border-top:1px solid rgba(200,151,28,0.15);padding:2.5rem 4rem;}
+
+  @media(max-width:900px){
+    .hero{padding:6rem 24px 3rem;}
+    section{padding:4rem 24px;}
+    .module-grid{grid-template-columns:1fr;}
+    .tier-grid{grid-template-columns:1fr;}
+    .support-grid{grid-template-columns:1fr;}
+    .hero-stats{flex-direction:column;gap:1.5rem;}
+    .integration-strip{padding:2rem 24px;}
+    .cta-section{padding:4rem 24px;}
+    footer{padding:2rem 24px;}
+  }
 </style>
-<?php wp_head(); ?>
 </head>
 <body>
 
-<nav>
-     <a class="nav-logo" href="https://finlanza.com/index.html">
-      <!-- SEO: Added alt text to logo image -->
-
+<nav id="main-nav" role="navigation" aria-label="Main navigation">
+  <a class="nav-logo" href="<?php echo home_url('/'); ?>">
     <img src="data:image/png;base64,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" alt="Finlanza" style="height:36px;width:auto;display:block;">
   </a>
-   <div class="nav-links">
+  <div class="nav-links" id="navLinks">
     <a href="#modules">Modules</a>
     <a href="#workflow">Workflow</a>
     <a href="#pricing">Pricing</a>
     <a href="#integrations">Integrations</a>
   </div>
   <a href="#cta" class="nav-cta">Now Accepting Pilots</a>
+  <button class="nav-hamburger"
+    onclick="document.getElementById('navLinks').classList.toggle('mob-open');
+             this.setAttribute('aria-expanded',
+             this.getAttribute('aria-expanded')==='false'?'true':'false');"
+    aria-label="Toggle navigation menu"
+    aria-expanded="false">☰</button>
 </nav>
+
+<main>
 
 <section class="hero" id="top">
   <div class="hero-left">
-    <div class="hero-eyebrow"><span></span> F2 Transform — Automotive Vertical</div>
+    <div class="hero-eyebrow"><span aria-hidden="true"></span> F2 Transform — Automotive Vertical</div>
     <h1>Run your<br>workshop.<br><em>Not spreadsheets.</em></h1>
-    <p class="hero-sub">Finlanza Garage ERP is a complete garage management system built on Zoho Creator. Job cards, quotations, parts, insurance claims, technician scheduling, and owner reporting — all in one system.</p>
+    <p class="hero-sub">Finlanza GarageERP is a complete garage management system built on Zoho Creator. Job cards, quotations, parts, insurance claims, technician scheduling, and owner reporting — all in one system.</p>
     <div class="hero-actions">
-      <a href="#cta" class="btn-primary">Book a Demo</a>
+      <!-- FIXED: WordPress contact URL for demo booking -->
+      <a href="<?php echo home_url('/contact/'); ?>" class="btn-primary">Book a Demo</a>
       <a href="#workflow" class="btn-ghost">See How It Works</a>
     </div>
     <div class="hero-stats">
@@ -141,47 +206,47 @@
   <p class="section-sub">Eight tightly integrated modules covering every function of a modern vehicle service operation — from customer check-in to owner reporting.</p>
   <div class="module-grid">
     <div class="module-card">
-      <div class="module-icon">🚗</div>
-      <div class="module-name">Front Desk & Job Cards</div>
+      <div class="module-icon" aria-hidden="true">🚗</div>
+      <div class="module-name">Front Desk &amp; Job Cards</div>
       <div class="module-desc">Vehicle check-in, customer and vehicle master, job card creation with blueprint-controlled status flow through 12 stages from New to Closed.</div>
     </div>
-    <div class="module-card" style="--accent:var(--teal)">
-      <div class="module-icon">🔧</div>
+    <div class="module-card">
+      <div class="module-icon" aria-hidden="true">🔧</div>
       <div class="module-name">Workshop Management</div>
       <div class="module-desc">Inspection checklists, work order assignment, technician labour logging, QC sign-off, and service history auto-generation at checkout.</div>
     </div>
     <div class="module-card">
-      <div class="module-icon">📋</div>
-      <div class="module-name">Quotations & Estimates</div>
+      <div class="module-icon" aria-hidden="true">📋</div>
+      <div class="module-name">Quotations &amp; Estimates</div>
       <div class="module-desc">Labour and parts quotations with approval workflow. Quote pushed to Zoho Books as estimate. 7-day validity with automated expiry notifications.</div>
     </div>
     <div class="module-card">
-      <div class="module-icon">🔩</div>
-      <div class="module-name">Parts & Storeroom</div>
+      <div class="module-icon" aria-hidden="true">🔩</div>
+      <div class="module-name">Parts &amp; Storeroom</div>
       <div class="module-desc">Spare parts master, parts request workflow, storekeeper approval, issue tracking, and Zoho Inventory sync for accurate stock levels.</div>
     </div>
     <div class="module-card" style="border-top-color:var(--gold);">
-      <div class="module-icon">🛡️</div>
+      <div class="module-icon" aria-hidden="true">🛡️</div>
       <div class="module-name">Insurance Claims</div>
       <div class="module-desc">Full insurance claim lifecycle — assessor scheduling, document management, insurer approval tracking, and settlement recording. Built for assessor-heavy markets.</div>
     </div>
     <div class="module-card">
-      <div class="module-icon">💳</div>
-      <div class="module-name">Invoicing & Payments</div>
+      <div class="module-icon" aria-hidden="true">💳</div>
+      <div class="module-name">Invoicing &amp; Payments</div>
       <div class="module-desc">Zoho Books integration for invoicing and estimates. Payment confirmation by accountant unlocks vehicle release. eTIMS-ready for VAT-registered garages.</div>
     </div>
     <div class="module-card">
-      <div class="module-icon">🔔</div>
+      <div class="module-icon" aria-hidden="true">🔔</div>
       <div class="module-name">Customer Communication</div>
       <div class="module-desc">Automated WhatsApp and email notifications at every stage — check-in confirmation, quote ready, vehicle ready for collection, service reminders, and payment receipts.</div>
     </div>
     <div class="module-card">
-      <div class="module-icon">📊</div>
-      <div class="module-name">Owner Dashboard & Reporting</div>
+      <div class="module-icon" aria-hidden="true">📊</div>
+      <div class="module-name">Owner Dashboard &amp; Reporting</div>
       <div class="module-desc">Real-time dashboards for garage owners showing active jobs, revenue this month, technician productivity, and average turnaround time. Daily summary sent by WhatsApp.</div>
     </div>
     <div class="module-card" style="border-top-color:var(--amber);">
-      <div class="module-icon">⚙️</div>
+      <div class="module-icon" aria-hidden="true">⚙️</div>
       <div class="module-name">System Configuration</div>
       <div class="module-desc">Every behavioural rule is configurable per client — quote approval requirement, QC enforcement, payment-before-release, credit release policy, and WhatsApp provider.</div>
     </div>
@@ -205,17 +270,17 @@
 </section>
 
 <section class="pricing-section" id="pricing">
-  <span class="section-label">Pricing & Packages</span>
+  <span class="section-label">Pricing &amp; Packages</span>
   <h2 class="section-title">Three packages. One system.<br>Every garage covered.</h2>
-  <p class="section-sub">Finlanza Garage ERP is deployed as a configured instance of the same core product. You pay for implementation, configuration, and training — not for a per-seat licence.</p>
+  <p class="section-sub">Finlanza GarageERP is deployed as a configured instance of the same core product. You pay for implementation, configuration, and training — not for a per-seat licence.</p>
   <div class="tier-grid">
     <div class="tier-card">
       <div class="tier-name">Starter</div>
       <div class="tier-target">Small garage · 1–3 bays · up to 5 staff</div>
       <div class="tier-price">KES 120,000 – 200,000</div>
-      <div class="tier-feature">Job cards & check-in/out</div>
+      <div class="tier-feature">Job cards &amp; check-in/out</div>
       <div class="tier-feature">Quotations (manual approval)</div>
-      <div class="tier-feature">Parts requests & issue</div>
+      <div class="tier-feature">Parts requests &amp; issue</div>
       <div class="tier-feature">Zoho Books integration (invoicing)</div>
       <div class="tier-feature">Basic owner dashboard</div>
       <div class="tier-feature">WhatsApp job status alerts</div>
@@ -229,7 +294,7 @@
       <div class="tier-feature">Everything in Starter</div>
       <div class="tier-feature">Insurance claims module</div>
       <div class="tier-feature">Full inspection checklist system</div>
-      <div class="tier-feature">Technician scheduling & labour log</div>
+      <div class="tier-feature">Technician scheduling &amp; labour log</div>
       <div class="tier-feature">QC module (mandatory or optional)</div>
       <div class="tier-feature">Zoho Inventory (parts stock)</div>
       <div class="tier-feature">Full owner dashboard + daily summary</div>
@@ -249,7 +314,7 @@
   </div>
 
   <h3 style="font-size:1.1rem;font-weight:600;color:var(--white);margin:3rem 0 1rem;padding-top:2rem;border-top:1px solid rgba(30,48,80,0.8)">Monthly Support Retainer</h3>
-  <p style="font-size:0.9rem;color:var(--grey);margin-bottom:1.5rem">Implementation is the beginning. Every Finlanza Garage ERP client is offered a monthly support retainer to keep the system running and improving.</p>
+  <p style="font-size:0.9rem;color:var(--grey);margin-bottom:1.5rem">Implementation is the beginning. Every Finlanza GarageERP client is offered a monthly support retainer to keep the system running and improving.</p>
   <div class="support-grid">
     <div class="support-card"><span class="support-price">KES 10,000/mo</span><div class="support-name">Basic Support</div><div class="support-desc">System support, minor configuration changes, user queries.</div></div>
     <div class="support-card" style="border-color:rgba(200,151,28,0.4)"><span class="support-price">KES 20,000/mo</span><div class="support-name">Professional Support</div><div class="support-desc">Reports, optimisation, new feature configuration, monthly review.</div></div>
@@ -257,7 +322,7 @@
   </div>
 </section>
 
-<section class="integration-strip" id="integrations">
+<section class="integration-strip" id="integrations" aria-label="Integrations">
   <span class="int-label">Integrations</span>
   <div class="int-apps">
     <div class="int-app">Zoho Books</div>
@@ -271,28 +336,45 @@
 
 <section class="cta-section" id="cta">
   <h2>Your workshop is running.<br>Is your <em>system</em>?</h2>
-  <p>Book a 60-minute Finlanza Garage ERP demo. We'll walk you through a live system and scope the right package for your operation.</p>
+  <p>Book a 60-minute Finlanza GarageERP demo. We'll walk you through a live system and scope the right package for your operation.</p>
   <div style="display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap">
-    <a href="/cdn-cgi/l/email-protection#d0b3bfbcbcb9bea390b6b9bebcb1beaab1feb3bfbd" class="btn-primary">Book a Demo</a>
-    <a href="/cdn-cgi/l/email-protection#ccafa3a0a0a5a2bf8caaa5a2a0ada2b6ade2afa3a1f3bfb9aea6a9afb8f18badbeadaba9e9fefc899e9ce9fefc89a2bdb9a5beb5" class="btn-ghost">Send an Enquiry</a>
+    <!-- FIXED: WordPress contact URL — removed Cloudflare-obfuscated mailto links -->
+    <a href="<?php echo home_url('/contact/'); ?>" class="btn-primary">Book a Demo</a>
+    <a href="mailto:ask@finlanza.com" class="btn-ghost">Send an Enquiry</a>
   </div>
-  <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--grey)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6a5a9aaaaafa8b586a0afa8aaa7a8bca7e8a5a9ab">[email&#160;protected]</a> · +254 724 463 536 · finlanza.com</p>
+  <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--grey)">
+    <a href="mailto:ask@finlanza.com" style="color:var(--grey);text-decoration:none;">ask@finlanza.com</a>
+    · <a href="tel:+254724463536" style="color:var(--grey);text-decoration:none;">+254 724 463 536</a>
+    · <a href="<?php echo home_url('/'); ?>" style="color:var(--grey);text-decoration:none;">finlanza.com</a>
+  </p>
 </section>
 
-<footer>
-  <div class="footer-brand"><strong>Finlanza Limited</strong> · Business Systems Architecture Firm</div>
-  <div class="footer-links" style="display:flex;gap:24px;margin-top:8px;flex-wrap:wrap;">
-    <a href="index.html" style="color:rgba(138,155,173,0.6);font-size:12px;text-decoration:none;letter-spacing:1px;">← Back to Finlanza</a>
-    <a href="contact.html" style="color:rgba(138,155,173,0.6);font-size:12px;text-decoration:none;letter-spacing:1px;">Book a Scoping Call</a>
-    <a href="mailto:collins@finlanza.com" style="color:rgba(138,155,173,0.6);font-size:12px;text-decoration:none;letter-spacing:1px;">collins@finlanza.com</a>
+</main>
+
+<footer role="contentinfo" aria-label="Site footer">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:24px;">
+    <div>
+      <div style="font-size:0.78rem;color:var(--grey);">
+        <strong style="color:var(--white);">Finlanza Limited</strong> · Business Systems Architecture Firm
+      </div>
+      <!-- FIXED: All footer links use WordPress URLs — removed hardcoded HTML and Cloudflare-obfuscated email -->
+      <div style="display:flex;gap:24px;margin-top:8px;flex-wrap:wrap;">
+        <a href="<?php echo home_url('/'); ?>" style="color:rgba(138,155,173,0.6);font-size:12px;text-decoration:none;letter-spacing:1px;">← Back to Finlanza</a>
+        <a href="<?php echo home_url('/products/'); ?>" style="color:rgba(138,155,173,0.6);font-size:12px;text-decoration:none;letter-spacing:1px;">All Products</a>
+        <a href="<?php echo home_url('/contact/'); ?>" style="color:rgba(138,155,173,0.6);font-size:12px;text-decoration:none;letter-spacing:1px;">Book a Scoping Call</a>
+        <a href="mailto:ask@finlanza.com" style="color:rgba(138,155,173,0.6);font-size:12px;text-decoration:none;letter-spacing:1px;">ask@finlanza.com</a>
+      </div>
+      <div style="margin-top:12px;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(200,151,28,0.16);padding:6px 12px;opacity:0.65;">
+        <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.45);">ZOHO</span>
+        <span style="display:inline-block;width:1px;height:14px;background:rgba(200,151,28,0.25);"></span>
+        <span style="font-family:'Space Mono',monospace;font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,151,28,0.7);">Authorised Partner · Africa</span>
+      </div>
+      <!-- FIXED: Dynamic copyright year -->
+      <div style="margin-top:12px;font-size:11px;color:rgba(138,155,173,0.4);letter-spacing:1px;">© <?php echo date('Y'); ?> Finlanza Limited. All rights reserved.</div>
+    </div>
   </div>
-  <div style="margin-top:12px;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(200,151,28,0.16);padding:6px 12px;opacity:0.65;">
-    <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.45);">ZOHO</span>
-    <span style="display:inline-block;width:1px;height:14px;background:rgba(200,151,28,0.25);"></span>
-    <span style="font-family:'Space Mono',monospace;font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,151,28,0.7);">Authorised Partner · Africa</span>
-  </div>
-  <div style="margin-top:12px;font-size:11px;color:rgba(138,155,173,0.4);letter-spacing:1px;">© 2026 Finlanza Limited. All rights reserved.</div>
 </footer>
+
 <?php wp_footer(); ?>
 </body>
 </html>
