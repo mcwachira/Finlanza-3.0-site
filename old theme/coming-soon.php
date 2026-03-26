@@ -1,5 +1,5 @@
 <?php
-/* Template Name: Finlanza Comming Soon */
+/* Template Name: Finlanza Contact */
 ?>
 
 <!DOCTYPE html>

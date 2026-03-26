@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Finlanza Limited</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #152232;
+    --navy-light: #1E3045;
+    --gold: #C8971C;
+    --gold-light: #E8B84B;
+    --white: #FFFFFF;
+    --text: #E8E2D4;
+    --text-muted: #8A9BAD;
+    --border: rgba(200,151,28,0.2);
+    --border-light: rgba(255,255,255,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 0 60px; height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(13,27,42,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo img { height: 36px; width: auto; display: block; }
+  .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-size: 13px; font-weight: 400;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-muted); transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: var(--gold) !important; color: var(--navy) !important; padding: 10px 24px !important; font-weight: 500 !important; }
+  .nav-hamburger { display: none; background: none; border: none; color: var(--white); font-size: 22px; cursor: pointer; }
+
+  /* LAYOUT */
+  .container { max-width: 800px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+
+  /* PAGE HEADER */
+  .page-header {
+    padding: 140px 0 60px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 64px;
+  }
+  .page-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .page-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); opacity: 0.5; }
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    letter-spacing: 2px; line-height: 0.95;
+    color: var(--white); margin-bottom: 20px;
+  }
+  .page-meta {
+    font-size: 13px; color: var(--text-muted);
+    font-family: 'Space Mono', monospace; letter-spacing: 1px;
+  }
+
+  /* DOCUMENT BODY */
+  .doc-body { padding-bottom: 100px; }
+
+  .doc-section { margin-bottom: 52px; }
+
+  .doc-section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 10px; display: block;
+  }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; letter-spacing: 2px;
+    color: var(--white); margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.5px;
+    color: var(--white); margin: 24px 0 10px;
+  }
+
+  p { color: var(--text-muted); margin-bottom: 14px; font-size: 15px; line-height: 1.8; }
+  p:last-child { margin-bottom: 0; }
+
+  ul, ol {
+    color: var(--text-muted); font-size: 15px; line-height: 1.8;
+    padding-left: 20px; margin-bottom: 14px;
+  }
+  li { margin-bottom: 6px; }
+  li::marker { color: var(--gold); }
+
+  .highlight-box {
+    background: var(--navy-mid);
+    border-left: 3px solid var(--gold);
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 14px; color: var(--text-muted); line-height: 1.75;
+  }
+  .highlight-box strong { color: var(--white); }
+
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  strong { color: var(--text); font-weight: 500; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border-light); position: relative; z-index: 1; }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 40px; font-size: 12px; color: var(--text-muted);
+    max-width: 800px; margin: 0 auto; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-legal { display: flex; gap: 20px; }
+  .footer-legal a { color: var(--text-muted); text-decoration: none; font-size: 12px; }
+  .footer-legal a:hover { color: var(--gold); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .container { padding: 0 24px; }
+    .page-header { padding: 110px 0 48px; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: block; }
+    .nav-links.mob-open {
+      display: flex; flex-direction: column;
+      position: fixed; top: 72px; left: 0; right: 0;
+      background: var(--navy); padding: 24px; gap: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-bottom { padding: 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <a class="nav-logo" href="index.html">
+    <img src="data:image/png;base64,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" alt="Finlanza">
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="dream.html">DREAM™</a></li>
+    <li><a href="insights.html">Insights</a></li>
+    <li><a href="scorecard.html">Free Scorecard</a></li>
+    <li><a href="contact.html" class="nav-cta">Book a Review</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('mob-open')" aria-label="Menu">☰</button>
+</nav>
+
+<div class="container">
+
+  <div class="page-header">
+    <div class="page-eyebrow">Legal · finlanza.com</div>
+    <h1 class="page-title">PRIVACY<br>POLICY.</h1>
+    <div class="page-meta">Effective date: 1 January 2026 &nbsp;·&nbsp; Last updated: March 2026</div>
+  </div>
+
+  <div class="doc-body">
+
+    <div class="highlight-box">
+      <strong>Plain summary:</strong> Finlanza collects only what it needs to do business with you. We do not sell your data. We do not share it with third parties except where required to deliver our services or comply with Kenyan law. You have the right to access, correct, or request deletion of your personal data at any time.
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">01</span>
+      <h2>WHO WE ARE</h2>
+      <p><strong>Finlanza Limited</strong> ("Finlanza", "we", "our", "us") is a Business Systems Architecture Firm registered in Kenya. We provide Zoho implementation, integration, and vertical product engineering services across East Africa.</p>
+      <p>This Privacy Policy applies to personal data collected through our website at <a href="https://finlanza.com">finlanza.com</a>, through our services engagements, and through direct business communications.</p>
+      <p><strong>Data Controller:</strong> Finlanza Limited<br>
+      <strong>Contact:</strong> <a href="mailto:legal@finlanza.com">legal@finlanza.com</a><br>
+      <strong>Address:</strong> Nairobi, Kenya<br>
+      <strong>Phone:</strong> +254 724 463 536</p>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">02</span>
+      <h2>LEGAL BASIS</h2>
+      <p>This policy is issued in compliance with the <strong>Kenya Data Protection Act, 2019</strong> (Cap. 411C) and the Data Protection (General) Regulations, 2021. Where our services extend to other East African jurisdictions, we apply equivalent standards under applicable local law.</p>
+      <p>We process personal data on the following legal grounds:</p>
+      <ul>
+        <li><strong>Contract performance</strong> — to deliver services you have engaged us for</li>
+        <li><strong>Legitimate interests</strong> — to communicate with prospective clients, manage relationships, and improve our services</li>
+        <li><strong>Legal obligation</strong> — to comply with applicable Kenyan law including tax, corporate, and regulatory requirements</li>
+        <li><strong>Consent</strong> — where you have explicitly provided it (e.g. marketing communications)</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">03</span>
+      <h2>WHAT DATA WE COLLECT</h2>
+
+      <h3>Data you provide directly</h3>
+      <ul>
+        <li>Name, job title, company name</li>
+        <li>Email address and phone number</li>
+        <li>Business information shared during scoping calls, proposals, or engagements</li>
+        <li>Information submitted through our website contact forms or scorecard</li>
+        <li>Communications sent to us by email, phone, or WhatsApp</li>
+      </ul>
+
+      <h3>Data collected automatically</h3>
+      <ul>
+        <li>IP address and browser type when you visit finlanza.com</li>
+        <li>Pages visited and time spent on site</li>
+        <li>Referral source (how you found our website)</li>
+      </ul>
+
+      <h3>Data from third parties</h3>
+      <ul>
+        <li>Business contact information from LinkedIn or referrals from existing clients</li>
+        <li>Company information from public registries where relevant to engagement scoping</li>
+      </ul>
+
+      <p>We do not collect sensitive personal data (health, financial account details, biometric data) unless strictly required by a specific engagement and with your explicit consent.</p>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">04</span>
+      <h2>HOW WE USE YOUR DATA</h2>
+      <p>We use personal data for the following purposes:</p>
+      <ul>
+        <li>Responding to enquiries and booking discovery calls</li>
+        <li>Delivering implementation, integration, and support services under contract</li>
+        <li>Preparing proposals, invoices, and project documentation</li>
+        <li>Communicating project updates and service notifications</li>
+        <li>Sending relevant insights or product updates (where you have consented)</li>
+        <li>Complying with legal and regulatory obligations including KRA tax filings</li>
+        <li>Improving our website and understanding how prospects engage with our content</li>
+      </ul>
+      <p>We do not use your data for automated decision-making or profiling.</p>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">05</span>
+      <h2>DATA SHARING</h2>
+      <p>We do not sell, rent, or trade personal data. We may share data in limited circumstances:</p>
+
+      <h3>Service providers</h3>
+      <p>We use Zoho Corporation's suite of products (CRM, Books, Projects, Sign, Campaigns) to manage client relationships, invoicing, and project delivery. Zoho processes data on our behalf under data processing agreements. Zoho's privacy policy is available at <a href="https://www.zoho.com/privacy.html" target="_blank" rel="noopener">zoho.com/privacy</a>.</p>
+
+      <h3>Legal and regulatory</h3>
+      <p>We may disclose personal data to the Kenya Revenue Authority, the Office of the Data Protection Commissioner, or other competent authorities where required by law or court order.</p>
+
+      <h3>Business transfers</h3>
+      <p>In the event of a merger, acquisition, or sale of Finlanza Limited, personal data may be transferred as part of that transaction, subject to equivalent privacy protections.</p>
+
+      <p>We do not share personal data with any third-party advertisers or data brokers.</p>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">06</span>
+      <h2>DATA RETENTION</h2>
+      <p>We retain personal data for as long as necessary to fulfil the purposes for which it was collected, or as required by law:</p>
+      <ul>
+        <li><strong>Prospect data</strong> — up to 2 years from last contact, unless you request deletion earlier</li>
+        <li><strong>Client engagement data</strong> — 7 years from engagement close, to comply with Kenya tax and corporate record-keeping requirements</li>
+        <li><strong>Invoice and financial records</strong> — 7 years, as required under the Kenya Income Tax Act (Cap. 470)</li>
+        <li><strong>Website analytics</strong> — 13 months on a rolling basis</li>
+      </ul>
+      <p>When data is no longer required, it is securely deleted or anonymised.</p>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">07</span>
+      <h2>YOUR RIGHTS</h2>
+      <p>Under the Kenya Data Protection Act, 2019, you have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Right of access</strong> — to request a copy of personal data we hold about you</li>
+        <li><strong>Right to rectification</strong> — to request correction of inaccurate or incomplete data</li>
+        <li><strong>Right to erasure</strong> — to request deletion of your data, subject to legal retention obligations</li>
+        <li><strong>Right to restrict processing</strong> — to request that we limit how we use your data</li>
+        <li><strong>Right to data portability</strong> — to receive your data in a structured, commonly used format</li>
+        <li><strong>Right to object</strong> — to object to processing based on legitimate interests</li>
+        <li><strong>Right to withdraw consent</strong> — where processing is based on consent, to withdraw it at any time without affecting prior processing</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:legal@finlanza.com">legal@finlanza.com</a>. We will respond within 21 days as required under the Act.</p>
+      <p>If you are unsatisfied with our response, you may lodge a complaint with the <strong>Office of the Data Protection Commissioner of Kenya</strong> at <a href="https://www.odpc.go.ke" target="_blank" rel="noopener">odpc.go.ke</a>.</p>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">08</span>
+      <h2>CROSS-BORDER TRANSFERS</h2>
+      <p>Our services are delivered across East Africa and data may be processed by service providers (including Zoho) in jurisdictions outside Kenya. Where such transfers occur, we ensure adequate safeguards are in place consistent with the requirements of the Kenya Data Protection Act, 2019 and the Data Protection (Registration of Data Controllers and Data Processors) Regulations, 2021.</p>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">09</span>
+      <h2>COOKIES AND WEBSITE TRACKING</h2>
+      <p>Our website (finlanza.com) uses minimal tracking. We do not use third-party advertising cookies. Basic analytics may be used to understand site performance and visitor behaviour. You can control cookie settings through your browser at any time.</p>
+      <p>We do not use cookies to build advertising profiles or share browsing data with third parties.</p>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">10</span>
+      <h2>SECURITY</h2>
+      <p>We implement appropriate technical and organisational measures to protect personal data against unauthorised access, loss, or disclosure. These include:</p>
+      <ul>
+        <li>Access controls and role-based permissions within our Zoho systems</li>
+        <li>TLS encryption for data in transit</li>
+        <li>Regular review of data access logs</li>
+        <li>Staff awareness of data handling obligations</li>
+      </ul>
+      <p>No system is entirely secure. If you suspect a data breach affecting your personal data, contact us immediately at <a href="mailto:legal@finlanza.com">legal@finlanza.com</a>.</p>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">11</span>
+      <h2>CHANGES TO THIS POLICY</h2>
+      <p>We may update this Privacy Policy from time to time to reflect changes in law, our services, or our data practices. The effective date at the top of this page will be updated accordingly. Material changes will be communicated to active clients directly.</p>
+      <p>Continued use of our website or services after an update constitutes acceptance of the revised policy.</p>
+    </div>
+
+    <div class="doc-section">
+      <span class="doc-section-num">12</span>
+      <h2>CONTACT US</h2>
+      <p>For any questions, data requests, or complaints regarding this Privacy Policy, contact:</p>
+      <div class="highlight-box">
+        <strong>Finlanza Limited</strong><br>
+        Data Controller · Business Systems Architecture Firm<br>
+        Nairobi, Kenya<br><br>
+        Email: <a href="mailto:legal@finlanza.com">legal@finlanza.com</a><br>
+        Phone: +254 724 463 536<br>
+        Website: <a href="https://finlanza.com">finlanza.com</a>
+      </div>
+    </div>
+
+  </div><!-- end doc-body -->
+</div><!-- end container -->
+
+<footer>
+  <div class="footer-bottom">
+    <div>© 2026 Finlanza Limited. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('main-nav').style.borderBottomColor =
+      window.scrollY > 40 ? 'rgba(200,151,28,0.2)' : 'rgba(200,151,28,0.1)';
+  });
+</script>
+
+</body>
+</html>
