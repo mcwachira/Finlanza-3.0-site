@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<?php if ( have_posts() ) : the_post(); ?>
+<?php the_post(); ?>
 <title><?php the_title(); ?> — Finlanza Insights</title>
 <meta name="description" content="<?php echo esc_attr( wp_trim_words( get_the_excerpt(), 25, '…' ) ); ?>">
 <link rel="canonical" href="<?php the_permalink(); ?>">
